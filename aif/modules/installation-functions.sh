@@ -669,14 +669,16 @@ install_alsa_xorg_input() {
 	 clear
 	 [[ ${_clist_x_pkg[*]} != "" ]] && pacstrap ${MOUNTPOINT} ${_clist_x_pkg[*]} 2>/tmp/.errlog
 	 wait
-	 arch_chroot "Xorg -configure" >/dev/null 2>>/tmp/.errlog
+	 arch-chroot $MOUNTPOINT /bin/bash -c "Xorg -configure" 2>>/tmp/.errlog
+	 wait
 	 cp -f ${MOUNTPOINT}/root/xorg.conf.new ${MOUNTPOINT}/etc/X11/xorg.conf
-	 arch_chroot "cp -f /root/xorg.conf.new /etc/X11/xorg.conf" >/dev/null 2>>/tmp/.errlog
+	 arch_chroot "cp -f /root/xorg.conf.new /etc/X11/xorg.conf" 2>>/tmp/.errlog
+	 wait
+	 sleep 3
 	 check_for_error
      
      # copy the keyboard configuration file, if generated
      if [[ -e /tmp/00-keyboard.conf ]]; then
-		#[[ -e ${MOUNTPOINT}/etc/X11/xorg.conf.d/ ]] || mkdir ${MOUNTPOINT}/etc/X11/xorg.conf.d
 		cp -f /tmp/00-keyboard.conf ${MOUNTPOINT}/etc/X11/xorg.conf.d/00-keyboard.conf
 		sed -i 's/^HOOKS=(base/HOOKS=(base consolefont keymap /' ${MOUNTPOINT}/etc/mkinitcpio.conf
 	 fi
@@ -1340,13 +1342,13 @@ dm_menu(){
               
          # KDE without Gnome      
         elif [[ $KDE_INSTALLED -eq 1 ]] && [[ $GNOME_INSTALLED -eq 0 ]]; then
-	        arch_chroot "sddm --example-config > /etc/sddm.conf"
+			arch_chroot "sddm --example-config > /etc/sddm.conf"
             arch_chroot "systemctl enable sddm.service" >/dev/null 2>>/tmp/.errlog
 	        DM="SDDM"
             
          # LXDM, without KDE or Gnome 
-         elif [[ $LXDE_INSTALLED -eq 1 ]] && [[ $KDE_INSTALLED -eq 0 ]] && [[ $GNOME_INSTALLED -eq 0 ]]; then 
-            arch_chroot "systemctl enable lxdm.service" >/dev/null 2>/tmp/.errlog
+         elif [[ $LXDE_INSTALLED -eq 1 ]] && [[ $KDE_INSTALLED -eq 0 ]] && [[ $GNOME_INSTALLED -eq 0 ]]; then
+			arch_chroot "systemctl enable lxdm.service" >/dev/null 2>/tmp/.errlog
             DM="LXDM"
 
          # Otherwise, select a DM	   
