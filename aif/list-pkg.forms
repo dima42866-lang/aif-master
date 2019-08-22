@@ -107,6 +107,7 @@ _pamac_aur="$filedir/packages/pamac-aur-7.3.3-1-x86_64.pkg.tar.xz"
 _pamac_classic="$filedir/packages/pamac-classic-7.0.0-1-x86_64.pkg.tar.xz"
 _timeshift="$filedir/packages/timeshift-19.01-2-x86_64.pkg.tar.xz"
 _github_desktop="$filedir/packages/github-desktop-2.1.0-2-x86_64.pkg.tar.xz"
-_yaourt="$filedir/packages/yaourt-1.9-1-any.pkg.tar.xz"
+_pikaur="$filedir/packages/pikaur-1.4.3-1-any.pkg.tar.xz"
+_yay="$filedir/packages/yay-9.2.1-1-x86_64.pkg.tar.xz"
 
 

@@ -1878,11 +1878,14 @@ install_pm_menu()
 	install_pyt()
 	{
 		cp ${_package_query} ${MOUNTPOINT}/var/lib/pacman/local/
-		cp ${_yaourt} ${MOUNTPOINT}/var/lib/pacman/local/
 		cp ${_package_query} /var/lib/pacman/local/
-		cp ${_yaourt} /var/lib/pacman/local/
+		cp ${_pikaur} ${MOUNTPOINT}/var/lib/pacman/local/
+		cp ${_pikaur} /var/lib/pacman/local/
+		cp ${_yay} ${MOUNTPOINT}/var/lib/pacman/local/
+		cp ${_yay} /var/lib/pacman/local/
 		pacman --root ${MOUNTPOINT} --dbpath ${MOUNTPOINT}/var/lib/pacman -U /var/lib/pacman/local/package-query-1.9-3-x86_64.pkg.tar.xz --noconfirm
-		pacman --root ${MOUNTPOINT} --dbpath ${MOUNTPOINT}/var/lib/pacman -U /var/lib/pacman/local/yaourt-1.9-1-any.pkg.tar.xz --noconfirm
+		pacman --root ${MOUNTPOINT} --dbpath ${MOUNTPOINT}/var/lib/pacman -U /var/lib/pacman/local/pikaur-1.4.3-1-any.pkg.tar.xz --noconfirm
+		pacman --root ${MOUNTPOINT} --dbpath ${MOUNTPOINT}/var/lib/pacman -U /var/lib/pacman/local/yay-9.2.1-1-x86_64.pkg.tar.xz --noconfirm
 	}
 	install_timeshift()
 	{
