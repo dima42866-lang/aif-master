@@ -668,7 +668,11 @@ install_alsa_xorg_input() {
 	 wait
 	 clear
 	 [[ ${_clist_x_pkg[*]} != "" ]] && pacstrap ${MOUNTPOINT} ${_clist_x_pkg[*]} 2>/tmp/.errlog
-     check_for_error
+	 wait
+	 arch_chroot "Xorg -configure" >/dev/null 2>>/tmp/.errlog
+	 cp -f ${MOUNTPOINT}/root/xorg.conf.new ${MOUNTPOINT}/etc/X11/xorg.conf
+	 arch_chroot "cp -f /root/xorg.conf.new /etc/X11/xorg.conf" >/dev/null 2>>/tmp/.errlog
+	 check_for_error
      
      # copy the keyboard configuration file, if generated
      if [[ -e /tmp/00-keyboard.conf ]]; then
@@ -1216,13 +1220,6 @@ install_de_wm() {
 # Determine if LXDE, LXQT, Gnome, and/or KDE has been installed, and act accordingly.
 install_dm() {
 
-xorg_install()
-{
-	arch_chroot "Xorg -configure" >/dev/null 2>>/tmp/.errlog
-	cp -f ${MOUNTPOINT}/root/xorg.conf.new ${MOUNTPOINT}/etc/X11/xorg.conf
-	arch_chroot "cp -f /root/xorg.conf.new /etc/X11/xorg.conf" >/dev/null 2>>/tmp/.errlog
-}
-
 # Function to save repetition
 dm_menu(){
 
@@ -1256,7 +1253,6 @@ dm_menu(){
 					wait
 					clear
                    pacstrap ${MOUNTPOINT} ${_list_lxdm_pkg[*]} 2>/tmp/.errlog
-				   xorg_install
                    arch_chroot "systemctl enable lxdm.service" >/dev/null 2>>/tmp/.errlog
                    DM="LXDM"
                    ;;
@@ -1267,7 +1263,6 @@ dm_menu(){
 					wait
 					clear
                    pacstrap ${MOUNTPOINT} ${_list_lightdm_pkg[*]} 2>/tmp/.errlog
-				   xorg_install
                    arch_chroot "systemctl enable lightdm.service" >/dev/null 2>>/tmp/.errlog
                    DM="LightDM"
                    ;;
@@ -1278,7 +1273,6 @@ dm_menu(){
 					wait
 					clear
                    pacstrap ${MOUNTPOINT} ${_list_sddm_pkg[*]} 2>/tmp/.errlog
-				   xorg_install
                    arch_chroot "sddm --example-config > /etc/sddm.conf"
                    arch_chroot "systemctl enable sddm.service" >/dev/null 2>>/tmp/.errlog
                    DM="SDDM"
@@ -1290,7 +1284,6 @@ dm_menu(){
 					wait
 					clear
                    pacstrap ${MOUNTPOINT} ${_list_gdm_pkg[*]} 2>/tmp/.errlog
-				   xorg_install
                    # arch_chroot "gdm --example-config > /etc/gdm.conf"
                    arch_chroot "systemctl enable gdm.service" >/dev/null 2>>/tmp/.errlog
                    DM="GDM"
@@ -1302,7 +1295,6 @@ dm_menu(){
 					wait
 					clear
                    pacstrap ${MOUNTPOINT} ${_list_slim_pkg[*]} 2>/tmp/.errlog
-				   xorg_install
                    arch_chroot "systemctl enable slim.service" >/dev/null 2>>/tmp/.errlog
                    DM="SLiM"
 
@@ -1324,7 +1316,6 @@ dm_menu(){
  if [[ $DM_INSTALLED -eq 0 ]]; then
 	     # Gnome without KDE
 	     if [[ $GNOME_INSTALLED -eq 1 ]] && [[ $KDE_INSTALLED -eq 0 ]]; then
-	        xorg_install
 			arch_chroot "systemctl enable gdm.service" >/dev/null 2>/tmp/.errlog
             DM="GDM"
 
@@ -1336,12 +1327,10 @@ dm_menu(){
 	           "2" $"SDDM (KDE)" 2>${ANSWER}	
 	
 	          case $(cat ${ANSWER}) in
-              "1") xorg_install
-					arch_chroot "systemctl enable gdm.service" >/dev/null 2>/tmp/.errlog
+              "1") arch_chroot "systemctl enable gdm.service" >/dev/null 2>/tmp/.errlog
                    DM="GDM"
                    ;;
-              "2") xorg_install
-					arch_chroot "sddm --example-config > /etc/sddm.conf"
+              "2") arch_chroot "sddm --example-config > /etc/sddm.conf"
                    arch_chroot "systemctl enable sddm.service" >/dev/null 2>>/tmp/.errlog
                    DM="SDDM"
                    ;;
@@ -1351,15 +1340,13 @@ dm_menu(){
               
          # KDE without Gnome      
         elif [[ $KDE_INSTALLED -eq 1 ]] && [[ $GNOME_INSTALLED -eq 0 ]]; then
-	        xorg_install
-			arch_chroot "sddm --example-config > /etc/sddm.conf"
+	        arch_chroot "sddm --example-config > /etc/sddm.conf"
             arch_chroot "systemctl enable sddm.service" >/dev/null 2>>/tmp/.errlog
 	        DM="SDDM"
             
          # LXDM, without KDE or Gnome 
          elif [[ $LXDE_INSTALLED -eq 1 ]] && [[ $KDE_INSTALLED -eq 0 ]] && [[ $GNOME_INSTALLED -eq 0 ]]; then 
-            xorg_install
-			arch_chroot "systemctl enable lxdm.service" >/dev/null 2>/tmp/.errlog
+            arch_chroot "systemctl enable lxdm.service" >/dev/null 2>/tmp/.errlog
             DM="LXDM"
 
          # Otherwise, select a DM	   
