@@ -67,6 +67,24 @@ _SeeConfErrBody2="\nHet basissyteem moet eerst worden geïnstalleerd.\n\n"
 # Pacman
 _PrepPacKey="Vernieuw de Pacman sleutelbestanden"
 
+# LUKS / DM-Crypt / Versleuteling
+_PrepLUKS="LUKS Versleuteling (optioneel)"
+_LuksMenuBody="\nOpslagmedia en volumes die versleuteld werden met dm_crypt kunnen niet  geopend of gelezen worden zonder deze te deblokkeren met een sleutel of wachtwoord."
+_LuksMenuBody2="\n\nEen aparte niet-versleutelde boot partitie zonder logisch volume management (LVM - tenzij bij gebruik van BIOS Grub) is vereist."
+_LuksMenuBody3="\n\nStandaard wordt de automatische versleuteloptie gebruikt, en dit is aanbevolen voor beginners. Het is ook mogelijk om de code en de sleutelgrootte-parameters manueel in te geven."
+_LuksOpen="Open Versleutelde Partitie"
+_LuksOpenBody="\nGeef een naam aan het versleutelde opslagmedium. Het is niet nodig om het voorvoegsel /dev/mapper/ te vermelden. er werd een voorbeeld voorzien."
+_LuksEncrypt="Automatische LUKS Versleuteling"
+_LuksEncryptAdv="Bepaal de sleutelgrootte en Cypher"
+_LuksEncryptBody="\nSelecteer een partitie om te versleutelen."
+_LuksEncruptSucc="\nKlaar! Geopend en klaar voor LVM (aanbevolen) of rechtstreekse aankoppeling.\n"
+_LuksPartErrBody="\nEr zijn minimum twee partities nodig om te kunnen versleutelen:\n\n1. Root (/) - standaard-of LVM partitie-types.\n\n2. Boot (/boot of /boot/efi) - alleen standaard partitietypes  (behalve LVM waar men BIOS Grub gebruikt).\n"
+_SelLuksRootBody="\nSelecteer de ROOT (/) partitie die moet worden versleuteld. Dit is waar Arch zal worden geïnstalleerd.\n\n"
+_LuksPassBody="\nGeef een wachtwoord in om de partitie te versleutelen. Dit mag niet hetzelfde zijn als het Root-wachtwoord of uw gebruikerswachtwoord.\n"
+_LuksWaitBody="\nAanmaken van een versleutelde Root partitie:"
+_LuksWaitBody2="Gebruikt opslagmedium of volume:"
+_LuksCipherKey="\nZodra de opgegeven vlaggen zijn gewijzigd, zullen ze automatisch worden gebruikt met de opdracht 'cryptsetup q luksFormat/dev/...'\n\nOpmerking: Sleutelbestanden worden niet ondersteund; ze kunnen na de installatie handmatig worden toegevoegd. Geef geen extra vlaggen op, zoals -v (--verbose) of -y (--verify-passphrase).\n"
+
 # Logical Volume Management
 _PrepLVM="Logical Volume Management (optioneel)"
 

@@ -68,6 +68,26 @@ _SeeConfErrBody2="\nİlk önce taban yüklenmelidir.\n\n"
 # Pacman
 _PrepPacKey="Pacman anahtarlığını yenile"
 
+# LUKS / DM-Crypt / Encryption
+_PrepLUKS="LUKS Şifreleme (isteğe bağlı)"
+_LuksMenuBody="\nDm_crypt şifreli cihazlar ve birimler anahtar veya şifre kilidini olmadan erişim veya hatta algılama yok."
+_LuksMenuBody2="\n\nŞifreleme veya mantıksal Birim Yöneticisi olmadan ayrı bir önyükleme bölümü gereklidir (LVM-BIOS Grub hariç)."
+_LuksMenuBody3="\n\nOtomatik şifreleme seçeneği, yeni başlayanlar için önerilen standart ayarları kullanır. Ayrıca şifre ve anahtar boyutu ayarlarını kendiniz ayarlayabilirsiniz."
+_LuksOpen="Şifreli bölümü aç"
+_LuksOpenBody="\nŞifrelenmiş aygıtın adını belirtin. Önek /dev/mapper / eklemek gerekli değildir. Bir örnek verilmiş."
+_LuksEncrypt="LUKS otomatik şifreleme"
+_LuksEncryptAdv="Anahtar ve şifre boyutunu ayarla"
+_LuksEncryptBody="\nŞifrelemek için bir bölüm seçin."
+_LuksEncruptSucc="\nBitti! Lvm'yi açın ve yapılandırın (önerilir) veya bölümleri monte etmeye devam edin.\n"
+
+_LuksPartErrBody="\nŞifreleme için en az iki bölüm gereklidir:\n\n1. Kök ( / ) - standart veya lvm bölümü.\n\n2. Önyüklenebilir (/boot veya/boot / efı) sadece standart bölüm tipidir (BIOS Grub'un kullanıldığı lvm hariç).\n"
+
+_SelLuksRootBody="\nŞifrelemek için kök (/) bölümünü seçin. Bu, Arch'ın kurulacağı bölümdür.\n\n"
+_LuksPassBody="\nŞifreyi girin bölümü şifresini çözmek/şifrelemek için. Bu parola, Root veya kullanıcı şifresiyle eşleşmemelidir.\n"
+_LuksWaitBody="\nŞifrelenmiş kök bölüm oluşturma:"
+_LuksWaitBody2="Kullanılan cihazlar veya birimler:"
+_LuksCipherKey="\nBelirtilen bayraklar değiştirildikten sonra, 'cryptsetup-q luksFormat /dev /' komutuna otomatik olarak uygulanır...'\n\nNot: anahtar dosyaları desteklenmez; kurulumdan sonra manuel olarak eklenebilirler. -V (--verbose) veya-y (--verify-passphrase) gibi ek bayraklar belirtmeyin.\n"
+
 # Logical Volume Management
 _PrepLVM="Mantıksal Bölüm Yönetimi (isteğe bağlı)"
 

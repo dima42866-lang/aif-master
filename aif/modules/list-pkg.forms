@@ -57,7 +57,7 @@ _generic_pkg=(xf86-video-fbdev)
 
 # Desktop environment packages
 _desktop_menu=("Cinnamon" "Enlightenment" "Gnome-Shell_(minimal)" "Gnome" "Gnome-Extras" "KDE-5-Base-(minimal)" "KDE-5" "LXDE" "LXQT" "MATE" "MATE-Extras" "Xfce" "Xfce-Extras" "Awesome-WM" "Fluxbox-WM" "i3-WM" "Ice-WM" "Openbox-WM" "Pek-WM" "WindowMaker-WM")
-_d_menu=(cinnamon enlightenment gnome-shell gnome gnome-extra plasma-desktop plasma lxde lxqt mate mate-extra xfce4 xfce4-goodies awesome fluxbox i3-wm icewm openbox pekwm windowmaker)
+_d_menu=(cinnamon enlightenment gnome-shell gnome gnome-extra plasma-desktop plasma lxde lxqt mate mate-extra xfce4 xfce4-goodies awesome fluxbox i3-wm icewm openbox pekwm) # windowmaker
 _cinnamon_pkg=(cinnamon)
 _enlightenment_pkg=(enlightenment terminology polkit-gnome)
 _gnome_shell_pkg=(gnome-shell gdm)
@@ -99,7 +99,7 @@ _gr_editor=(gimp)
 _office=(libreoffice-fresh)
 # libreoffice-fresh libreoffice-fresh-ru
 _minimal_pkg=(grub-customizer xterm gnome-terminal lxterminal cmake brasero acetoneiso2 fuseiso chromium transmission-gtk curl git wget gwget ksysguard doublecmd-gtk2 krusader blender vlc inkscape okular gedit geany leafpad parcellite)
-_other_pkg=(keepassxc truecrypt virtualbox kicad kicad-library kicad-library-3d smplayer wine wine-mono wine_gecko winetricks)
+_other_pkg=(keepassxc veracrypt virtualbox kicad kicad-library kicad-library-3d smplayer wine wine-mono wine_gecko winetricks) # truecrypt
 ABS_FILENAME=`readlink -e "$0"`
 filedir=`dirname "$ABS_FILENAME"`
 _package_query="$filedir/packages/package-query-1.9-3-x86_64.pkg.tar.xz"

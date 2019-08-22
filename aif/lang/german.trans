@@ -64,6 +64,26 @@ _SeeConfErrBody1="\nDatei nicht vorhanden.\n\n"
 _SeeConfErrBody2="\nDas 'Base' System muss zuerst installiert werden.\n\n"
 # Pacman - translate
 
+# LUKS / DM-Crypt / Encryption
+_PrepLUKS="LUKS Verschlüsselung (Optional)"
+_LuksMenuBody="\nGeräte und Volumes dm_crypt verschlüsselt haben keinen Zugriff oder sogar Erkennung ohne Schlüssel oder Passwort zu entsperren."
+_LuksMenuBody2="\n\nErfordert eine separate Boot-Partition ohne Verschlüsselung oder logischen Volume-Manager (LVM-außer mit Grub BIOS)."
+_LuksMenuBody3="\n\nDie automatische Verschlüsselungsoption verwendet die für Anfänger empfohlenen Standardeinstellungen. Sie können auch die Verschlüsselungseinstellungen und die Größe des Schlüssels selbst festlegen."
+_LuksOpen="Verschlüsselte Partition öffnen"
+_LuksOpenBody="\nGeben Sie den Namen des verschlüsselten Geräts an. Das Präfix / dev / mapper / muss nicht Hinzugefügt werden. Beispiel zur Verfügung gestellt."
+_LuksEncrypt="Automatische LUKS-Verschlüsselung"
+_LuksEncryptAdv="Schlüsselgröße und Chiffre festlegen"
+_LuksEncryptBody="\nWählen Sie einen Abschnitt zum verschlüsseln aus."
+_LuksEncruptSucc="\nFertig! Öffnen und konfigurieren Sie LVM (empfohlen) oder gehen Sie zum mounten von Partitionen.\n"
+
+_LuksPartErrBody="\nMindestens zwei Partitionen sind für die Verschlüsselung erforderlich:\n\n1. Root ( / ) ist eine Standard-oder lvm-Partition.\n\n2. Bootfähig (/boot oder /boot/efi) ist nur der standardpartitionstyp (mit Ausnahme von lvm, wo das Grub - BIOS verwendet wird).\n"
+
+_SelLuksRootBody="\nWählen SIE root ( / ) Partition zu verschlüsseln. Dies ist der Abschnitt, in dem Arch installiert wird.\n\n"
+_LuksPassBody="\nGeben Sie das Passwort zum entschlüsseln/verschlüsseln Abschnitt. Dieses Passwort muss nicht mit dem Root-oder Benutzerpasswort übereinstimmen.\n"
+_LuksWaitBody="\nErstellen einer verschlüsselten stammpartition:"
+_LuksWaitBody2="Verwendete Geräte oder Volumes:"
+_LuksCipherKey="\nNachdem die angegebenen Flags geändert wurden, werden Sie automatisch auf den Befehl 'cryptsetup-q luksFormat /dev/' angewendet...'\n\nHINWEIS: Schlüsseldateien werden nicht unterstützt; Sie können manuell nach der Installation Hinzugefügt werden. Geben Sie keine zusätzlichen Flags wie-v (--verbose) oder-y (--verify-passphrase) an.\n"
+
 _PrepPacKey="Aktualisieren der Pacman Schlüssel"
 # Logical Volume Management
 

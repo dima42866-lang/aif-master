@@ -62,6 +62,24 @@ _SeeConfErrBody2="\nElőször az alaprendszert telepítsd.\n\n"
 # Pacman
 _PrepPacKey="Pacman kulcsok frissítése"
  
+# LUKS / DM-Crypt / Titkosítás
+_PrepLUKS="LUKS Titkosítás (választható)"
+_LuksMenuBody="\nEszközök és kötetek titkosítása 'dm_crypt' használatával. Kulcs vagy jelszó használata nélkül nincs hozzáférés vagy akár nem láthatóak az adatok."
+_LuksMenuBody2="\n\nTitkosítatlan , különálló boot partíció, vagy logikai kötetkezelő (LVM - hacsak BIOS Grub-ot használsz) szükséges."
+_LuksMenuBody3="\n\nAz automatikus lehetőség az alapértelmezett titkosítási beállításokat használja, ez a kezdőknek ajánlott. Egyébként van lehetőség a rejtjel és a kulcs méret paraméterjeinek kézi megadására."
+_LuksOpen="Titkosított partíció kinyitása"
+_LuksOpenBody="\nAdj egy nevet a titkosított block eszköznek. Nem szükséges, hogy az előtag tartalmazza a /dev/ leképezőt. Egy példa biztosított."
+_LuksEncrypt="Automatikus LUKS Titkosítás"
+_LuksEncryptAdv="Határozd meg a kulcs méretét és a rejtjelezés típusát"
+_LuksEncryptBody="\nVálaszd ki a titkosítandó partíciót."
+_LuksEncruptSucc="\nKész! Kinyílt, és kész az LVM (ajánlott) vagy direkt csatolásra.\n"
+_LuksPartErrBody="\nMinimum kettő partícióra van szükség a titkosításhoz:\n\n1. Root (/) - normál vagy lvm partíció.\n\n2. Boot (/boot or /boot/efi) - csak normál partíció (kivéve lvm-nél ha BIOS Grub-ot használsz).\n"
+_SelLuksRootBody="\nVálaszd a gyökér (/) partíciót titkosításra. Ez az, ahová az Arch lesz telepítve.\n\n"
+_LuksPassBody="\nAdj meg egy jelszót a partíció titkosításához, illetve a titkosítás feloldásához. Ez nem egyezhet sem a rendszergazda, sem a felhasználói jelszóval.\n"
+_LuksWaitBody="\nTitkosított gyökér partíció létrehozása:"
+_LuksWaitBody2="Használt eszköz vagy kötet:"
+_LuksCipherKey="\nHa a megadott zászlókat módosítod, ezt automatikusan használva lesz a  'cryptsetup -q luksFormat /dev/...' parancssal.\n\nMegjegyzés: Kulcs fájlok nem támogatottak; ezeket manuálisan kell hozzáadni telepítés után. Ne add meg a további zászlókat, mint a  -v (--verbose) vagy -y (--verify-passphrase).\n"
+ 
 # Logical Volume Management
 _PrepLVM="Logikai kötetkezelő (választható)"
  

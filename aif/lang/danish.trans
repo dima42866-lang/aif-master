@@ -66,6 +66,26 @@ _SeeConfErrBody2="\nDet grundlæggende system skal installeres først.\n\n"
 # Pacman - translate
 _PrepPacKey="Indlæs Pacman Nøgler"
 
+# LUKS / DM-Crypt / Encryption
+_PrepLUKS="LUKS-kryptering (valgfri)"
+_LuksMenuBody="\nDm_crypt krypterede enheder og bind har ikke adgang til eller end ikke detektion uden at låse op med en nøgle eller adgangskode."
+_LuksMenuBody2="\n\nKræver en separat boot-partition uden kryptering eller logisk volumenhåndtering (LVM - undtagen ved brug af BIOS Grub)."
+_LuksMenuBody3="\n\nTilvalget automatisk kryptering bruger de standardindstillinger der anbefales for begyndere. Du kan også sætte parametrene for koden og nøglens størrelse."
+_LuksOpen="Åbn den krypterede partition"
+_LuksOpenBody="\nAngiv navnet på den krypterede enhed. Det er ikke nødvendigt at præfiksere den med /dev/mapper/. Eksempel givet."
+_LuksEncrypt="Automatisk kryptering med LUKS"
+_LuksEncryptAdv="Sæt nøglestørrelse og kode"
+_LuksEncryptBody="\nVælg den partition der skal krypteres."
+_LuksEncruptSucc="\nKlar! Åbn og indstil LVM (anbefalet) eller fortsæt til montering af partitionen.\n"
+
+_LuksPartErrBody="\nDer kræves mindst to skillevægge til kryptering:\n\n1. Root (/) - standard eller lvm-partition.\n\n2. Boot (/boot eller/boot / efi) - kun standardstypeafsnittet (med undtagelse af lvm, som anvender BIOS, Grub).\n"
+
+_SelLuksRootBody="\nVælg den rod - ( / ) partition der skal krypteres. Dette er skillevæggen hvor buen vil blive installeret.\n\n"
+_LuksPassBody="\nIndtast adgangskoden til dekryptering / kryptering af partitionen. Denne adgangskode Må ikke være den samme som Root eller user-adgangskoden.\n"
+_LuksWaitBody="\nOpretter en krypteret rod-partition:"
+_LuksWaitBody2="Anvendte anordninger eller volumener:"
+_LuksCipherKey="\nEfter at de angivne flag er ændret, vil de automatisk blive anvendt på kommandoens kryptsæt-d-luksFormat /dev/...'\n\nBemærk: nøglefilerne er ikke understøttet; de kan tilføjes manuelt efter installation. Angiv ikke yderligere flag såsom-v (--verbose) eller-y (--verification-adgangsfrase).\n"
+
 # Logical Volume Management
 _PrepLVM="Logisk Disk Håndtering LVM (optional)"
 

@@ -67,6 +67,25 @@ _SeeConfErrBody2="\nLe Système Base doit être installé en premier\n\n"
 # Pacman
 _PrepPacKey="Actualiser les clés de Pacman"
 
+# Cryptage / DM-Crypt / LUKS 
+_PrepLUKS="Cryptage LUKS (optionnel)"
+_LuksMenuBody="\nLes volumes et périphériques cryptés utilisant dm_crypt ne peuvent pas être accessibles ou visibles sans être débloqués par une clé de chiffrement ou un mot de passe."
+_LuksMenuBody2="\n\nUne partition de démarrage (boot) séparée sans cryptage ou un gestionnaire de volume logique (LVM - sauf si vous utilisez BIOS Grub) est nécessaire." 
+_LuksMenuBody3="\n\nL'option automatique utilise les paramètres d'encryptage par défaut, et elle est recommandé pour les débutants. Toutefois, il est possible de préciser manuellement les paramètres de chiffrement ainsi que la longueur de clé."
+_LuksOpen="Ouvrir une partition cryptée"
+_LuksOpenBody="\nPréciser un nom pour le bloc crypté du périphérique. Il n'est pas nécessaire de le préfixer avec /dev/mapper/. Un exemple a été fourni."
+_LuksEncrypt="Cryptage LUKS automatique"
+_LuksEncryptAdv="Définir le cryptage et la longueur de clé"
+_LuksEncryptBody="\nSélectionner une partition à crypter."
+_LuksEncruptSucc="\nTerminé ! Ouvert et prêt pour LVM (recommandé) ou montage direct.\n"
+_LuksPartErrBody="\nUn minimum de deux partitions est nécessaire pour le cryptage :\n\n1. Root (/) - partition standard ou lvm.\n\n2. Boot (/boot ou /boot/efi) - partition standard uniquement (excepté lvm utilisant BIOS Grub).\n"
+_SelLuksRootBody="\nSélectionner la partition ROOT (/) à crypter. Arch sera installé dans cette partition.\n\n"
+_SelLuksRootBody="\nEntrer un mot de passe pour crypter/décrypter la partition. Le mot de passe ne doit pas être le même que celui du compte utilisateur ou administrateur.\n"
+_LuksWaitBody="\nCréation d'une partition Root crypté :"
+_LuksWaitBody2="Périphérique ou volume utilisé :"
+_LuksCipherKey="\nDès que les drapeaux spécifiés sont modifiés, ils peuvent être automatiquement utilisés avec la commande 'cryptsetup -q luksFormat /dev/...'.\n\nNOTE : Les fichiers de clé ne sont pas supportés ; Ils peuvent être ajoutés manuellement après l'installation. Ne spécifier aucuns drapeaux additionnels du genre -v (--verbose) ou -y (verify-passphrase).\n"
+
+
 # Gestionnaire de volume(s) logique(s)
 _PrepLVM="Gestionnaire de volume(s) logique(s) (optionnel)"
 

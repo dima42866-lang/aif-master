@@ -67,6 +67,26 @@ _SeeConfErrBody2="\nSystem bazowy musi zostać zainstalowany najpierw.\n\n"
 # Menedżer pakietów Pacman
 _PrepPacKey="Odśwież Klucze Pacman-a"
 
+# LUKS / DM-Crypt / Encryption
+_PrepLUKS="LUKS Szyfrowania (opcjonalnie)"
+_LuksMenuBody="\nUrządzenia i toma zaszyfrowane dm_crypt nie mają dostępu lub wykrywania nawet bez odblokowania klucza lub hasła."
+_LuksMenuBody2="\n\nWymaga osobnej partycji rozruchowej bez szyfrowania lub menedżera woluminów logicznych (LVM - oprócz korzystających z BIOS Grub)."
+_LuksMenuBody3="\n\nOpcja automatycznego szyfrowania wykorzystuje standardowe ustawienia zalecane dla początkujących. Można również określić ustawienia szyfrowania i rozmiaru klucza."
+_LuksOpen="Otworzyć zaszyfrowany klucz"
+_LuksOpenBody="\nWprowadź nazwę zaszyfrowanego urządzenia. Dodać do niego przedrostek /dev/mapper/ nie koniecznie. Przykładem jest tu."
+_LuksEncrypt="Automatyczne szyfrowanie LUKS"
+_LuksEncryptAdv="Ustawić rozmiar klucza szyfr"
+_LuksEncryptBody="\nWybierz klucz do szyfrowania."
+_LuksEncruptSucc="\nGotowe! Otwórz i skonfiguruj LVM (zalecane) lub przejść do montażu partycji.\n"
+
+_LuksPartErrBody="\nCo najmniej dwie partycje potrzebne do szyfrowania:\n\n1. Root (/) - standardowy lub partycji lvm.\n\n2. Bootstrap (/boot lub /boot/efi) - tylko standardowy typ partycji (za wyjątkiem lvm, gdzie jest używany przez BIOS Grub).\n"
+
+_SelLuksRootBody="\nWybierz ROOT (/) klucz do szyfrowania. To jest ten punkt, gdzie będzie montowany Arch.\n\n"
+_LuksPassBody="\nWprowadź hasło, aby odszyfrować/zaszyfrować partycję. Hasło nie może być identyczne z hasłem Root lub użytkownika.\n"
+_LuksWaitBody="\nTworzenie zaszyfrowanej partycji root:"
+_LuksWaitBody2="Używane urządzenia lub woluminu:"
+_LuksCipherKey="\nPo tym jak te flagi zostaną zmienione, zostaną automatycznie zastosowane do zespołu 'cryptsetup -q luksFormat /dev/...'\n\nUWAGA: Pliki kluczy nie są obsługiwane; mogą być dodawane ręcznie po instalacji. Nie podawaj dodatkowe flagi, takie jak -v (--verbose) lub -y (--verify-passphrase).\n"
+
 # Zarządzanie woluminami logicznymi
 _PrepLVM="Zarządzanie woluminami logicznymi (opcjonalne)"
 

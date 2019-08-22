@@ -61,6 +61,25 @@ _SeeConfErrBody2="\nO Sistema Básico deve ser instalado primeiro.\n\n"
 # Pacman - translate
 _PrepPacKey="Atualizar as chaves do Pacman"
 
+# Criptografia / LUKS / DM-Crypt
+_PrepLUKS="Criptografia LUKS (opcional)"
+_LuksMenuBody="\nDispositivos e volumes criptografados utilizando o dm_crypt não podem ter acesso ou mesmo visualizados sem serem desbloqueados através de uma chave ou senha."
+_LuksMenuBody2="\n\nÉ necessária uma partição de boot separada do restante sem criptografia ou gestão de volume lógico (LVM - a não ser utilizando Grub BIOS)."
+_LuksMenuBody3="\n\nA opção automática utiliza as configurações padrão de criptografia, e é recomendado para os iniciantes. Por outro lado, é possível especificar manualmente a criptografia e os parâmetros do tamanho da chave."
+_LuksOpen="Abrir a Partição Criptografada"
+_LuksOpenBody="\nDefina um nome para o dispositivo de bloco criptografado. Não é necessário acrescentar o prefixo /dev/mapper/. Um exemplo é apresentado."
+_LuksEncrypt="Criptografia LUKS Automática"
+_LuksEncryptAdv="Defina o Tamanho da Chave e Criptografia"
+_LuksEncryptBody="\nSeleccione uma partição para criptografar."
+_LuksEncruptSucc="\nPronto! Aberto e pronto para o LVM (recomendado) ou montar directamente.\n"
+_LuksPartErrBody="\nSão necessárias no mínimo duas partições para a criptografia:\n\n1. Root (/) - tipo de partição padrão ou lvm.\n\n2. Boot (/boot ou /boot/efi) - apenas o tipo de partição padrão (exceto LVM onde utiliza Grub BIOS).\n"
+_SelLuksRootBody="\nSeleccione a partição ROOT (/) para criptografar. Este é o lugar onde o Arch será instalado..\n\n"
+_LuksPassBody="\nDigite a senha para des/criptografar a partição. Esta não deve ser a mesma da conta Root ou das contas dos usuários.\n"
+_LuksWaitBody="\nCriando partição Root criptografada:"
+_LuksWaitBody2="Dispositivo ou volume utilizado:"
+_LuksCipherKey="\nDepois de ter configurado as flags especificadas, elas serão usadas automaticamente com o comando 'cryptsetup -q luksFormat /dev/...'\n\nNOTA: Os arquivos de chave não são suportados, eles podem ser adicionados manualmente após a instalação. Não especifique quaisquer flags adicionais como -v (--verbose) ou -y (--verify-passphrase)./n"
+
+
 # Logical Volume Management
 _PrepLVM="Logical Volume Management (opcional)"
 

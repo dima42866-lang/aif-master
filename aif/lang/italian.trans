@@ -67,6 +67,25 @@ _SeeConfErrBody2="\nIl sistema di Base deve essere installato per primo.\n\n"
 # Pacman
 _PrepPacKey="Aggiornare le chiavi di Pacman"
 
+# LUKS / DM-Crypt / Encryption
+_PrepLUKS="Crittografia LUKS (opzionale)"
+_LuksMenuBody="\nI dispositivi e volumi crittografati con dm_crypt non possono essere montati o visualizzati senza prima essere sbloccati da una chiave o password."
+_LuksMenuBody2="\n\nÈ necessaria una partizione di boot separata senza cifratura o Logical Volume Management (LVM - tranne GRUB su BIOS)."
+_LuksMenuBody3="\n\nL'opzione Automatica usa impostazioni crittografiche tipiche, ed è raccomandata per i principianti. Eventualmente, è possibile specificare algoritmo e grandezza chiave manualmente."
+_LuksOpen="Apri Partizione Crittografata"
+_LuksOpenBody="\nSpecificare un nome per il dispositivo a blocchi crittografato. Non è necessario sia preceduto da /dev/mapper. Viene mostrato un esempio."
+_LuksEncrypt="Crittografia LUKS Automatica"
+_LuksEncryptAdv="impostare lunghezza chiave e algoritmo di cifratura"
+_LuksEncryptBody="\nSelezionare una partizione da crittografare."
+_LuksEncruptSucc="\nFatto! Aerta e pronta per LVM (raccomandato) o montaggio diretto.\n"
+_LuksPartErrBody="\nDevono essere crittografate almeno due partizioni:\n\n1. Root (/) - ammesse partizioni standard o lvm.\n\n2. Boot (/boot or /boot/efi) - solo partizioni standard (o lvm con Grub su BIOS).\n"
+_SelLuksRootBody="\nSelezionare la partizione ROOT (/) da crittografare. Arch sarà installata qui.\n\n"
+_LuksPassBody="\nInserire una aprola chiave per de/crittare la partizione. Dovrebbe essere differente da quella usata per l'account Root o gli account utente.\n"
+_LuksWaitBody="\nCreazione partizione Root crittografata in corso:"
+_LuksWaitBody2="Volume o dispositivo in uso:"
+_LuksCipherKey="\nUna volte modificati i parametri, saranno automaticamente utilizzati per il comando 'cryptsetup -q luksFormat /dev/...' .\n\nNOTA: l'uso di key files non è supportato; potranno essere aggiunti manualmente al termine dell'installazione. Non specificare parametri addizionali come -v (--verbose) o -y (--verify-passphrase).\n"
+
+
 # Gestore logico dei volumi
 _PrepLVM="Gestore logico dei volumi (opzionale)"
 
