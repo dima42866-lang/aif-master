@@ -1240,12 +1240,11 @@ dm_menu(){
 	
 #	dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_DmChTitle" --menu "$_DmChBody" 0 0 5 ${_listdm_menu} 2>${ANSWER}
   dialog --default-item 3 --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_DmChTitle" \
-               --menu "$_DmChBody" 0 0 5 \
+               --menu "$_DmChBody" 0 0 4 \
  	           "1" $"LXDM" \
 	           "2" $"LightDM" \
 	           "3" $"SDDM" \
-			   "4" $"GDM" \
-	           "5" $"SLiM" 2>${ANSWER}	
+	           "4" $"SLiM" 2>${ANSWER}	
 	
 	          case $(cat ${ANSWER}) in
               "1") # LXDM
@@ -1279,18 +1278,18 @@ dm_menu(){
                    arch_chroot "systemctl enable sddm.service" >/dev/null 2>>/tmp/.errlog
                    DM="SDDM"
                    ;;
-			  "4") # GDM
-					clear
-					info_search_pkg
-					_list_gdm_pkg=$(check_s_lst_pkg "${_gdm_pkg[*]}")
-					wait
-					clear
-                   pacstrap ${MOUNTPOINT} ${_list_gdm_pkg[*]} 2>/tmp/.errlog
-                   # arch_chroot "gdm --example-config > /etc/gdm.conf"
-                   arch_chroot "systemctl enable gdm.service" >/dev/null 2>>/tmp/.errlog
-                   DM="GDM"
-					;;
-              "5") # SLiM
+			 # "4") # GDM
+			#		clear
+			#		info_search_pkg
+			#		_list_gdm_pkg=$(check_s_lst_pkg "${_gdm_pkg[*]}")
+			#		wait
+			#		clear
+             #      pacstrap ${MOUNTPOINT} ${_list_gdm_pkg[*]} 2>/tmp/.errlog
+             #      # arch_chroot "gdm --example-config > /etc/gdm.conf"
+             #      arch_chroot "systemctl enable gdm.service" >/dev/null 2>>/tmp/.errlog
+             #      DM="GDM"
+			#		;;
+              "4") # SLiM
                    clear
 				   info_search_pkg
 					_list_slim_pkg=$(check_s_lst_pkg "${_slim_pkg[*]}")

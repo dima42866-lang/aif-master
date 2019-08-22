@@ -112,7 +112,7 @@ set_keymap() {
 # Set keymap for X11
  set_xkbmap() { 	
 	if [[ $_is_xkb -eq 0 ]]; then
-		keymaps_xkb=("af_Afghani al_Albanian am_Armenian ara_Arabic at_German-Austria az_Azerbaijani ba_Bosnian bd_Bangla be_Belgian bg_Bulgarian br_Portuguese-Brazil bt_Dzongkha bw_Tswana by_Belarusian ca_French-Canada cd_French-DR-Congo ch_German-Switzerland cm_English-Cameroon cn_Chinese cz_Czech de_German dk_Danishee_Estonian epo_Esperanto es_Spanish et_Amharic fo_Faroese fi_Finnish fr_French gb_English-UK ge_Georgian gh_English-Ghana gn_French-Guinea gr_Greek hr_Croatian hu_Hungarian ie_Irish il_Hebrew iq_Iraqi ir_Persian is_Icelandic it_Italian jp_Japanese ke_Swahili-Kenya kg_Kyrgyz kh_Khmer-Cambodia kr_Korean kz_Kazakh la_Lao latam_Spanish-Lat-American lk_Sinhala-phonetic lt_Lithuanian lv_Latvian ma_Arabic-Morocco mao_Maori md_Moldavian me_Montenegrin mk_Macedonian ml_Bambara mm_Burmese mn_Mongolian mt_Maltese mv_Dhivehi ng_English-Nigeria nl_Dutch no_Norwegian np_Nepali ph_Filipino pk_Urdu-Pakistan pl_Polish pt_Portuguese ro_Romanian rs_Serbian ru_Russian se_Swedish si_Slovenian sk_Slovak sn_Wolof sy_Arabic-Syria th_Thai tj_Tajik tm_Turkmen tr_Turkish tw_Taiwanese tz_Swahili-Tanzania ua_Ukrainian us_English-US uz_Uzbek vn_Vietnamese za_English-S-Africa")
+		# keymaps_xkb=("af_Afghani al_Albanian am_Armenian ara_Arabic at_German-Austria az_Azerbaijani ba_Bosnian bd_Bangla be_Belgian bg_Bulgarian br_Portuguese-Brazil bt_Dzongkha bw_Tswana by_Belarusian ca_French-Canada cd_French-DR-Congo ch_German-Switzerland cm_English-Cameroon cn_Chinese cz_Czech de_German dk_Danishee_Estonian epo_Esperanto es_Spanish et_Amharic fo_Faroese fi_Finnish fr_French gb_English-UK ge_Georgian gh_English-Ghana gn_French-Guinea gr_Greek hr_Croatian hu_Hungarian ie_Irish il_Hebrew iq_Iraqi ir_Persian is_Icelandic it_Italian jp_Japanese ke_Swahili-Kenya kg_Kyrgyz kh_Khmer-Cambodia kr_Korean kz_Kazakh la_Lao latam_Spanish-Lat-American lk_Sinhala-phonetic lt_Lithuanian lv_Latvian ma_Arabic-Morocco mao_Maori md_Moldavian me_Montenegrin mk_Macedonian ml_Bambara mm_Burmese mn_Mongolian mt_Maltese mv_Dhivehi ng_English-Nigeria nl_Dutch no_Norwegian np_Nepali ph_Filipino pk_Urdu-Pakistan pl_Polish pt_Portuguese ro_Romanian rs_Serbian ru_Russian se_Swedish si_Slovenian sk_Slovak sn_Wolof sy_Arabic-Syria th_Thai tj_Tajik tm_Turkmen tr_Turkish tw_Taiwanese tz_Swahili-Tanzania ua_Ukrainian us_English-US uz_Uzbek vn_Vietnamese za_English-S-Africa")
 		
 		_switch_xkb=("grp:toggle" "grp:ctrl_shift_toggle" "grp:alt_shift_toggle" "grp:ctrl_alt_toggle" "grp:lwin_toggle" "grp:rwin_toggle" "grp:lctrl_toggle" "grp:rctrl_toggle")
 		
@@ -122,7 +122,13 @@ set_keymap() {
 			_xkb_mdl="${_xkb_mdl} ${i} -"
 		done
 		
-		for i in ${keymaps_xkb[*]}; do
+		KEYMAPS=""
+		for i in $(ls -R /usr/share/kbd/keymaps | grep "map.gz" | sed 's/\.map.gz//g' | sort); do
+			KEYMAPS="${KEYMAPS} ${i} -"
+		done
+		
+		# for i in ${keymaps_xkb[*]}; do
+		for i in ${KEYMAPS[*]}; do
 			_xkb_list="${_xkb_list} ${i} -"
 		done	
 		
@@ -143,14 +149,14 @@ set_keymap() {
 	{
 		_xkb_w=""
 		_xkb_u=""
-		dialog --default-item 1 --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_xkb_list_title" --menu "$_xkb_list1_body" 0 0 11 ${_xkb_list} 2>${ANSWER} || set_xkbmap
-		_xkb_w=$(cat ${ANSWER} |sed 's/_.*//')
-		
+		#dialog --default-item 1 --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_xkb_list_title" --menu "$_xkb_list1_body" 0 0 11 ${_xkb_list} 2>${ANSWER} || set_xkbmap
+		#_xkb_w=$(cat ${ANSWER} |sed 's/_.*//')
+		_xkb_w="${KEYMAP[*]}"
 		dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_yesno_user_layout_title" --yesno "$_yesno_user_layout_body" 0 0
 		if [[ $? -eq 0 ]]; then
 			dialog --default-item 1 --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_xkb_list_title" --menu "$_xkb_list2_body" 0 0 11 ${_xkb_list} 2>${ANSWER} || set_xkbmap
 			_xkb_u=$(cat ${ANSWER} |sed 's/_.*//')
-			[[ $_xkb_w == $_xkb_u ]] && xkb_layout="$_xkb_w" || xkb_layout="$_xkb_w,$_xkb_u"
+			[[ $_xkb_w == $_xkb_u ]] && xkb_layout="$_xkb_w" || xkb_layout="$_xkb_u, $_xkb_w"
 		else
 			xkb_layout="$_xkb_w"
 		fi
@@ -205,7 +211,7 @@ set_keymap() {
 		[[ $xkb_layout == "" ]] && _skip=1
 		[[ $xkb_model == "" ]] && _skip=1
 		[[ $xkb_variant == "" ]] && _skip=1
-		[[ $xkb_layout == "" ]] && xkb_layout="us"
+		[[ $xkb_layout == "" ]] && xkb_layout="${KEYMAP[*]}"
 		[[ $xkb_model == "" ]] && xkb_model="pc105"
 		[[ $xkb_variant == "" ]] && xkb_variant="qwerty"
 		if [[ $_skip == "1" ]]; then
