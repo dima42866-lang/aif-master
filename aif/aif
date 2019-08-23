@@ -1,4 +1,4 @@
-# !/bin/bash
+﻿# !/bin/bash
 #
 # Architect Installation Framework (version 1.6.3 - 17-Dec-2015)
 #
@@ -12,9 +12,9 @@
 
 
 ######################################################################
-##																	##
-##                   Installer Variables							##
-##																	##
+##                                                                  ##
+##                   Installer Variables                            ##
+##                                                                  ##
 ######################################################################
 
 # Create a temporary file to store menu selections
@@ -24,22 +24,22 @@ filesdir=`dirname "$ABSOLUT_FILENAME"`
 # Save retyping
 VERSION="MAXIMALISIMUS Installation Framework 2.3"
 
-source $filesdir/modules/installer-variables.sh 				# list of variables
-source $filesdir/list-pkg.forms 								# list of packages for uses the script
-source $filesdir/modules/core-functions.sh 						# language, checks
-source $filesdir/modules/configuration-functions.sh 			# Keyboard, locale, time zone, FSTAB, mkinitcpio, user controls
-source $filesdir/modules/system-partitioning.sh 				# managing partitions, installing the boot
-source $filesdir/modules/encryption-functions.sh				# Encryption
-source $filesdir/modules/logical-volume.sh 						# LVM control
-source $filesdir/modules/installation-functions.sh 				# system installation functions
-source $filesdir/modules/swappiness-config.sh 					# SWAPPINESS
-source $filesdir/modules/devices-config.sh 						# tune2fs
-source $filesdir/modules/main-interfaces.sh 					# main menu interface
+source $filesdir/modules/installer-variables.sh                 # list of variables
+source $filesdir/list-pkg.forms                                 # list of packages for uses the script
+source $filesdir/modules/core-functions.sh                      # language, checks
+source $filesdir/modules/configuration-functions.sh             # Keyboard, locale, time zone, FSTAB, mkinitcpio, user controls
+source $filesdir/modules/system-partitioning.sh                 # managing partitions, installing the boot
+source $filesdir/modules/encryption-functions.sh                # Encryption
+source $filesdir/modules/logical-volume.sh                      # LVM control
+source $filesdir/modules/installation-functions.sh              # system installation functions
+source $filesdir/modules/swappiness-config.sh                   # SWAPPINESS
+source $filesdir/modules/devices-config.sh                      # tune2fs
+source $filesdir/modules/main-interfaces.sh                     # main menu interface
 
 ######################################################################
-##																	##
-##                        Execution     							##
-##																	##
+##                                                                  ##
+##                        Execution                                 ##
+##                                                                  ##
 ######################################################################
 # sudo cp -f $filesdir/pacman.conf /etc/pacman.conf
 id_system
@@ -47,6 +47,6 @@ select_language
 multilib_question
 check_requirements
 greeting
-	while true; do
+    while true; do
           main_menu_online      
     done

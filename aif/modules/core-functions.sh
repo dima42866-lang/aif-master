@@ -1,27 +1,27 @@
 ﻿######################################################################
-##																	##
-##                        Core Functions							##
-##																	##
+##                                                                  ##
+##                        Core Functions                            ##
+##                                                                  ##
 ######################################################################
 
 # Add locale on-the-fly and sets source translation file for installer
 select_language() {
     
     dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title " Select Language " --menu "\nLanguage / sprache / taal / språk / lingua / idioma / nyelv / língua" 0 0 12 \
- 	"1" $"English		(en)" \
- 	"2" $"Italian 		(it)" \
- 	"3" $"Russian 		(ru)" \
- 	"4" $"Turkish 		(tr)" \
- 	"5" $"Dutch 		(nl)" \
- 	"6" $"Greek 		(el)" \
- 	"7" $"Danish 		(da)" \
- 	"8" $"Hungarian 	(hu)" \
- 	"9" $"Portuguese 	(pt)" \
-   "10" $"German	 	(de)" \
-   "11" $"French		(fr)" \
-   "12" $"Polish		(pl)" 2>${ANSWER}
+    "1" $"English       (en)" \
+    "2" $"Italian       (it)" \
+    "3" $"Russian       (ru)" \
+    "4" $"Turkish       (tr)" \
+    "5" $"Dutch         (nl)" \
+    "6" $"Greek         (el)" \
+    "7" $"Danish        (da)" \
+    "8" $"Hungarian     (hu)" \
+    "9" $"Portuguese    (pt)" \
+   "10" $"German        (de)" \
+   "11" $"French        (fr)" \
+   "12" $"Polish        (pl)" 2>${ANSWER}
 
-	case $(cat ${ANSWER}) in
+    case $(cat ${ANSWER}) in
         "1") source ${filesdir}/lang/english.trans
              CURR_LOCALE="en_US.UTF-8"
              ;;
@@ -79,7 +79,7 @@ select_language() {
 # Check user is root, and that there is an active internet connection
 # Seperated the checks into seperate "if" statements for readability.
 check_requirements() {
-	
+    
   dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_ChkTitle" --infobox "$_ChkBody" 0 0
   sleep 2
   
@@ -108,7 +108,7 @@ check_requirements() {
 # Adapted from AIS. Checks if system is made by Apple, whether the system is BIOS or UEFI,
 # and for LVM and/or LUKS.
 id_system() {
-	
+    
     # Apple System Detection
     if [[ "$(cat /sys/class/dmi/id/sys_vendor)" == 'Apple Inc.' ]] || [[ "$(cat /sys/class/dmi/id/sys_vendor)" == 'Apple Computer, Inc.' ]]; then
       modprobe -r -q efivars || true  # if MAC

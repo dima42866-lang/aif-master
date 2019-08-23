@@ -30,7 +30,7 @@ _intel_2100=(ipw2100-fw)
 _list_intel_2100=""
 _intel_2200=(ipw2200-fw)
 _list_intel_2200=""
-_menu_wifi=("$_SeeWirelessDev" "Broadcom_802.11b/g/n" "Intel_PRO/Wireless_2100" "Intel_PRO/Wireless_2200" "$_All" "$_Back")
+_menu_wifi=("Show_Devices" "Broadcom_802.11b/g/n" "Intel_PRO/Wireless_2100" "Intel_PRO/Wireless_2200" "All" "Back")
 
 # Package for grub and uefi menu
 _grub_pkg=(grub os-prober)
@@ -56,7 +56,7 @@ _vmware_pkg=(xf86-video-vmware xf86-input-vmmouse)
 _generic_pkg=(xf86-video-fbdev)
 
 # Desktop environment packages
-_desktop_menu=("Cinnamon" "Enlightenment" "Gnome-Shell_(minimal)" "Gnome" "Gnome-Extras" "KDE-5-Base-(minimal)" "KDE-5" "LXDE" "LXQT" "MATE" "MATE-Extras" "Xfce" "Xfce-Extras" "Awesome-WM" "Fluxbox-WM" "i3-WM" "Ice-WM" "Openbox-WM" "Pek-WM" "WindowMaker-WM")
+_desktop_menu=("Cinnamon" "Enlightenment" "Gnome-Shell_minimal" "Gnome" "Gnome_Gnome-Extras" "KDE-5-Base_minimal" "KDE-5" "LXDE" "LXQT" "MATE" "MATE_MATE-Extras" "Xfce" "Xfce_Xfce-Extras" "Awesome-WM" "Fluxbox-WM" "i3-WM" "Ice-WM" "Openbox-WM" "Pek-WM") # WindowMaker-WM
 _d_menu=(cinnamon enlightenment gnome-shell gnome gnome-extra plasma-desktop plasma lxde lxqt mate mate-extra xfce4 xfce4-goodies awesome fluxbox i3-wm icewm openbox pekwm) # windowmaker
 _cinnamon_pkg=(cinnamon)
 _enlightenment_pkg=(enlightenment terminology polkit-gnome)

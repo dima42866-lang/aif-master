@@ -1,14 +1,14 @@
 ﻿######################################################################
-##																	##
-##            System and Partitioning Functions						##
-##																	##
+##                                                                  ##
+##            System and Partitioning Functions                     ##
+##                                                                  ##
 ######################################################################
 
 
 
 # Unmount partitions.
 umount_partitions(){
-	
+    
   MOUNTED=""
   MOUNTED=$(mount | grep "${MOUNTPOINT}" | awk '{print $3}' | sort -r)
   swapoff -a
@@ -51,7 +51,7 @@ confirm_mount_btrfs() {
 # installation device; more than one device may be formatted. This is now set in the
 # mount_partitions function, when the Root is chosen.
 select_device() {
-	
+    
     DEVICE=""
     devices_list=$(lsblk -d | awk '{print "/dev/" $1}' | grep 'sd\|hd\|vd\|nvme\|mmc');
     
@@ -66,7 +66,7 @@ select_device() {
 
 # Same as above, but goes to install_base_menu instead where cancelling, and otherwise installs Grub.
 select_grub_device() {
-	
+    
     GRUB_DEVICE=""
     grub_devices_list=$(lsblk -d | awk '{print "/dev/" $1}' | grep 'sd\|hd\|vd');
     
@@ -93,13 +93,13 @@ auto_partition(){
 
 # Hooray for tac! Deleting partitions in reverse order deals with logical partitions easily.
 delete_partitions(){
-	
-	parted -s ${DEVICE} print | awk '/^ / {print $1}' > /tmp/.del_parts
-	
-	for del_part in $(tac /tmp/.del_parts); do
-		parted -s ${DEVICE} rm ${del_part} 2>/tmp/.errlog
-		check_for_error
-	done
+    
+    parted -s ${DEVICE} print | awk '/^ / {print $1}' > /tmp/.del_parts
+    
+    for del_part in $(tac /tmp/.del_parts); do
+        parted -s ${DEVICE} rm ${del_part} 2>/tmp/.errlog
+        check_for_error
+    done
 
 
 }
@@ -110,16 +110,16 @@ delete_partitions(){
  # Autopartition for BIOS systems 
  if [[ $SYSTEM == "BIOS" ]]; then
     dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title " Auto-Partition (BIOS/MBR) " --yesno "$_AutoPartBody1 $DEVICE $_AutoPartBIOSBody2" 0 0
-	
-	if [[ $? -eq 0 ]]; then
-	    delete_partitions
-	    if [[ $part_table != "msdos" ]]; then
-		   parted -s ${DEVICE} mklabel msdos 2>/tmp/.errlog
-		   check_for_error
-		fi
-		parted -s ${DEVICE} mkpart primary ext3 1MiB 100% 2>/tmp/.errlog	
-		parted -s ${DEVICE} set 1 boot on 2>>/tmp/.errlog
-		check_for_error
+    
+    if [[ $? -eq 0 ]]; then
+        delete_partitions
+        if [[ $part_table != "msdos" ]]; then
+           parted -s ${DEVICE} mklabel msdos 2>/tmp/.errlog
+           check_for_error
+        fi
+        parted -s ${DEVICE} mkpart primary ext3 1MiB 100% 2>/tmp/.errlog    
+        parted -s ${DEVICE} set 1 boot on 2>>/tmp/.errlog
+        check_for_error
         echo -e "Partition Scheme:\n" > /tmp/.devlist
         lsblk ${DEVICE} -o NAME,TYPE,FSTYPE,SIZE > /tmp/.devlist
         dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "" --textbox /tmp/.devlist 0 0
@@ -130,21 +130,21 @@ delete_partitions(){
  # Autopartition for UEFI systems   
  else
     dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title " Auto-Partition (UEFI/GPT) " --yesno "$_AutoPartBody1 $DEVICE $_AutoPartUEFIBody2" 0 0
-	
-	if [[ $? -eq 0 ]]; then
-	    delete_partitions
-	    if [[ $part_table != "gpt" ]]; then
-		   parted -s ${DEVICE} mklabel gpt 2>/tmp/.errlog
-		   check_for_error
-		fi
-		parted -s ${DEVICE} mkpart ESP fat32 1MiB 513MiB 2>/tmp/.errlog
-		parted -s ${DEVICE} set 1 boot on 2>>/tmp/.errlog
-		parted -s ${DEVICE} mkpart primary ext3 513MiB 100% 2>>/tmp/.errlog
-		echo -e "Partition Scheme:\n" > /tmp/.devlist
+    
+    if [[ $? -eq 0 ]]; then
+        delete_partitions
+        if [[ $part_table != "gpt" ]]; then
+           parted -s ${DEVICE} mklabel gpt 2>/tmp/.errlog
+           check_for_error
+        fi
+        parted -s ${DEVICE} mkpart ESP fat32 1MiB 513MiB 2>/tmp/.errlog
+        parted -s ${DEVICE} set 1 boot on 2>>/tmp/.errlog
+        parted -s ${DEVICE} mkpart primary ext3 513MiB 100% 2>>/tmp/.errlog
+        echo -e "Partition Scheme:\n" > /tmp/.devlist
         lsblk ${DEVICE} -o NAME,TYPE,FSTYPE,SIZE >> /tmp/.devlist
         dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "" --textbox /tmp/.devlist 0 0
     else
-		create_partitions
+        create_partitions
     fi
     
  fi
@@ -154,11 +154,11 @@ delete_partitions(){
     dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_PartToolTitle" \
     --menu "$_PartToolBody" 0 0 6 \
     "1" $"Auto Partition (BIOS & UEFI)" \
- 	"2" $"Parted (BIOS & UEFI)" \
-	"3" $"CFDisk (BIOS/MBR)" \
-	"4" $"CGDisk (UEFI/GPT)" \
-	"5" $"FDisk  (BIOS & UEFI)" \
-	"6" $"GDisk  (UEFI/GPT)" 2>${ANSWER}	
+    "2" $"Parted (BIOS & UEFI)" \
+    "3" $"CFDisk (BIOS/MBR)" \
+    "4" $"CGDisk (UEFI/GPT)" \
+    "5" $"FDisk  (BIOS & UEFI)" \
+    "6" $"GDisk  (UEFI/GPT)" 2>${ANSWER}    
 
     case $(cat ${ANSWER}) in
         "1") auto_partition
@@ -178,17 +178,17 @@ delete_partitions(){
              ;;
           *) prep_menu
              ;;
-    esac  	
-}	
+    esac    
+}   
 
 # find all available partitions and generate a list of them
 # This also includes partitions on different devices.
 find_partitions() {
 
-	PARTITIONS=""
-	NUMBER_PARTITIONS=0
+    PARTITIONS=""
+    NUMBER_PARTITIONS=0
     partition_list=$(lsblk -l | grep 'part\|lvm' | sed 's/[\t ].*//' | sort -u)
-	
+    
     for i in ${partition_list[@]}; do
         PARTITIONS="${PARTITIONS} ${i} -"
         NUMBER_PARTITIONS=$(( NUMBER_PARTITIONS + 1 ))
@@ -201,7 +201,7 @@ find_partitions() {
     fi
     
     if [[ $NUMBER_PARTITIONS -eq 0 ]] && [[ $SYSTEM == "BIOS" ]]; then
-        dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_BiosPartErrTitle" --msgbox "$_BiosPartErrBody" 0 0	
+        dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_BiosPartErrTitle" --msgbox "$_BiosPartErrBody" 0 0  
         create_partitions
     fi
 }
@@ -215,18 +215,18 @@ BTRFS=0
 
 dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_FSTitle" \
     --menu "$_FSBody" 0 0 12 \
- 	"1" "$_FSSkip" \
- 	"2" $"btrfs" \
-	"3" $"ext2" \
- 	"4" $"ext3" \
-	"5" $"ext4" \
-	"6" $"f2fs" \
-	"7" $"jfs" \
- 	"8" $"nilfs2" \
-	"9" $"ntfs" \
-	"10" $"reiserfs" \
- 	"11" $"vfat" \
-	"12" $"xfs" 2>${ANSWER}	
+    "1" "$_FSSkip" \
+    "2" $"btrfs" \
+    "3" $"ext2" \
+    "4" $"ext3" \
+    "5" $"ext4" \
+    "6" $"f2fs" \
+    "7" $"jfs" \
+    "8" $"nilfs2" \
+    "9" $"ntfs" \
+    "10" $"reiserfs" \
+    "11" $"vfat" \
+    "12" $"xfs" 2>${ANSWER} 
 
     case $(cat ${ANSWER}) in
         "1") FILESYSTEM="skip"
@@ -236,8 +236,8 @@ dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_FSTitle" \
              
              dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_btrfsSVTitle" --yesno "$_btrfsSVBody" 0 0
              if [[ $? -eq 0 ]];then
-				BTRFS=2
-		     else
+                BTRFS=2
+             else
                 BTRFS=1
              fi
              
@@ -276,7 +276,7 @@ mount_partitions() {
 set_mount_type() {
 
 [[ $(echo ${PARTITION} | grep 'sd\|hd\|vd[a-z][1-99]') != "" ]] && MOUNT_TYPE="/dev/" || MOUNT_TYPE="/dev/mapper/"
-	
+    
 }
 
 btrfs_subvols() {
@@ -290,7 +290,7 @@ btrfs_subvols() {
  
  dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_btrfsSVTitle" --inputbox "$_btrfsMSubBody1 ${MOUNTPOINT}${MOUNT} $_btrfsMSubBody2" 0 0 "" 2>${ANSWER} || select_filesystem
  BTRFS_MSUB_VOL=$(cat ${ANSWER})
- # if root, then create boot flag for syslinux, systemd-boot and rEFInd bootloaders	
+ # if root, then create boot flag for syslinux, systemd-boot and rEFInd bootloaders 
  [[ ${MOUNT} == "" ]] && BTRFS_MNT="rootflags=subvol="$BTRFS_MSUB_VOL
 
  # Loop while subvolume is blank or has spaces.
@@ -311,9 +311,9 @@ btrfs_subvols() {
  # Get any mount options and mount
  btrfs_mount_opts
  if [[ $(cat ${BTRFS_OPTS}) != "" ]]; then
-	[[ ${MOUNT} == "" ]] && mount -o $(cat ${BTRFS_OPTS})",subvol="${BTRFS_MSUB_VOL} ${MOUNT_TYPE}${PARTITION} ${MOUNTPOINT} 2>/tmp/.errlog || mount -o $(cat ${BTRFS_OPTS})",subvol="${BTRFS_MSUB_VOL} ${MOUNT_TYPE}${PARTITION} ${MOUNTPOINT}${MOUNT} 2>/tmp/.errlog
+    [[ ${MOUNT} == "" ]] && mount -o $(cat ${BTRFS_OPTS})",subvol="${BTRFS_MSUB_VOL} ${MOUNT_TYPE}${PARTITION} ${MOUNTPOINT} 2>/tmp/.errlog || mount -o $(cat ${BTRFS_OPTS})",subvol="${BTRFS_MSUB_VOL} ${MOUNT_TYPE}${PARTITION} ${MOUNTPOINT}${MOUNT} 2>/tmp/.errlog
  else
-    [[ ${MOUNT} == "" ]] &&	mount -o "subvol="${BTRFS_MSUB_VOL} ${MOUNT_TYPE}${PARTITION} ${MOUNTPOINT} 2>/tmp/.errlog || mount -o "subvol="${BTRFS_MSUB_VOL} ${MOUNT_TYPE}${PARTITION} ${MOUNTPOINT}${MOUNT} 2>/tmp/.errlog
+    [[ ${MOUNT} == "" ]] && mount -o "subvol="${BTRFS_MSUB_VOL} ${MOUNT_TYPE}${PARTITION} ${MOUNTPOINT} 2>/tmp/.errlog || mount -o "subvol="${BTRFS_MSUB_VOL} ${MOUNT_TYPE}${PARTITION} ${MOUNTPOINT}${MOUNT} 2>/tmp/.errlog
  fi
  
  # Check for error and confirm successful mount
@@ -326,8 +326,8 @@ btrfs_subvols() {
  
  # Loop while the termination character has not been entered
  while [[ $BTRFS_OSUB_VOL != "*" ]]; do
-	dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_btrfsSVTitle ($BTRFS_MSUB_VOL) " --inputbox "$_btrfsSVBody1 $BTRFS_OSUB_NUM $_btrfsSVBody2 $BTRFS_MSUB_VOL.$_btrfsSVBody3 $(cat ${BTRFS_VOL_LIST})" 0 0 "" 2>${ANSWER} || select_filesystem
-	BTRFS_OSUB_VOL=$(cat ${ANSWER})	
+    dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_btrfsSVTitle ($BTRFS_MSUB_VOL) " --inputbox "$_btrfsSVBody1 $BTRFS_OSUB_NUM $_btrfsSVBody2 $BTRFS_MSUB_VOL.$_btrfsSVBody3 $(cat ${BTRFS_VOL_LIST})" 0 0 "" 2>${ANSWER} || select_filesystem
+    BTRFS_OSUB_VOL=$(cat ${ANSWER}) 
 
     # Loop while subvolume is blank or has spaces.
     while [[ ${#BTRFS_OSUB_VOL} -eq 0 ]] || [[ $BTRFS_SUB_VOL =~ \ |\' ]]; do
@@ -352,17 +352,17 @@ btrfs_subvols() {
 # for neatness.
 btrfs_mount_opts() {
 
-	echo "" > ${BTRFS_OPTS}
+    echo "" > ${BTRFS_OPTS}
 
-	dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_btrfsMntTitle" --checklist "$_btrfsMntBody" 0 0 16 \
-	"1" "autodefrag" off \
-	"2" "compress=zlib" off \
-	"3" "compress=lzo" off \
-	"4" "compress=no" off \
-	"5" "compress-force=zlib" off \
-	"6" "compress-force=lzo" off \
-	"7" "discard" off \
-	"8" "noacl" off \
+    dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_btrfsMntTitle" --checklist "$_btrfsMntBody" 0 0 16 \
+    "1" "autodefrag" off \
+    "2" "compress=zlib" off \
+    "3" "compress=lzo" off \
+    "4" "compress=no" off \
+    "5" "compress-force=zlib" off \
+    "6" "compress-force=lzo" off \
+    "7" "discard" off \
+    "8" "noacl" off \
     "9" "noatime" off \
    "10" "nodatasum" off \
    "11" "nospace_cache" off \
@@ -396,8 +396,8 @@ btrfs_mount_opts() {
 
    
    if [[ $(cat ${BTRFS_OPTS}) != "" ]]; then
-	  dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_btrfsMntTitle" --yesno "$_btrfsMntConfBody $(cat $BTRFS_OPTS)\n" 0 0 
-	  [[ $? -eq 1 ]] && btrfs_mount_opts
+      dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_btrfsMntTitle" --yesno "$_btrfsMntConfBody $(cat $BTRFS_OPTS)\n" 0 0 
+      [[ $? -eq 1 ]] && btrfs_mount_opts
    fi  
 
 }
@@ -413,13 +413,13 @@ btrfs_mount_opts() {
        vgchange -ay >/dev/null 2>&1
     fi
 
-	# Ensure partitions are unmounted (i.e. where mounted previously), and then list available partitions
+    # Ensure partitions are unmounted (i.e. where mounted previously), and then list available partitions
     umount_partitions
-	find_partitions
-	
-	# Identify and mount root
-	dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_SelRootTitle" --menu "$_SelRootBody" 0 0 4 ${PARTITIONS} 2>${ANSWER} || prep_menu
-	PARTITION=$(cat ${ANSWER})
+    find_partitions
+    
+    # Identify and mount root
+    dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_SelRootTitle" --menu "$_SelRootBody" 0 0 4 ${PARTITIONS} 2>${ANSWER} || prep_menu
+    PARTITION=$(cat ${ANSWER})
     ROOT_PART=${PARTITION}
     set_mount_type
     
@@ -430,31 +430,31 @@ btrfs_mount_opts() {
     else
        LVM_ROOT=1
     fi
-    	
-	select_filesystem
-	[[ $FILESYSTEM != "skip" ]] && ${FILESYSTEM} ${MOUNT_TYPE}${PARTITION} >/dev/null 2>/tmp/.errlog
-	check_for_error
-	
-	# Make the root directory
-	mkdir -p ${MOUNTPOINT} 2>/tmp/.errlog
+        
+    select_filesystem
+    [[ $FILESYSTEM != "skip" ]] && ${FILESYSTEM} ${MOUNT_TYPE}${PARTITION} >/dev/null 2>/tmp/.errlog
+    check_for_error
+    
+    # Make the root directory
+    mkdir -p ${MOUNTPOINT} 2>/tmp/.errlog
 
     # If btrfs without subvolumes has been selected, get the mount options
     [[ $BTRFS -eq 1 ]] && btrfs_mount_opts
     
     # If btrfs has been selected without subvolumes - and at least one btrfs mount option selected - then
-	# mount with options. Otherwise, basic mount.
-	if [[ $BTRFS -eq 1 ]] && [[ $(cat ${BTRFS_OPTS}) != "" ]]; then
-	   mount -o $(cat ${BTRFS_OPTS}) ${MOUNT_TYPE}${PARTITION} ${MOUNTPOINT} 2>>/tmp/.errlog
-	else
-	   mount ${MOUNT_TYPE}${PARTITION} ${MOUNTPOINT} 2>>/tmp/.errlog
+    # mount with options. Otherwise, basic mount.
+    if [[ $BTRFS -eq 1 ]] && [[ $(cat ${BTRFS_OPTS}) != "" ]]; then
+       mount -o $(cat ${BTRFS_OPTS}) ${MOUNT_TYPE}${PARTITION} ${MOUNTPOINT} 2>>/tmp/.errlog
+    else
+       mount ${MOUNT_TYPE}${PARTITION} ${MOUNTPOINT} 2>>/tmp/.errlog
     fi
-	  
-	# Check for error, confirm mount, and deal with BTRFS with subvolumes if applicable  
-	check_for_error
+      
+    # Check for error, confirm mount, and deal with BTRFS with subvolumes if applicable  
+    check_for_error
     confirm_mount ${MOUNTPOINT}
     [[ $BTRFS -eq 2 ]] && btrfs_subvols
-	
-	# Identify and create swap, if applicable
+    
+    # Identify and create swap, if applicable
     dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_SelSwpTitle" --menu "$_SelSwpBody" 0 0 4 "$_SelSwpNone" $"-" "$_SelSwpFile" $"-" ${PARTITIONS} 2>${ANSWER} || prep_menu  
     if [[ $(cat ${ANSWER}) != "$_SelSwpNone" ]]; then    
        PARTITION=$(cat ${ANSWER})
@@ -495,8 +495,8 @@ btrfs_mount_opts() {
        
        # Inform users of the mountpoint options and consequences       
        dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_MntUefiTitle" --menu "$_MntUefiBody"  0 0 2 \
- 	   "1" $"/boot" \
-	   "2" $"/boot/efi" 2>${ANSWER}
+       "1" $"/boot" \
+       "2" $"/boot/efi" 2>${ANSWER}
        
        case $(cat ${ANSWER}) in
         "1") UEFI_MOUNT="/boot"
@@ -527,8 +527,8 @@ btrfs_mount_opts() {
                 
                 select_filesystem 
                 [[ $FILESYSTEM != "skip" ]] && ${FILESYSTEM} ${MOUNT_TYPE}${PARTITION} >/dev/null 2>/tmp/.errlog
-	            check_for_error
-	            
+                check_for_error
+                
                 # Don't give /boot as an example for UEFI systems!
                 if [[ $SYSTEM == "UEFI" ]]; then
                    dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_ExtNameTitle $PARTITON " --inputbox "$_ExtNameBodyUefi" 0 0 "/" 2>${ANSWER} || config_base_menu
@@ -557,17 +557,17 @@ btrfs_mount_opts() {
                 [[ $BTRFS -eq 1 ]] && btrfs_mount_opts
     
                 # If btrfs has been selected without subvolumes - and at least one btrfs mount option selected - then
-	            # mount with options. Otherwise, basic mount.
-	            if [[ $BTRFS -eq 1 ]] && [[ $(cat ${BTRFS_OPTS}) != "" ]]; then
-					mount -o $(cat ${BTRFS_OPTS}) ${MOUNT_TYPE}${PARTITION} ${MOUNTPOINT}${MOUNT} 2>>/tmp/.errlog
-				else
-					mount ${MOUNT_TYPE}${PARTITION} ${MOUNTPOINT}${MOUNT} 2>>/tmp/.errlog
-				fi
-	  
-				# Check for error, confirm mount, and deal with BTRFS with subvolumes if applicable  
-				check_for_error
-				confirm_mount ${MOUNTPOINT}${MOUNT}
-				[[ $BTRFS -eq 2 ]] && btrfs_subvols
+                # mount with options. Otherwise, basic mount.
+                if [[ $BTRFS -eq 1 ]] && [[ $(cat ${BTRFS_OPTS}) != "" ]]; then
+                    mount -o $(cat ${BTRFS_OPTS}) ${MOUNT_TYPE}${PARTITION} ${MOUNTPOINT}${MOUNT} 2>>/tmp/.errlog
+                else
+                    mount ${MOUNT_TYPE}${PARTITION} ${MOUNTPOINT}${MOUNT} 2>>/tmp/.errlog
+                fi
+      
+                # Check for error, confirm mount, and deal with BTRFS with subvolumes if applicable  
+                check_for_error
+                confirm_mount ${MOUNTPOINT}${MOUNT}
+                [[ $BTRFS -eq 2 ]] && btrfs_subvols
                 
                 # Determine if a seperate /boot is used, and if it is LVM or not
                 LVM_SEP_BOOT=0

@@ -1,7 +1,7 @@
 ﻿######################################################################
-##																	##
-##             Logical Volume Management Functions			    	##
-##																	##
+##                                                                  ##
+##             Logical Volume Management Functions                  ##
+##                                                                  ##
 ######################################################################
 
 
@@ -62,7 +62,7 @@ find_lvm_partitions() {
     LVM_PARTITIONS=""
     NUMBER_LVM_PARTITIONS=0
     lvm_partition_list=$(lvmdiskscan | grep -v 'LVM physical volume' | grep 'sd[a-z][1-99]' | sed 's/\/dev\///' | awk '{print $1}')
-	
+    
     for i in ${lvm_partition_list[@]}; do
         LVM_PARTITIONS="${LVM_PARTITIONS} ${i} -"
         NUMBER_LVM_PARTITIONS=$(( NUMBER_LVM_PARTITIONS + 1 ))
@@ -118,7 +118,7 @@ check_lv_size() {
       
 }
 
-	# Check that there is at least one partition available for LVM
+    # Check that there is at least one partition available for LVM
     if [[ $NUMBER_LVM_PARTITIONS -lt 1 ]]; then
         dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_LvmPartErrTitle" --msgbox "$_LvmPartErrBody" 0 0
         prep_menu
