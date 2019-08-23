@@ -110,6 +110,7 @@ set_keymap() {
   }
 
 # Set keymap for X11
+<<<<<<< HEAD
  set_xkbmap() {     
     if [[ $_is_xkb -eq 0 ]]; then
         # keymaps_xkb=("af_Afghani al_Albanian am_Armenian ara_Arabic at_German-Austria az_Azerbaijani ba_Bosnian bd_Bangla be_Belgian bg_Bulgarian br_Portuguese-Brazil bt_Dzongkha bw_Tswana by_Belarusian ca_French-Canada cd_French-DR-Congo ch_German-Switzerland cm_English-Cameroon cn_Chinese cz_Czech de_German dk_Danishee_Estonian epo_Esperanto es_Spanish et_Amharic fo_Faroese fi_Finnish fr_French gb_English-UK ge_Georgian gh_English-Ghana gn_French-Guinea gr_Greek hr_Croatian hu_Hungarian ie_Irish il_Hebrew iq_Iraqi ir_Persian is_Icelandic it_Italian jp_Japanese ke_Swahili-Kenya kg_Kyrgyz kh_Khmer-Cambodia kr_Korean kz_Kazakh la_Lao latam_Spanish-Lat-American lk_Sinhala-phonetic lt_Lithuanian lv_Latvian ma_Arabic-Morocco mao_Maori md_Moldavian me_Montenegrin mk_Macedonian ml_Bambara mm_Burmese mn_Mongolian mt_Maltese mv_Dhivehi ng_English-Nigeria nl_Dutch no_Norwegian np_Nepali ph_Filipino pk_Urdu-Pakistan pl_Polish pt_Portuguese ro_Romanian rs_Serbian ru_Russian se_Swedish si_Slovenian sk_Slovak sn_Wolof sy_Arabic-Syria th_Thai tj_Tajik tm_Turkmen tr_Turkish tw_Taiwanese tz_Swahili-Tanzania ua_Ukrainian us_English-US uz_Uzbek vn_Vietnamese za_English-S-Africa")
@@ -249,6 +250,141 @@ set_keymap() {
     "5" "$_Back" 2>${ANSWER}
     
     HIGHLIGHT_SUB=$(cat ${ANSWER})
+=======
+ set_xkbmap() { 	
+	if [[ $_is_xkb -eq 0 ]]; then
+		keymaps_xkb=("af_Afghani al_Albanian am_Armenian ara_Arabic at_German-Austria az_Azerbaijani ba_Bosnian bd_Bangla be_Belgian bg_Bulgarian br_Portuguese-Brazil bt_Dzongkha bw_Tswana by_Belarusian ca_French-Canada cd_French-DR-Congo ch_German-Switzerland cm_English-Cameroon cn_Chinese cz_Czech de_German dk_Danishee_Estonian epo_Esperanto es_Spanish et_Amharic fo_Faroese fi_Finnish fr_French gb_English-UK ge_Georgian gh_English-Ghana gn_French-Guinea gr_Greek hr_Croatian hu_Hungarian ie_Irish il_Hebrew iq_Iraqi ir_Persian is_Icelandic it_Italian jp_Japanese ke_Swahili-Kenya kg_Kyrgyz kh_Khmer-Cambodia kr_Korean kz_Kazakh la_Lao latam_Spanish-Lat-American lk_Sinhala-phonetic lt_Lithuanian lv_Latvian ma_Arabic-Morocco mao_Maori md_Moldavian me_Montenegrin mk_Macedonian ml_Bambara mm_Burmese mn_Mongolian mt_Maltese mv_Dhivehi ng_English-Nigeria nl_Dutch no_Norwegian np_Nepali ph_Filipino pk_Urdu-Pakistan pl_Polish pt_Portuguese ro_Romanian rs_Serbian ru_Russian se_Swedish si_Slovenian sk_Slovak sn_Wolof sy_Arabic-Syria th_Thai tj_Tajik tm_Turkmen tr_Turkish tw_Taiwanese tz_Swahili-Tanzania ua_Ukrainian us_English-US uz_Uzbek vn_Vietnamese za_English-S-Africa")
+		
+		_switch_xkb=("grp:toggle" "grp:ctrl_shift_toggle" "grp:alt_shift_toggle" "grp:ctrl_alt_toggle" "grp:lwin_toggle" "grp:rwin_toggle" "grp:lctrl_toggle" "grp:rctrl_toggle")
+		
+		_indicate_xkd=("grp_led:caps" "grp_led:num" "grp_led:scroll")
+		
+		for i in $(cat $filesdir/modules/xkb-models.conf); do
+			_xkb_mdl="${_xkb_mdl} ${i} -"
+		done
+				
+		for i in ${keymaps_xkb[*]}; do
+			_xkb_list="${_xkb_list} ${i} -"
+		done	
+		
+		
+		for i in $(cat $filesdir/modules/xkb-variant.conf); do
+			_xkb_var="${_xkb_var} ${i} -"
+		done
+		
+		_is_xkb=1
+	fi
+	
+	xkbmodel()
+	{
+		dialog --default-item 1 --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_xkb_mdl_title" --menu "$_xkb_mdl_body" 0 0 11 ${_xkb_mdl} 2>${ANSWER} || set_xkbmap
+		xkb_model=$(cat ${ANSWER})
+	}
+	xkblayout()
+	{
+		_xkb_w=""
+		_xkb_u=""
+		#dialog --default-item 1 --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_xkb_list_title" --menu "$_xkb_list1_body" 0 0 11 ${_xkb_list} 2>${ANSWER} || set_xkbmap
+		#_xkb_w=$(cat ${ANSWER} |sed 's/_.*//')
+		_xkb_w="${KEYMAP[*]}"
+		dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_yesno_user_layout_title" --yesno "$_yesno_user_layout_body" 0 0
+		if [[ $? -eq 0 ]]; then
+			dialog --default-item 1 --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_xkb_list_title" --menu "$_xkb_list2_body" 0 0 11 ${_xkb_list} 2>${ANSWER} || set_xkbmap
+			_xkb_u=$(cat ${ANSWER} |sed 's/_.*//')
+			[[ $_xkb_w == $_xkb_u ]] && xkb_layout="$_xkb_w" || xkb_layout="$_xkb_u, $_xkb_w"
+		else
+			xkb_layout="$_xkb_w"
+		fi
+	}
+	xkbvariant()
+	{
+		dialog --default-item 1 --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_xkb_var_title" --menu "$_xkb_var_body" 0 0 11 ${_xkb_var} 2>${ANSWER} || set_xkbmap
+		xkb_variant=$(cat ${ANSWER})
+	}
+	xkboptions()
+	{
+		_sw=""
+		_ind=""
+		dialog --default-item 2 --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_xkb_switch_title" --menu "$_xkb_switch_body" 0 0 8 \
+			"1" $"Right Alt" \
+			"2" $"Control+Shift" \
+			"3" $"Alt+Shift" \
+			"4" $"Control+Alt" \
+			"5" $"Left Win" \
+			"6" $"Right Win" \
+			"7" $"Left Control" \
+			"8" $"Right Control" 2>${ANSWER}
+		var=$(cat ${ANSWER})
+		var=$(($var-1))
+		_sw=${_switch_xkb[$var]}
+		dialog --default-item 2 --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_xkb_indicate_title" --checklist "$_xkb_indicate_body" 0 0 3 \
+			"1" "$_indicate_caps_lock" "off" \
+			"2" "$_indicate_num_lock" "on" \
+			"3" "$_indicate_scroll_lock" "off" 2>${ANSWER}
+		# ${_indicate_xkd[0]}
+		#_ind=$(cat ${ANSWER})
+		# [[ $_ind == "" ]] && xkb_options="$_sw" || xkb_options="$_sw,$_ind"
+		if [[ $(cat ${ANSWER}) == "" ]]; then
+			xkb_options="$_sw"
+		else
+			counter=0
+			for i in $(cat ${ANSWER}); do
+				if [[ $counter -eq 0 ]]; then
+					counter=1
+					_tmp=$(($i-1))
+					_ind=${_indicate_xkd[_tmp]}
+				else
+					_tmp=$(($i-1))
+					_ind="${_ind},${_indicate_xkd[_tmp]}"
+				fi
+			done
+			xkb_options="$_sw,$_ind"
+		fi
+	}
+	fine_keyboard_conf()
+	{
+		[[ $xkb_layout == "" ]] && _skip=1
+		[[ $xkb_model == "" ]] && _skip=1
+		[[ $xkb_variant == "" ]] && _skip=1
+		[[ $xkb_layout == "" ]] && xkb_layout="${KEYMAP[*]}"
+		[[ $xkb_model == "" ]] && xkb_model="pc105"
+		[[ $xkb_variant == "" ]] && xkb_variant="qwerty"
+		if [[ $_skip == "1" ]]; then
+			_xkb_info_body="\n$_inf2\n\n$_inf_l $xkb_layout\n$_inf_m $xkb_model\n$_inf_v $xkb_variant\n$_inf_o $xkb_options\n\n\n"
+			dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_xkb_info_title" --msgbox "$_xkb_info_body" 0 0
+			_skip=0
+		fi
+		echo "# /etc/X11/xorg.conf.d/00-keyboard.conf " > /tmp/00-keyboard.conf
+		echo "# Read and parsed by systemd-localed. It's probably wise not to edit this file" >> /tmp/00-keyboard.conf
+		echo -e -n "# manually too freely.\n" >> /tmp/00-keyboard.conf
+		echo -e -n "Section \"InputClass\"\n" >> /tmp/00-keyboard.conf
+		echo -e -n "\tIdentifier \"system-keyboard\"\n" >> /tmp/00-keyboard.conf
+		echo -e -n "\tMatchIsKeyboard \"on\"\n" >> /tmp/00-keyboard.conf
+		echo -e -n "\tOption \"XkbLayout\" \"$xkb_layout\"\n" >> /tmp/00-keyboard.conf
+		echo -e -n "\tOption \"XkbModel\" \"$xkb_model\"\n" >> /tmp/00-keyboard.conf
+		echo -e -n "\tOption \"XkbVariant\" \"$xkb_variant\"\n" >> /tmp/00-keyboard.conf
+		echo -e -n "\tOption \"XKbOptions\" \"$xkb_options\"\n" >> /tmp/00-keyboard.conf
+		echo -e -n "EndSection\n" >> /tmp/00-keyboard.conf
+	}
+	
+	if [[ $SUB_MENU != "set_xkbmap" ]]; then
+	   SUB_MENU="set_xkbmap"
+	   HIGHLIGHT_SUB=1
+	else
+	   if [[ $HIGHLIGHT_SUB != 5 ]]; then
+	      HIGHLIGHT_SUB=$(( HIGHLIGHT_SUB + 1 ))
+	   fi
+	fi
+	
+	dialog --default-item ${HIGHLIGHT_SUB} --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_xkb_menu_title" --menu "$_xkb_menu_body" 0 0 5 \
+ 	"1" "* $_xkb_layout_menu" \
+	"2" "$_xkb_model_menu" \
+	"3" "$_xkb_variant_menu" \
+	"4" "$_xkb_options_menu" \
+	"5" "$_Back" 2>${ANSWER}
+	
+	HIGHLIGHT_SUB=$(cat ${ANSWER})
+>>>>>>> 35d857815a22daa94e40b336279117033d6ce713
     case $(cat ${ANSWER}) in
     "1") xkblayout
          ;;
