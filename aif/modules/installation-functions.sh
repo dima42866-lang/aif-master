@@ -122,6 +122,15 @@ install_archivers()
     clear
     [[ ${_ch_archivers[*]} != "" ]] && pacstrap ${MOUNTPOINT} ${_ch_archivers[*]} 2>/tmp/.errlog
 }
+win_fonts_setup()
+{
+    dialog --defaultno --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_yn_win_fnts_ttl" --yesno "$_yn_win_fnts_bd" 0 0
+    if [[ $? -eq 0 ]]; then
+       tar -C "${MOUNTPOINT}/usr/share/fonts" -xvzf $_win_fonts_pkg
+		arch-chroot $MOUNTPOINT /bin/bash -c "fc-cache" 2>/tmp/.errlog
+		check_for_error
+    fi
+}
 install_ttftheme()
 {
     if [[ $_ttf_once == "0" ]]; then
@@ -142,6 +151,8 @@ install_ttftheme()
     _ch_ttf=$(cat ${ANSWER})
     clear
     [[ ${_ch_ttf[*]} != "" ]] && pacstrap ${MOUNTPOINT} ${_ch_ttf[*]} 2>/tmp/.errlog
+	check_for_error
+	win_fonts_setup
 }
 install_standartpkg()
 {

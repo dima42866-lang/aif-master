@@ -596,6 +596,19 @@ _info_tmpfs_body="\n$_info_tmpfs_bd1\n$_info_tmpfs_bd2\n$_info_tmpfs_bd3\n$_info
 _input_size_tmpfs_title="Ввод объема папки tmp"
 _input_size_tmpfs_body="\nПожалуйста введите желаемый объем. Например: 1G\n"
 
+# Shell and Windows Fonts
+_yn_win_fnts_ttl="Установка шрифтов Windows"
+_yn_win_fnts_bd="\nУстановить шрифты Windows?\n"
+_shell_friendly_menu="Выбор и установка SHELL"
+_select_shell_menu_ttl="Выбор SHELL для установки"
+_select_shell_menu_bd="\nПожалуйста, выберите SHELL для пользователя"
+_yesno_scrfetch_ttl="Установка screenfetch приветствия"
+_yesno_scrfetch_bd="\nУстановить приветствие screenfetch?\n"
+_scrn_strp_ttl="Настройка screenfetch приветствия"
+_scrn_strp_bd="\nДобавить screenfetch приветствие в автозагрузку?\n"
+_menu_ch_usr_ttl="Выбор пользователей"
+_menu_ch_usr_bd="\nПожалуйста выберите пользователей, для которых необходимо изменить SHELL\n"
+
 # General Menu Package
 _InstGeMenuGE="Установка общих пакетов и программ"
 _menu_gen_title="Установка общих пакетов и программ"

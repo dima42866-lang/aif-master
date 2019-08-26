@@ -567,6 +567,19 @@ _info_tmpfs_body="\n$_info_tmpfs_bd1\n$_info_tmpfs_bd2\n$_info_tmpfs_bd3\n$_info
 _input_size_tmpfs_title="Enter the tmp folder size"
 _input_size_tmpfs_body="\nPlease enter the desired volume. For example: 1G\n"
 
+# Shell and Windows Fonts
+_yn_win_fnts_ttl="Installing Windows fonts"
+_yn_win_fnts_bd="\nInstall Windows fonts?\n"
+_shell_friendly_menu="SHELL selection and installation"
+_select_shell_menu_ttl="Selecting the SHELL to install"
+_select_shell_menu_bd="\nPlease select SHELL for user"
+_yesno_scrfetch_ttl="Install screenfetch welcome"
+_yesno_scrfetch_bd="\nTo set the greeting screenfetch?\n"
+_scrn_strp_ttl="Setting screenfetch welcome"
+_scrn_strp_bd="\nAdd screenfetch greeting in startup?\n"
+_menu_ch_usr_ttl="User selection"
+_menu_ch_usr_bd="\nPlease select the users for whom you want to change the SHELL\n"
+
 # General Menu Package
 _InstGeMenuGE="Install common packages and programs"
 _menu_gen_title="Install common packages and programs"

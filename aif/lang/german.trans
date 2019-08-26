@@ -569,6 +569,19 @@ _info_tmpfs_body="\n$_info_tmpfs_bd1\n$_info_tmpfs_bd2\n$_info_tmpfs_bd3\n$_info
 _input_size_tmpfs_title="Geben Sie die Lautstärke des tmp-Ordners ein"
 _input_size_tmpfs_body="\nBitte geben Sie das gewünschte Volumen ein. Zum Beispiel: 1G\n"
 
+# Shell and Windows Fonts
+_yn_win_fnts_ttl="Installieren von Windows-Schriftarten"
+_yn_win_fnts_bd="\nWindows-Schriftarten installieren?\n"
+_shell_friendly_menu="SHELL auswählen und installieren"
+_select_shell_menu_ttl="SHELL für die Installation auswählen"
+_select_shell_menu_bd="\nBitte wählen Sie SHELL für Benutzer"
+_yesno_scrfetch_ttl="Installation screenfetch Grüße"
+_yesno_scrfetch_bd="\nGruss screenfetch installieren?\n"
+_scrn_strp_ttl="Konfigurieren screenfetch Grüße"
+_scrn_strp_bd="\nHinzufügen screenfetch Gruß zum Autostart?\n"
+_menu_ch_usr_ttl="Benutzer auswählen"
+_menu_ch_usr_bd="\nBitte wählen Sie die Benutzer aus, für die Sie die SHELL ändern MÖCHTEN\n"
+
 # General Menu Package
 _InstGeMenuGE="Allgemeine Pakete und Programme installieren"
 _menu_gen_title="Allgemeine Pakete und Programme installieren"

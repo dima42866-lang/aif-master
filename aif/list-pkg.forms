@@ -91,6 +91,13 @@ _sddm_pkg=(sddm sddm-kcm)
 _gdm_pkg=(gdm)
 _slim_pkg=(slim)
 
+# List of packages SHELL
+_screen_startup=(screenfetch)
+_shells_sh=(bash zsh fish)
+_bash_sh=(bash bash-completion)
+_zsh_sh=(zsh zsh-completions)
+_fish_sh=(fish)
+
 # User Package
 _archivers_pkg=(ark xarchiver unzip zip unrar p7zip)
 _ttf_theme_pkg=(gnome-icon-theme ttf-liberation ttf-dejavu opendesktop-fonts ttf-bitstream-vera ttf-arphic-ukai ttf-arphic-uming ttf-hanazono terminus-font breeze breeze-grub breeze-icons)
@@ -109,5 +116,5 @@ _timeshift="$filedir/packages/timeshift-19.01-2-x86_64.pkg.tar.xz"
 _github_desktop="$filedir/packages/github-desktop-2.1.0-2-x86_64.pkg.tar.xz"
 _pikaur="$filedir/packages/pikaur-1.4.3-1-any.pkg.tar.xz"
 _yay="$filedir/packages/yay-9.2.1-1-x86_64.pkg.tar.xz"
-
+_win_fonts_pkg="$filedir/packages/windowsfonts.tar.gz"
 

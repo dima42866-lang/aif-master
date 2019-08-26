@@ -566,6 +566,19 @@ _info_tmpfs_body="\n$_info_tmpfs_bd1\n$_info_tmpfs_bd2\n$_info_tmpfs_bd3\n$_info
 _input_size_tmpfs_title="Voer de grootte van de tmp-map in"
 _input_size_tmpfs_body="\nVoer het gewenste volume in. Bijvoorbeeld: 1G\n"
 
+# Shell and Windows Fonts
+_yn_win_fnts_ttl="Windows-lettertypen installeren"
+_yn_win_fnts_bd="\nWindows lettertypen installeren?\n"
+_shell_friendly_menu="SHELL selectie en installatie"
+_select_shell_menu_ttl="Selecteren van de SHELL om te installeren"
+_select_shell_menu_bd="\nSelecteer SHELL voor gebruiker"
+_yesno_scrfetch_ttl="Screenfetch welkom installeren"
+_yesno_scrfetch_bd="\nOm de begroeting screenfetch in te stellen?\n"
+_scrn_strp_ttl="Screenfetch-welkom instellen"
+_scrn_strp_bd="\nScreenfetch-begroeting toevoegen bij opstarten?\n"
+_menu_ch_usr_ttl="Gebruikerskeuze"
+_menu_ch_usr_bd="\nSelecteer de gebruikers voor wie u de SHELL wilt wijzigen\n"
+
 # General Menu Package
 _InstGeMenuGE="Gemeenschappelijke pakketten en programma ' s installeren"
 _menu_gen_title="Gemeenschappelijke pakketten en programma ' s installeren"

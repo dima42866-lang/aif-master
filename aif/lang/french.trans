@@ -561,6 +561,19 @@ _info_tmpfs_body="\n$_info_tmpfs_bd1\n$_info_tmpfs_bd2\n$_info_tmpfs_bd3\n$_info
 _input_size_tmpfs_title="Entrée du volume du dossier tmp"
 _input_size_tmpfs_body="\nVeuillez entrer le volume désiré. Par exemple: 1G\n"
 
+# Shell and Windows Fonts
+_yn_win_fnts_ttl="Installation des polices Windows"
+_yn_win_fnts_bd="\nInstaller les polices Windows?\n"
+_shell_friendly_menu="Sélection et installation de SHELL"
+_select_shell_menu_ttl="Choisir un SHELL à installer"
+_select_shell_menu_bd="\nS'il vous plaît choisir SHELL pour l'utilisateur"
+_yesno_scrfetch_ttl="Installation screenfetch d'accueil"
+_yesno_scrfetch_bd="\nInstaller screenfetch salutation?\n"
+_scrn_strp_ttl="Configuration screenfetch d'accueil"
+_scrn_strp_bd="\nAjouter un message d'accueil screenfetch au démarrage?\n"
+_menu_ch_usr_ttl="Sélection des utilisateurs"
+_menu_ch_usr_bd="\nVeuillez sélectionner les utilisateurs pour lesquels vous souhaitez modifier SHELL\n"
+
 # General Menu Package
 _InstGeMenuGE="Installation de packages et de programmes partagés"
 _menu_gen_title="Installation de packages et de programmes partagés"

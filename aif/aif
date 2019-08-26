@@ -25,7 +25,7 @@ filesdir=`dirname "$ABSOLUT_FILENAME"`
 VERSION="MAXIMALISIMUS Installation Framework 2.3"
 
 source $filesdir/modules/installer-variables.sh                 # list of variables
-source $filesdir/list-pkg.forms                                 # list of packages for uses the script
+source $filesdir/list-pkg.forms                               	# list of packages for uses the script
 source $filesdir/modules/core-functions.sh                      # language, checks
 source $filesdir/modules/configuration-functions.sh             # Keyboard, locale, time zone, FSTAB, mkinitcpio, user controls
 source $filesdir/modules/system-partitioning.sh                 # managing partitions, installing the boot
@@ -34,6 +34,7 @@ source $filesdir/modules/logical-volume.sh                      # LVM control
 source $filesdir/modules/installation-functions.sh              # system installation functions
 source $filesdir/modules/swappiness-config.sh                   # SWAPPINESS
 source $filesdir/modules/devices-config.sh                      # tune2fs
+source $filesdir/modules/shell_installer.sh                     # SHELL installer functions
 source $filesdir/modules/main-interfaces.sh                     # main menu interface
 
 ######################################################################

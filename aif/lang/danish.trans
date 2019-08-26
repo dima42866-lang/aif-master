@@ -577,6 +577,19 @@ _info_tmpfs_body="\n$_info_tmpfs_bd1\n$_info_tmpfs_bd2\n$_info_tmpfs_bd3\n$_info
 _input_size_tmpfs_title="Indtast tmp-mappens størrelse"
 _input_size_tmpfs_body="\nIndtast den ønskede mængde. F. eks.: 1G\n"
 
+# Shell and Windows Fonts
+_yn_win_fnts_ttl="Installerer Vinduesskrifttyper"
+_yn_win_fnts_bd="\nInstallere vinduesskrifttyper?\n"
+_shell_friendly_menu="SKALMARKERING og installation"
+_select_shell_menu_ttl="Valg af skallen der skal installeres"
+_select_shell_menu_bd="\nVælg venligst Skal for bruger"
+_yesno_scrfetch_ttl="Install screenfetch velkomst"
+_yesno_scrfetch_bd="\nFor at sætte velkomstskærmen?\n"
+_scrn_strp_ttl="Opsætning af skærmterminal velkomst"
+_scrn_strp_bd="\nTilføj filmmanuskription ved opstart?\n"
+_menu_ch_usr_ttl="Brugervalg"
+_menu_ch_usr_bd="\nVælg de brugere for hvem du ønsker at ændre skallen\n"
+
 # General Menu Package
 _InstGeMenuGE="Install fælles pakker og programmer"
 _menu_gen_title="Install fælles pakker og programmer"

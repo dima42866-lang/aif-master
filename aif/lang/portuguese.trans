@@ -571,6 +571,19 @@ _info_tmpfs_body="\n$_info_tmpfs_bd1\n$_info_tmpfs_bd2\n$_info_tmpfs_bd3\n$_info
 _input_size_tmpfs_title="Volume de entrada de pasta tmp"
 _input_size_tmpfs_body="\nPor favor, digite a quantidade desejada. Por exemplo: 1G\n"
 
+# Shell and Windows Fonts
+_yn_win_fnts_ttl="Instalar fontes no Windows"
+_yn_win_fnts_bd="\nPara instalar fontes no Windows?\n"
+_shell_friendly_menu="A escolha e a SHELL"
+_select_shell_menu_ttl="A escolha do SHELL para instalar"
+_select_shell_menu_bd="\nPor favor, escolha um SHELL para o usuário"
+_yesno_scrfetch_ttl="A instalação screenfetch de boas-vindas"
+_yesno_scrfetch_bd="\nDefinir a saudação screenfetch?\n"
+_scrn_strp_ttl="Configurar screenfetch de boas-vindas"
+_scrn_strp_bd="\nAdicionar screenfetch saudação a inicialização?\n"
+_menu_ch_usr_ttl="Escolha usuário"
+_menu_ch_usr_bd="\nPor favor, selecione o usuário para o qual deseja alterar o SHELL\n"
+
 # General Menu Package
 _InstGeMenuGE="A instalação dos pacotes compartilhados e programas"
 _menu_gen_title="A instalação dos pacotes compartilhados e programas"

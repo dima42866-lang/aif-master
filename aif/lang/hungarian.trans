@@ -588,6 +588,19 @@ _info_tmpfs_body="\n$_info_tmpfs_bd1\n$_info_tmpfs_bd2\n$_info_tmpfs_bd3\n$_info
 _input_size_tmpfs_title="Adja meg a tmp mappa méretét"
 _input_size_tmpfs_body="\nAdja meg a kívánt hangerőt. Például: 1G\n"
 
+# Shell and Windows Fonts
+_yn_win_fnts_ttl="Windows betűtípusok telepítése"
+_yn_win_fnts_bd="\nWindows betűtípusok telepítése?\n"
+_shell_friendly_menu="SHELL kiválasztása és telepítése"
+_select_shell_menu_ttl="A telepítendő parancsértelmező kiválasztása"
+_select_shell_menu_bd="\nKérjük, válassza ki a SHELL a felhasználó számára"
+_yesno_scrfetch_ttl="Telepítse screenfetch Üdvözöljük"
+_yesno_scrfetch_bd="\nHogy beállítsa az üdvözlő screenfetch?\n"
+_scrn_strp_ttl="Screenfetch beállítása Üdvözöljük"
+_scrn_strp_bd="\nScreenfetch üdvözlés hozzáadása indításkor?\n"
+_menu_ch_usr_ttl="Felhasználói kiválasztás"
+_menu_ch_usr_bd="\nKérjük, válassza ki a felhasználókat, akiknek módosítani szeretné a SHELL\n"
+
 # General Menu Package
 _InstGeMenuGE="Általános csomagok és Programok telepítése"
 _menu_gen_title="Általános csomagok és Programok telepítése"

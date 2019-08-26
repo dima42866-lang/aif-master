@@ -578,6 +578,19 @@ _info_tmpfs_body="\n$_info_tmpfs_bd1\n$_info_tmpfs_bd2\n$_info_tmpfs_bd3\n$_info
 _input_size_tmpfs_title="Τάση του όγκου φάκελο tmp"
 _input_size_tmpfs_body="\nΠαρακαλώ εισάγετε το επιθυμητό ποσό. Για παράδειγμα: 1G\n"
 
+# Shell and Windows Fonts
+_yn_win_fnts_ttl="Εγκατάσταση γραμματοσειρών των Windows"
+_yn_win_fnts_bd="\nΝα εγκαταστήσετε τις γραμματοσειρές των Windows;\n"
+_shell_friendly_menu="Επιλογή και εγκατάσταση SHELL"
+_select_shell_menu_ttl="Επιλογή SHELL για την εγκατάσταση"
+_select_shell_menu_bd="\nΠαρακαλώ επιλέξτε ένα ΚΈΛΥΦΟΣ για το χρήστη"
+_yesno_scrfetch_ttl="Εγκατάσταση screenfetch υποδοχής"
+_yesno_scrfetch_bd="\nΟρισμός χαιρετισμός screenfetch;\n"
+_scrn_strp_ttl="Ρύθμιση screenfetch υποδοχής"
+_scrn_strp_bd="\nΠροσθέστε το screenfetch χαιρετισμό κατά την εκκίνηση;\n"
+_menu_ch_usr_ttl="Επιλογή χρηστών"
+_menu_ch_usr_bd="\nΠαρακαλώ επιλέξτε τους χρήστες, για τους οποίους πρέπει να αλλάξετε SHELL\n"
+
 # General Menu Package
 _InstGeMenuGE="Εγκατάσταση κοινά πακέτα και προγράμματα"
 _menu_gen_title="Εγκατάσταση κοινά πακέτα και προγράμματα"

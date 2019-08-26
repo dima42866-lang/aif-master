@@ -156,22 +156,25 @@ config_user_menu() {
        SUB_MENU="config_user_menu"
        HIGHLIGHT_SUB=1
     else
-       if [[ $HIGHLIGHT_SUB != 3 ]]; then
+       if [[ $HIGHLIGHT_SUB != 4 ]]; then
           HIGHLIGHT_SUB=$(( HIGHLIGHT_SUB + 1 ))
        fi
     fi
 
-    dialog --default-item ${HIGHLIGHT_SUB} --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_ConfUsrTitle" --menu "$_ConfUsrBody" 0 0 3 \
+    dialog --default-item ${HIGHLIGHT_SUB} --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_ConfUsrTitle" --menu "$_ConfUsrBody" 0 0 4 \
     "1" "$_ConfUsrRoot" \
     "2" "$_ConfUsrNew" \
-    "3" "$_Back" 2>${ANSWER}
+    "3" "$_shell_friendly_menu" \
+    "4" "$_Back" 2>${ANSWER}
     
     HIGHLIGHT_SUB=$(cat ${ANSWER})
     case $(cat ${ANSWER}) in
     "1") set_root_password 
          ;;
     "2") create_new_user
-         ;;     
+         ;;
+    "3") shell_friendly_setup
+        ;;
       *) main_menu_online
          ;;
     esac

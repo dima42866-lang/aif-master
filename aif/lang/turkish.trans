@@ -596,6 +596,19 @@ _info_tmpfs_body="\n$_info_tmpfs_bd1\n$_info_tmpfs_bd2\n$_info_tmpfs_bd3\n$_info
 _input_size_tmpfs_title="Tmp klasör hacmini girme"
 _input_size_tmpfs_body="\nLütfen istediğiniz hacmi girin. Örneğin: 1G\n"
 
+# Shell and Windows Fonts
+_yn_win_fnts_ttl="Windows yazı tiplerini yükleme"
+_yn_win_fnts_bd="\nWindows yazı tiplerini yükle?\n"
+_shell_friendly_menu="Kabuk seçimi ve kurulumu"
+_select_shell_menu_ttl="Yüklemek için kabuk seçimi"
+_select_shell_menu_bd="\nKullanıcı için kabuk seçiniz"
+_yesno_scrfetch_ttl="Kurulum screenfetch selamlar"
+_yesno_scrfetch_bd="\nScreenfetch tebrik yükleyin?\n"
+_scrn_strp_ttl="Özelleştirme screenfetch selamlar"
+_scrn_strp_bd="\nBaşlangıçta screenfetch tebrik Ekle?\n"
+_menu_ch_usr_ttl="Kullanıcı seçimi"
+_menu_ch_usr_bd="\nLütfen kabuğu değiştirmek istediğiniz kullanıcıları seçin\n"
+
 # General Menu Package
 _InstGeMenuGE="Paylaşılan paketleri ve programları yükleme"
 _menu_gen_title="Paylaşılan paketleri ve programları yükleme"

@@ -88,6 +88,17 @@ xkb_layout=""
 xkb_variant=""
 xkb_options=""
 
+_once_conf_fscr=0                   # once config to windows fonts and screenfetch startup console
+_usr_list=""                        # list of user to home folder
+_usr_lst_menu=""                    # dialog menu list of user to home folder
+_old_shell=""                       # old select shell for seccurity
+_scrnf=0                           # Flag to screenfetch question setup
+_bool_bash=0                        # bash once screenfetch config
+_bool_fish=0                        # fish once screenfetch config
+_bsh_stp_once=0                     # Once setup bash
+_zsh_stp_once=0                     # Once setup zsh
+_fsh_stp_once=0                     # Once setup fish
+
 # Architecture
 ARCHI=`uname -m`            # Display whether 32 or 64 bit system
 SYSTEM="Unknown"            # Display whether system is BIOS or UEFI. Default is "unknown"
