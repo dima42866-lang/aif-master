@@ -117,4 +117,4 @@ _github_desktop="$filedir/packages/github-desktop-2.1.0-2-x86_64.pkg.tar.xz"
 _pikaur="$filedir/packages/pikaur-1.4.3-1-any.pkg.tar.xz"
 _yay="$filedir/packages/yay-9.2.1-1-x86_64.pkg.tar.xz"
 _win_fonts_pkg="$filedir/packages/windowsfonts.tar.gz"
-
+_gksu="$filedir/packages/gksu-2.0.2-6-x86_64.pkg.tar.xz"

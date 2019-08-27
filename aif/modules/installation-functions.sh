@@ -230,9 +230,12 @@ install_pm_menu()
         cp ${_pikaur} /var/lib/pacman/local/
         cp ${_yay} ${MOUNTPOINT}/var/lib/pacman/local/
         cp ${_yay} /var/lib/pacman/local/
+		 cp ${_gksu} ${MOUNTPOINT}/var/lib/pacman/local/
+	    cp ${_gksu} /var/lib/pacman/local/
         pacman --root ${MOUNTPOINT} --dbpath ${MOUNTPOINT}/var/lib/pacman -U /var/lib/pacman/local/package-query-1.9-3-x86_64.pkg.tar.xz --noconfirm
         pacman --root ${MOUNTPOINT} --dbpath ${MOUNTPOINT}/var/lib/pacman -U /var/lib/pacman/local/pikaur-1.4.3-1-any.pkg.tar.xz --noconfirm
         pacman --root ${MOUNTPOINT} --dbpath ${MOUNTPOINT}/var/lib/pacman -U /var/lib/pacman/local/yay-9.2.1-1-x86_64.pkg.tar.xz --noconfirm
+		 pacman --root ${MOUNTPOINT} --dbpath ${MOUNTPOINT}/var/lib/pacman -U /var/lib/pacman/local/gksu-2.0.2-6-x86_64.pkg.tar.xz --noconfirm
     }
     install_timeshift()
     {
