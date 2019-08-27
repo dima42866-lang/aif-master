@@ -127,8 +127,8 @@ win_fonts_setup()
     dialog --defaultno --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_yn_win_fnts_ttl" --yesno "$_yn_win_fnts_bd" 0 0
     if [[ $? -eq 0 ]]; then
        tar -C "${MOUNTPOINT}/usr/share/fonts" -xvzf $_win_fonts_pkg
-		arch-chroot $MOUNTPOINT /bin/bash -c "fc-cache" 2>/tmp/.errlog
-		check_for_error
+        arch-chroot $MOUNTPOINT /bin/bash -c "fc-cache" 2>/tmp/.errlog
+        check_for_error
     fi
 }
 install_ttftheme()
@@ -151,8 +151,8 @@ install_ttftheme()
     _ch_ttf=$(cat ${ANSWER})
     clear
     [[ ${_ch_ttf[*]} != "" ]] && pacstrap ${MOUNTPOINT} ${_ch_ttf[*]} 2>/tmp/.errlog
-	check_for_error
-	win_fonts_setup
+    check_for_error
+    win_fonts_setup
 }
 install_standartpkg()
 {
@@ -230,12 +230,12 @@ install_pm_menu()
         cp ${_pikaur} /var/lib/pacman/local/
         cp ${_yay} ${MOUNTPOINT}/var/lib/pacman/local/
         cp ${_yay} /var/lib/pacman/local/
-		 cp ${_gksu} ${MOUNTPOINT}/var/lib/pacman/local/
-	    cp ${_gksu} /var/lib/pacman/local/
+        cp ${_gksu} ${MOUNTPOINT}/var/lib/pacman/local/
+        cp ${_gksu} /var/lib/pacman/local/
         pacman --root ${MOUNTPOINT} --dbpath ${MOUNTPOINT}/var/lib/pacman -U /var/lib/pacman/local/package-query-1.9-3-x86_64.pkg.tar.xz --noconfirm
         pacman --root ${MOUNTPOINT} --dbpath ${MOUNTPOINT}/var/lib/pacman -U /var/lib/pacman/local/pikaur-1.4.3-1-any.pkg.tar.xz --noconfirm
         pacman --root ${MOUNTPOINT} --dbpath ${MOUNTPOINT}/var/lib/pacman -U /var/lib/pacman/local/yay-9.2.1-1-x86_64.pkg.tar.xz --noconfirm
-		 pacman --root ${MOUNTPOINT} --dbpath ${MOUNTPOINT}/var/lib/pacman -U /var/lib/pacman/local/gksu-2.0.2-6-x86_64.pkg.tar.xz --noconfirm
+        pacman --root ${MOUNTPOINT} --dbpath ${MOUNTPOINT}/var/lib/pacman -U /var/lib/pacman/local/gksu-2.0.2-6-x86_64.pkg.tar.xz --noconfirm
     }
     install_timeshift()
     {
