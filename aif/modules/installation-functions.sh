@@ -683,10 +683,16 @@ install_alsa_xorg_input() {
      clear
      [[ ${_clist_x_pkg[*]} != "" ]] && pacstrap ${MOUNTPOINT} ${_clist_x_pkg[*]} 2>/tmp/.errlog
      wait
+	  pacstrap ${MOUNTPOINT} xorg 2>/tmp/.errlog
+	  wait
+	  sleep 5
+	  wait
      arch-chroot $MOUNTPOINT /bin/bash -c "Xorg -configure" 2>>/tmp/.errlog
      wait
-     cp -f ${MOUNTPOINT}/root/xorg.conf.new ${MOUNTPOINT}/etc/X11/xorg.conf
-     arch_chroot "cp -f /root/xorg.conf.new /etc/X11/xorg.conf" 2>>/tmp/.errlog
+	  sleep 3
+	  wait
+     sudo cp -f ${MOUNTPOINT}/root/xorg.conf.new ${MOUNTPOINT}/etc/X11/xorg.conf
+     arch_chroot "sudo cp -f /root/xorg.conf.new /etc/X11/xorg.conf" 2>>/tmp/.errlog
      wait
      sleep 3
      check_for_error
