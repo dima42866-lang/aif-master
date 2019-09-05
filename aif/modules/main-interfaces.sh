@@ -238,12 +238,12 @@ edit_configs() {
        SUB_MENU="edit configs"
        HIGHLIGHT_SUB=1
     else
-       if [[ $HIGHLIGHT_SUB != 11 ]]; then
+       if [[ $HIGHLIGHT_SUB != 12 ]]; then
           HIGHLIGHT_SUB=$(( HIGHLIGHT_SUB + 1 ))
        fi
     fi
 
-   dialog --default-item ${HIGHLIGHT_SUB} --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_SeeConfOptTitle" --menu "$_SeeConfOptBody" 0 0 11 \
+   dialog --default-item ${HIGHLIGHT_SUB} --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_SeeConfOptTitle" --menu "$_SeeConfOptBody" 0 0 12 \
    "1" "/etc/vconsole.conf" \
    "2" "/etc/locale.conf" \
    "3" "/etc/hostname" \
@@ -251,10 +251,11 @@ edit_configs() {
    "5" "/etc/sudoers" \
    "6" "/etc/mkinitcpio.conf" \
    "7" "/etc/fstab" \
-   "8" "/etc/sysctl.d/00-sysctl.conf" \
-   "9" "$BOOTLOADER" \
-   "10" "$DM" \
-   "11" "$_Back" 2>${ANSWER}
+   "8" "/etc/resolv.conf" \
+   "9" "/etc/sysctl.d/00-sysctl.conf" \
+   "10" "$BOOTLOADER" \
+   "11" "$DM" \
+   "12" "$_Back" 2>${ANSWER}
     
     HIGHLIGHT_SUB=$(cat ${ANSWER})
     case $(cat ${ANSWER}) in
@@ -272,9 +273,11 @@ edit_configs() {
              ;;
         "7") FILE="${MOUNTPOINT}/etc/fstab"
              ;;
-        "8") FILE="${MOUNTPOINT}/etc/sysctl.d/00-sysctl.conf"
+        "8") FILE="${MOUNTPOINT}/etc/resolv.conf"
+             ;;
+        "9") FILE="${MOUNTPOINT}/etc/sysctl.d/00-sysctl.conf"
             ;;
-        "9") case $BOOTLOADER in
+        "10") case $BOOTLOADER in
                    "Grub") FILE="${MOUNTPOINT}/etc/default/grub"
                            ;;
                "Syslinux") FILE="${MOUNTPOINT}/boot/syslinux/syslinux.cfg"
@@ -288,7 +291,7 @@ edit_configs() {
                            ;;
               esac
             ;;
-        "10") case $DM in
+        "11") case $DM in
                    "LXDM") FILE="${MOUNTPOINT}/etc/lxdm/lxdm.conf" 
                            ;;
                 "LightDM") FILE="${MOUNTPOINT}/etc/lightdm/lightdm.conf" 
