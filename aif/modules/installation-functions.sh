@@ -9,8 +9,12 @@ multilib_question()
     dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_yesno_multilib_title" --yesno "$_yesno_multilib_body" 0 0
 
     if [[ $? -eq 0 ]]; then
-        echo "[multilib]" >> /etc/pacman.conf
-        echo "Include = /etc/pacman.d/mirrorlist" >> /etc/pacman.conf
+        # echo "[multilib]" >> /etc/pacman.conf
+        # echo "Include = /etc/pacman.d/mirrorlist" >> /etc/pacman.conf
+	# sed -i 's/^\#\[multilib\]$/[multilib]/' /etc/pacman.conf
+        # sed -i '/^\[multilib\]$/a\Include = /etc/pacman.d/mirrorlist' /etc/pacman.conf
+	sed -i '93s/\#\[multilib\]/[multilib]/' /etc/pacman.conf
+        sed -i '94s/\#Include/Include/' /etc/pacman.conf
         _multilib=1
     else
         _multilib=0
@@ -355,8 +359,12 @@ install_base() {
     esac    
      
     if [[ $_multilib == "1" ]]; then
-        echo "[multilib]" >>  ${MOUNTPOINT}/etc/pacman.conf
-        echo "Include = /etc/pacman.d/mirrorlist" >>  ${MOUNTPOINT}/etc/pacman.conf
+        # echo "[multilib]" >>  ${MOUNTPOINT}/etc/pacman.conf
+        # echo "Include = /etc/pacman.d/mirrorlist" >>  ${MOUNTPOINT}/etc/pacman.conf
+	# sed -i 's/^\#\[multilib\]$/[multilib]/' ${MOUNTPOINT}/etc/pacman.conf
+        # sed -i '/^\[multilib\]$/a\Include = /etc/pacman.d/mirrorlist' ${MOUNTPOINT}/etc/pacman.conf
+	sed -i '93s/\#\[multilib\]/[multilib]/' ${MOUNTPOINT}/etc/pacman.conf
+        sed -i '94s/\#Include/Include/' ${MOUNTPOINT}/etc/pacman.conf
     fi
     
     mirrorlist_question 
