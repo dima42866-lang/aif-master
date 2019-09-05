@@ -11,9 +11,9 @@ multilib_question()
     if [[ $? -eq 0 ]]; then
         # echo "[multilib]" >> /etc/pacman.conf
         # echo "Include = /etc/pacman.d/mirrorlist" >> /etc/pacman.conf
-	# sed -i 's/^\#\[multilib\]$/[multilib]/' /etc/pacman.conf
+        # sed -i 's/^\#\[multilib\]$/[multilib]/' /etc/pacman.conf
         # sed -i '/^\[multilib\]$/a\Include = /etc/pacman.d/mirrorlist' /etc/pacman.conf
-	sed -i '93s/\#\[multilib\]/[multilib]/' /etc/pacman.conf
+        sed -i '93s/\#\[multilib\]/[multilib]/' /etc/pacman.conf
         sed -i '94s/\#Include/Include/' /etc/pacman.conf
         _multilib=1
     else
@@ -361,9 +361,9 @@ install_base() {
     if [[ $_multilib == "1" ]]; then
         # echo "[multilib]" >>  ${MOUNTPOINT}/etc/pacman.conf
         # echo "Include = /etc/pacman.d/mirrorlist" >>  ${MOUNTPOINT}/etc/pacman.conf
-	# sed -i 's/^\#\[multilib\]$/[multilib]/' ${MOUNTPOINT}/etc/pacman.conf
+        # sed -i 's/^\#\[multilib\]$/[multilib]/' ${MOUNTPOINT}/etc/pacman.conf
         # sed -i '/^\[multilib\]$/a\Include = /etc/pacman.d/mirrorlist' ${MOUNTPOINT}/etc/pacman.conf
-	sed -i '93s/\#\[multilib\]/[multilib]/' ${MOUNTPOINT}/etc/pacman.conf
+        sed -i '93s/\#\[multilib\]/[multilib]/' ${MOUNTPOINT}/etc/pacman.conf
         sed -i '94s/\#Include/Include/' ${MOUNTPOINT}/etc/pacman.conf
     fi
     
@@ -691,14 +691,14 @@ install_alsa_xorg_input() {
      clear
      [[ ${_clist_x_pkg[*]} != "" ]] && pacstrap ${MOUNTPOINT} ${_clist_x_pkg[*]} 2>/tmp/.errlog
      wait
-	  pacstrap ${MOUNTPOINT} xorg 2>/tmp/.errlog
-	  wait
-	  sleep 5
-	  wait
+      pacstrap ${MOUNTPOINT} xorg 2>/tmp/.errlog
+      wait
+      sleep 5
+      wait
      arch-chroot $MOUNTPOINT /bin/bash -c "Xorg -configure" 2>>/tmp/.errlog
      wait
-	  sleep 3
-	  wait
+      sleep 3
+      wait
      sudo cp -f ${MOUNTPOINT}/root/xorg.conf.new ${MOUNTPOINT}/etc/X11/xorg.conf
      arch_chroot "sudo cp -f /root/xorg.conf.new /etc/X11/xorg.conf" 2>>/tmp/.errlog
      wait
