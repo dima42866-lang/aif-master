@@ -51,29 +51,6 @@ fish_setup()
         check_for_error
     fi
 }
-screenfetch_setup()
-{
-    if [[ $_scrnf == "1" ]]; then
-        clear
-        case $1 in
-            "bash") if [[ $_bool_bash == "0" ]]; then
-                      echo "/usr/bin/screenfetch" >> ${MOUNTPOINT}/etc/bash.bashrc 2>/tmp/.errlog
-                      _bool_bash=1
-                    fi
-                ;;
-            "zsh") if [[ $_select_user != "root" ]]; then
-                     echo "/usr/bin/screenfetch" >> ${MOUNTPOINT}/home/$2/.zshrc 2>/tmp/.errlog
-                   fi
-                ;;
-            "fish") if [[ $_bool_fish == "0" ]]; then
-                      echo "/usr/bin/screenfetch" >> ${MOUNTPOINT}/etc/fish/config.fish 2>/tmp/.errlog
-                      _bool_fish=1
-                    fi
-                ;;
-        esac
-        check_for_error
-    fi
-}
 screenfetch_dialog()
 {
     # Dialog yesno to screenfetch setup
@@ -104,15 +81,12 @@ select_install_shell()
     case $variable in 
         "1") bash_setup
              arch-chroot $MOUNTPOINT /bin/bash -c "chsh -s /bin/bash $1" 2>/tmp/.errlog
-             screenfetch_setup "bash" "$1"
             ;;
         "2") zsh_setup
              arch-chroot $MOUNTPOINT /bin/bash -c "chsh -s /usr/bin/zsh $1" 2>/tmp/.errlog
-             screenfetch_setup "zsh" "$1"
             ;;
         "3") fish_setup
              arch-chroot $MOUNTPOINT /bin/bash -c "chsh -s /usr/bin/fish $1" 2>/tmp/.errlog
-             screenfetch_setup "fish" "$1"
             ;;
     esac
     check_for_error
