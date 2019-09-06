@@ -56,11 +56,7 @@ screenfetch_dialog()
     # Dialog yesno to screenfetch setup
     dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_yesno_scrfetch_ttl" --yesno "$_yesno_scrfetch_bd" 0 0
     if [[ $? -eq 0 ]]; then
-        dialog --defaultno --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_scrn_strp_ttl" --yesno "$_scrn_strp_bd" 0 0
-        if [[ $? -eq 0 ]]; then
-            _scrnf=1
-        fi
-       clear
+        clear
         info_search_pkg
         _list_scr_strtp=$(check_s_lst_pkg "${_screen_startup[*]}")
         wait
