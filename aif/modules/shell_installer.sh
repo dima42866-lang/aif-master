@@ -19,6 +19,10 @@ bash_setup()
         clear
         [[ ${_clist_bash_sh[*]} != "" ]] && pacstrap ${MOUNTPOINT} ${_clist_bash_sh[*]} 2>/tmp/.errlog
         check_for_error
+         # BASH
+        sed -i 's/PS1=/#PS1=/' ${MOUNTPOINT}/etc/bash.bashrc
+        echo "alias ls='ls --color=auto'" >> ${MOUNTPOINT}/etc/bash.bashrc
+        echo "PS1='\[\e[0;32m\]\u\[\e[m\] \[\e[1;34m\]\w\[\e[m\] \[\e[1;32m\]\\$\[\e[m\] \[\e[1;37m\]'" >> ${MOUNTPOINT}/etc/bash.bashrc
     fi
 }
 zsh_setup()
@@ -34,6 +38,11 @@ zsh_setup()
         clear
         [[ ${_clist_zsh_sh[*]} != "" ]] && pacstrap ${MOUNTPOINT} ${_clist_zsh_sh[*]} 2>/tmp/.errlog
         check_for_error
+         # ZSH
+        _user_list=$(ls ${MOUNTPOINT}/home/ | sed "s/lost+found//")
+        for i in ${_user_list[*]}; do
+            echo "alias ls='ls --color=auto'" >> ${MOUNTPOINT}/home/$i/.zshrc
+        done
     fi
 }
 fish_setup()
@@ -49,6 +58,8 @@ fish_setup()
         clear
         [[ ${_clist_fish_sh[*]} != "" ]] && pacstrap ${MOUNTPOINT} ${_clist_fish_sh[*]} 2>/tmp/.errlog
         check_for_error
+         #FISH
+        echo "alias ls='ls --color=auto'" >> ${MOUNTPOINT}/etc/fish/config.fish
     fi
 }
 screenfetch_dialog()
@@ -56,7 +67,7 @@ screenfetch_dialog()
     # Dialog yesno to screenfetch setup
     dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_yesno_scrfetch_ttl" --yesno "$_yesno_scrfetch_bd" 0 0
     if [[ $? -eq 0 ]]; then
-        clear
+       clear
         info_search_pkg
         _list_scr_strtp=$(check_s_lst_pkg "${_screen_startup[*]}")
         wait
