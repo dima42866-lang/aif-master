@@ -285,10 +285,8 @@ set_keymap() {
 
 # locale array generation code adapted from the Manjaro 0.8 installer
 set_locale() {
-  _nocomment=$(cat ${MOUNTPOINT}/etc/locale.gen | grep -Ei "^[a-z]" | sed 's/_.*//')
-  for i in ${_nocomment[*]}; do
-    sed -i "s/\\$i/#$i/g" ${MOUNTPOINT}/etc/locale.gen 2>/tmp/.errlog
-  done
+  
+  sed -i '/^[a-z]/s/^/#/g' ${MOUNTPOINT}/etc/locale.gen
 
   LOCALES=""    
   for i in $(cat /etc/locale.gen | grep -v "#  " | sed 's/#//g' | sed 's/ UTF-8//g' | grep .UTF-8); do
