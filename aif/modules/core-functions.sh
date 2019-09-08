@@ -7,7 +7,7 @@
 # Add locale on-the-fly and sets source translation file for installer
 select_language() {
     
-    dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title " Select Language " --menu "\nLanguage / sprache / taal / språk / lingua / idioma / nyelv / língua" 0 0 12 \
+    dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title " Select Language " --menu "\nLanguage / sprache / taal / språk / lingua / idioma / nyelv / língua" 0 0 11 \
     "1" $"English       (en)" \
     "2" $"Italian       (it)" \
     "3" $"Russian       (ru)" \
@@ -18,8 +18,7 @@ select_language() {
     "8" $"Hungarian     (hu)" \
     "9" $"Portuguese    (pt)" \
    "10" $"German        (de)" \
-   "11" $"French        (fr)" \
-   "12" $"Polish        (pl)" 2>${ANSWER}
+   "11" $"French        (fr)" 2>${ANSWER}
 
     case $(cat ${ANSWER}) in
         "1") source ${filesdir}/lang/english.trans
@@ -58,10 +57,6 @@ select_language() {
              ;;
        "11") source ${filesdir}/lang/french.trans
              CURR_LOCALE="fr_FR.UTF-8"
-             ;;
-       "12") source ${filesdir}/lang/polish.trans
-             CURR_LOCALE="pl_PL.UTF-8"
-             FONT="latarcyrheb-sun16"
              ;;
           *) exit 0
              ;;
