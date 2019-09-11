@@ -305,6 +305,9 @@ _PassNUsrErrBody="\nDie eingegebenen Benutzer Passwörter stimmen nicht überein
 _MntStatusTitle=" Mount Status "
 _MntStatusSucc="\nMount erfolgreich!\n\n"
 _MntStatusFail="\nMount fehlgeschlagen!\n\n"
+_Mnt_Status_Title="Mount-Status"
+_Mnt_Body="Verwenden Sie [Leertaste], um die Mount-Optionen auszuwählen / aufzuheben und eine detaillierte Inspektion durchzuführen. Bitte wählen Sie nicht mehrere Versionen der gleichen Optionen."
+_Mnt_Conf_Body="Bestätigen Sie die folgenden Mount-Optionen:\n\n"
 
 # Select Device (installation) - Translate
 _DevSelTitle=" Wähle Gerät / Laufwerk "

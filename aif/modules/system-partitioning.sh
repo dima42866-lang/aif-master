@@ -247,28 +247,64 @@ dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_FSTitle" \
         "4") FILESYSTEM="mkfs.ext3 -F"
              ;;            
         "5") FILESYSTEM="mkfs.ext4 -F"
+             CHK_NUM=8
+             fs_opts="data=journal data=writeback dealloc discard noacl noatime nobarrier nodelalloc"
              ;;
         "6") FILESYSTEM="mkfs.f2fs"
              modprobe f2fs
+             fs_opts="data_flush disable_roll_forward disable_ext_identify discard fastboot flush_merge inline_xattr inline_data inline_dentry no_heap noacl nobarrier noextent_cache noinline_data norecovery"
+             CHK_NUM=16
              ;;
         "7") FILESYSTEM="mkfs.jfs -q"
+             CHK_NUM=4
+             fs_opts="discard errors=continue errors=panic nointegrity"
              ;;
         "8") FILESYSTEM="mkfs.nilfs2 -f"
+             CHK_NUM=7
+             fs_opts="discard nobarrier errors=continue errors=panic order=relaxed order=strict norecovery"
              ;;  
         "9") FILESYSTEM="mkfs.ntfs -q"
              ;;  
         "10") FILESYSTEM="mkfs.reiserfs -f -f"
+             CHK_NUM=5
+             fs_opts="acl nolog notail replayonly user_xattr"
              ;;  
        "11") FILESYSTEM="mkfs.vfat -F32"
              ;;  
        "12") FILESYSTEM="mkfs.xfs -f"
+             CHK_NUM=9
+             fs_opts="discard filestreams ikeep largeio noalign nobarrier norecovery noquota wsync"
              ;;      
           *) prep_menu
              ;;
     esac
 
   }
-  
+
+# Seperate subfunction for neatness.
+mount_opts() {
+
+    FS_OPTS=""
+    echo "" > ${MOUNT_OPTS}
+    
+    for i in ${fs_opts}; do
+        FS_OPTS="${FS_OPTS} ${i} - off"
+    done
+
+    dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title " $(echo $FILESYSTEM | sed "s/.*\.//g" | sed "s/-.*//g") " --checklist "$_Mnt_Body" 0 0 $CHK_NUM \
+    $FS_OPTS 2>${MOUNT_OPTS}
+    
+    # Now clean up the file
+    sed -i 's/ /,/g' ${MOUNT_OPTS}
+    sed -i '$s/,$//' ${MOUNT_OPTS}   
+    
+    # If mount options selected, confirm choice 
+    if [[ $(cat ${MOUNT_OPTS}) != "" ]]; then
+        dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title " $_Mnt_Status_Title " --yesno "\n${_Mnt_Conf_Body}$(cat ${MOUNT_OPTS})\n" 10 75
+        [[ $? -eq 1 ]] && mount_opts
+    fi 
+}
+
 mount_partitions() {
 
 # function created to save repetition of code. Checks and determines if standard partition or LVM LV,
@@ -446,7 +482,16 @@ btrfs_mount_opts() {
     if [[ $BTRFS -eq 1 ]] && [[ $(cat ${BTRFS_OPTS}) != "" ]]; then
        mount -o $(cat ${BTRFS_OPTS}) ${MOUNT_TYPE}${PARTITION} ${MOUNTPOINT} 2>>/tmp/.errlog
     else
-       mount ${MOUNT_TYPE}${PARTITION} ${MOUNTPOINT} 2>>/tmp/.errlog
+        # BIOS
+       # Get mounting options for appropriate filesystems
+       [[ $fs_opts != "" ]] && mount_opts
+       # Use special mounting options if selected, else standard mount
+       if [[ $(cat ${MOUNT_OPTS}) != "" ]]; then
+           mount -o $(cat ${MOUNT_OPTS}) ${MOUNT_TYPE}${PARTITION} ${MOUNTPOINT} 2>>/tmp/.errlog
+       else
+           mount ${MOUNT_TYPE}${PARTITION} ${MOUNTPOINT} 2>>/tmp/.errlog
+       fi  
+       # mount ${MOUNT_TYPE}${PARTITION} ${MOUNTPOINT} 2>>/tmp/.errlog
     fi
       
     # Check for error, confirm mount, and deal with BTRFS with subvolumes if applicable  
@@ -508,7 +553,16 @@ btrfs_mount_opts() {
        esac
        
        mkdir -p ${MOUNTPOINT}${UEFI_MOUNT} 2>/tmp/.errlog
-       mount $"/dev/"${PARTITION} ${MOUNTPOINT}${UEFI_MOUNT} 2>>/tmp/.errlog
+       # UEFI
+        # Get mounting options for appropriate filesystems
+        [[ $fs_opts != "" ]] && mount_opts
+        # Use special mounting options if selected, else standard mount
+        if [[ $(cat ${MOUNT_OPTS}) != "" ]]; then
+            mount -o $(cat ${MOUNT_OPTS}) $"/dev/"${PARTITION} ${MOUNTPOINT}${UEFI_MOUNT} 2>>/tmp/.errlog
+        else
+            mount $"/dev/"${PARTITION} ${MOUNTPOINT}${UEFI_MOUNT} 2>>/tmp/.errlog
+        fi
+       # mount $"/dev/"${PARTITION} ${MOUNTPOINT}${UEFI_MOUNT} 2>>/tmp/.errlog
        check_for_error
        confirm_mount ${MOUNTPOINT}${UEFI_MOUNT}     
        
@@ -561,7 +615,16 @@ btrfs_mount_opts() {
                 if [[ $BTRFS -eq 1 ]] && [[ $(cat ${BTRFS_OPTS}) != "" ]]; then
                     mount -o $(cat ${BTRFS_OPTS}) ${MOUNT_TYPE}${PARTITION} ${MOUNTPOINT}${MOUNT} 2>>/tmp/.errlog
                 else
-                    mount ${MOUNT_TYPE}${PARTITION} ${MOUNTPOINT}${MOUNT} 2>>/tmp/.errlog
+                    # BIOS
+                    # Get mounting options for appropriate filesystems
+                    [[ $fs_opts != "" ]] && mount_opts
+                    # Use special mounting options if selected, else standard mount
+                    if [[ $(cat ${MOUNT_OPTS}) != "" ]]; then
+                        mount -o $(cat ${MOUNT_OPTS}) ${MOUNT_TYPE}${PARTITION} ${MOUNTPOINT}${MOUNT} 2>>/tmp/.errlog
+                    else
+                        mount ${MOUNT_TYPE}${PARTITION} ${MOUNTPOINT}${MOUNT} 2>>/tmp/.errlog
+                    fi  
+                    # mount ${MOUNT_TYPE}${PARTITION} ${MOUNTPOINT}${MOUNT} 2>>/tmp/.errlog
                 fi
       
                 # Check for error, confirm mount, and deal with BTRFS with subvolumes if applicable  

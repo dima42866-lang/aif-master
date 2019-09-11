@@ -130,11 +130,15 @@ LUKS_UUID=""                                        # UUID used for comparison p
 LUKS_OPT=""                                         # Default or user-defined?
 
 # Installation
-MOUNTPOINT="/mnt"           # Installation
-MOUNT_TYPE=""               # "/dev/" for standard partitions, "/dev/mapper" for LVM
+MOUNTPOINT="/mnt"            # Installation
+MOUNT_TYPE=""                # "/dev/" for standard partitions, "/dev/mapper" for LVM
 BTRFS=0                     # BTRFS used? "1" = btrfs alone, "2" = btrfs + subvolume(s)
-BTRFS_OPTS="/tmp/.btrfs_opts" #BTRFS Mount options
-BTRFS_MNT=""                # used for syslinux where /mnt is a btrfs subvolume
+BTRFS_OPTS="/tmp/.btrfs_opts"  #BTRFS Mount options
+BTRFS_MNT=""                 # used for syslinux where /mnt is a btrfs subvolume
+BYPASS="$MOUNTPOINT/bypass/"   # Root image mountpoint
+MOUNT_OPTS="/tmp/.mnt_opts"    # Filesystem Mount options
+FS_OPTS=""						# FS mount options available
+CHK_NUM=16						# Used for FS mount options checklist length
 
 # Language Support
 CURR_LOCALE="en_US.UTF-8"   # Default Locale

@@ -303,6 +303,9 @@ _PassNUsrErrBody="\nLe password dell'account utente digitate non corrispondono. 
 _MntStatusTitle=" Status del montaggio "
 _MntStatusSucc="\nMontaggio corretto!\n\n"
 _MntStatusFail="\nMontaggio fallito!\n\n"
+_Mnt_Status_Title="Stato di montaggio"
+_Mnt_Body="Utilizzare [Barra spaziatrice] per selezionare / deselezionare le opzioni di montaggio e l'ispezione dettagliata. Si prega di non selezionare più versioni delle stesse opzioni."
+_Mnt_Conf_Body="Confermare le seguenti opzioni di montaggio:\n\n"
 
 # Seleziona il Dispositivo (installazione)
 _DevSelTitle=" Seleziona il dispositivo "

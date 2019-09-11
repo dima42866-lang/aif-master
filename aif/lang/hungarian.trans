@@ -298,6 +298,9 @@ _PassNUsrErrBody="\nA megadott jelszavak nem egyeznek. Kérlek próbáld újra.\
 _MntStatusTitle=" A csatolás állapota "
 _MntStatusSucc="\nA csatolás sikeres!\n\n"
 _MntStatusFail="\nCsatolási hiba!\n\n"
+ _Mnt_Status_Title="Status mount"
+_Mnt_Body="A [Space] gombokkal válassza ki / törölje a csatlakozást, majd a részletes ellenőrzési beállításokat. Kérjük, ne válassza ki az azonos Opciók több változatát."
+_Mnt_Conf_Body="Erősítse meg a következő csatlakozási lehetőségeket:\n\n"
  
 # Select Device (installation)
 _DevSelTitle=" Eszközválasztás "

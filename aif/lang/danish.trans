@@ -304,6 +304,9 @@ _PassNUsrErrBody="\nAdgangskoderne er ikke ens. Prøv venligst igen.\n\n"
 _MntStatusTitle=" Mount Status "
 _MntStatusSucc="\nMount Udført!\n\n"
 _MntStatusFail="\nMount Fejlet!\n\n"
+_Mnt_Status_Title="Status montere"
+_Mnt_Body="Brug [mellemrum] til at vælge / deselektere montering og detaljerede inspektionstilvalg. Vælg ikke flere versioner af de samme tilvalg."
+_Mnt_Conf_Body="Bekræft følgende monteringsmuligheder:\n\n"
 
 # Select Device (installation) - Translate
 _DevSelTitle=" Vælg Enhed "

@@ -303,6 +303,9 @@ _PassNUsrErrBody="\nThe User passwords entered do not match. Please try again.\n
 _MntStatusTitle=" Mount Status "
 _MntStatusSucc="\nMount Successful!\n\n"
 _MntStatusFail="\nMount Failed!\n\n"
+_Mnt_Status_Title="Status mount"
+_Mnt_Body="Use [Space] to select / deselect mount and detailed inspection options. Please do not select multiple versions of the same options."
+_Mnt_Conf_Body="Confirm the following mount options:\n\n"
 
 # Select Device (installation) - Translate
 _DevSelTitle=" Select Device "

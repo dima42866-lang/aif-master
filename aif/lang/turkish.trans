@@ -306,6 +306,9 @@ _PassNUsrErrBody="\nGirdiğiniz kullanıcı şifreleri birbirleriyle uyuşmuyor.
 _MntStatusTitle=" Bağlama Durumu "
 _MntStatusSucc="\nBağlama Başarılı!\n\n"
 _MntStatusFail="\nBağlama Hatası!\n\n"
+_Mnt_Status_Title="Montaj durumu"
+_Mnt_Body="Montaj seçeneklerini seçmek/iptal etmek ve ayrıntılı bir inceleme yapmak için [boşluk] kullanın. Lütfen aynı seçeneklerin birden çok sürümünü seçmeyin."
+_Mnt_Conf_Body="Aşağıdaki montaj seçeneklerini onaylayın:\n\n"
 
 # Select Device (installation)
 _DevSelTitle=" Aygıt Seç "

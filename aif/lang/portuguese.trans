@@ -297,6 +297,9 @@ _PassNUsrErrBody="\nAs Palavras-Chave de Usuário não correspondem. Por Favor T
 _MntStatusTitle=" Estado de Montagem "
 _MntStatusSucc="\nMontagem com Sucesso!\n\n"
 _MntStatusFail="\nMontagem Falhou!\n\n"
+_Mnt_Status_Title="O status de montagem"
+_Mnt_Body="Use a [barra de Espaço] para selecionar ou cancelar a seleção de opções de montagem e inspeção detalhada. Por favor, não selecione várias versões dos mesmos opções."
+_Mnt_Conf_Body="Confirme as seguintes opções de montagem:\n\n"
 
 # Select Device (installation) - Translate
 _DevSelTitle=" Selecionar Dispositivo "

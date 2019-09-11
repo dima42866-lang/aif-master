@@ -302,6 +302,9 @@ _PassNUsrErrBody="\nHet Gebruikerswachtwoord en de herhaling ervan zijn niet ide
 _MntStatusTitle=" Aankoppelstatus "
 _MntStatusSucc="\nSuccesvol aangekoppeld!\n\n"
 _MntStatusFail="\nAankoppeling mislukt!\n\n"
+_Mnt_Status_Title="Status aankoppelen"
+_Mnt_Body="Gebruik [ruimte] om mount en gedetailleerde inspectieopties te selecteren / te ontselecteren. Selecteer Niet meerdere versies van dezelfde opties."
+_Mnt_Conf_Body="Bevestig de volgende mount opties:\n\n"
 
 # Selecteer opslagmedium  (installatie)
 _DevSelTitle=" Selecteer opslagmedium"

@@ -303,6 +303,9 @@ _PassNUsrErrBody="\nLes mots de passe utilisateur entrés ne correspondent pas. 
 _MntStatusTitle=" État de montage "
 _MntStatusSucc="\nMontage réussi !\n\n"
 _MntStatusFail="\nÉchec de montage !\n\n"
+_Mnt_Status_Title="Statut de montage"
+_Mnt_Body="Utilisez [Espace] pour sélectionner/désélectionner les options de montage et l'inspection détaillée. Veuillez ne pas sélectionner plusieurs versions des mêmes options."
+_Mnt_Conf_Body="Confirmez les paramètres de montage suivants:\n\n"
 
 # Sélectionner un périphérique (installation)
 _DevSelTitle=" Sélectionner un périphérique "
