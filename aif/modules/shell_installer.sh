@@ -113,7 +113,9 @@ shell_friendly_setup()
     # Checklist dialog user
     dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_menu_ch_usr_ttl" --checklist "$_menu_ch_usr_bd" 0 0 16 ${_usr_lst_menu} 2>${ANSWER}
     _ch_usr=$(cat ${ANSWER})
-    for i in ${_ch_usr[*]}; do
-        select_install_shell "$i"
-    done
+    if [[ ${_ch_usr[*]} != "" ]]; then
+        for i in ${_ch_usr[*]}; do
+            select_install_shell "$i"
+        done
+	fi
 }
