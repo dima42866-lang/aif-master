@@ -1,4 +1,4 @@
-﻿###########################################
+###########################################
 #                                         #
 #   aif-master script instalation         #
 #   online to Dialog mode on ArchLinux    #
