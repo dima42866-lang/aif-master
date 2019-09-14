@@ -11,10 +11,10 @@ multilib_question()
     if [[ $? -eq 0 ]]; then
         # echo "[multilib]" >> /etc/pacman.conf
         # echo "Include = /etc/pacman.d/mirrorlist" >> /etc/pacman.conf
-        # sed -i 's/^\#\[multilib\]$/[multilib]/' /etc/pacman.conf
-        # sed -i '/^\[multilib\]$/a\Include = /etc/pacman.d/mirrorlist' /etc/pacman.conf
-        sed -i '93s/\#\[multilib\]/[multilib]/' /etc/pacman.conf
-        sed -i '94s/\#Include/Include/' /etc/pacman.conf
+        sed -i 's/^\#\[multilib\]$/[multilib]/' /etc/pacman.conf
+        sed -i '/^\[multilib\]$/a\Include = /etc/pacman.d/mirrorlist' /etc/pacman.conf
+        # sed -i '93s/\#\[multilib\]/[multilib]/' /etc/pacman.conf
+        # sed -i '94s/\#Include/Include/' /etc/pacman.conf
         _multilib=1
     else
         _multilib=0
