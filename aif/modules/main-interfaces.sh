@@ -88,6 +88,7 @@ install_base_menu() {
              pacman-key --init
              pacman-key --populate archlinux
              pacman-key --refresh-keys
+             pacman -S archlinux-keyring --noconfirm
              ;;
         "2") install_base
              ;;
