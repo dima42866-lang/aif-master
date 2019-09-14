@@ -310,7 +310,7 @@ install_base() {
             [[ ${_list_base_pkg[*]} != "" ]] && pacstrap ${MOUNTPOINT} base ${_list_base_pkg[*]} 2>/tmp/.errlog \
             || pacstrap ${MOUNTPOINT} base 2>/tmp/.errlog
              ipv6_disable
-			  _orders=1
+            _orders=1
              ;;
         "2") # Latest Kernel and base-devel
              clear
@@ -322,7 +322,7 @@ install_base() {
             [[ ${_list_base_devel[*]} != "" ]] && pacstrap ${MOUNTPOINT} base base-devel ${_list_base_devel[*]} 2>/tmp/.errlog \
             || pacstrap ${MOUNTPOINT} base base-devel 2>/tmp/.errlog
              ipv6_disable
-			  _orders=1
+            _orders=1
              ;;
         "3") # LTS Kernel
              clear
@@ -339,7 +339,7 @@ install_base() {
              #pacstrap ${MOUNTPOINT} base ${_list_lts_pkg[*]} 2>/tmp/.errlog
              # [[ $? -eq 0 ]] && LTS=1
              ipv6_disable
-			  _orders=1
+            _orders=1
              ;;
         "4") # LTS Kernel and base-devel
              clear
@@ -356,7 +356,7 @@ install_base() {
              #pacstrap ${MOUNTPOINT} base base-devel ${_list_lts_pkg[*]} 2>/tmp/.errlog
              #[[ $? -eq 0 ]] && LTS=1
              ipv6_disable
-			  _orders=1
+            _orders=1
              ;;
           *) install_base_menu
              ;;
@@ -805,7 +805,7 @@ nvidia_search()
     else HIGHLIGHT_SUB_GC=14
     fi
     
-	skip_orderers_resume
+    skip_orderers_resume
 	
    dialog --default-item ${HIGHLIGHT_SUB_GC} --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_GCtitle" \
     --menu "$GRAPHIC_CARD\n" 0 0 11 \
