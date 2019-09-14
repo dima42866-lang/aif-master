@@ -612,3 +612,7 @@ _Done="Klaar"
 
 # Sluit Installer
 _CloseInstBody="Installer Afsluiten?"
+
+# Skip and resume installation
+_yesno_order_ttl="Meerdere menu ' s doorgeven"
+_yesno_order_bd="\nHeb je een LTS kernel geïnstalleerd?\n"

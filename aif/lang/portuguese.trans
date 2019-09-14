@@ -617,3 +617,7 @@ _Done="Instalação Completa!"
 
 # Close Installer
 _CloseInstBody="Fechar instalador ?"
+
+# Skip and resume installation
+_yesno_order_ttl="A passagem de vários menus"
+_yesno_order_bd="\nSe você tem um kernel LTS?\n"

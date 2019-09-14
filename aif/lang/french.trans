@@ -607,3 +607,7 @@ _Done="Terminé"
 
 # Fermer l'installateur
 _CloseInstBody="Fermer l'installateur ?"
+
+# Skip and resume installation
+_yesno_order_ttl="Sauter plusieurs menus"
+_yesno_order_bd="\nAvez-vous installé le noyau LTS?\n"

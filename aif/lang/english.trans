@@ -613,3 +613,7 @@ _Done="Done"
 
 # Close Installer
 _CloseInstBody="Close installer?"
+
+# Skip and resume installation
+_yesno_order_ttl="Pass multiple menus"
+_yesno_order_bd="\nDo you have an LTS kernel installed?\n"

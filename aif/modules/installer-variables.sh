@@ -49,30 +49,30 @@ _ldm_menu=""
 _d_menu_once=0
 _listdm_menu=""
 _standart_pkg_menu=""
-_multilib=0                                                     # Multilib additional repositoryes to qestion
-_user_local=""                                                  # Forms User Locale in auto forms on Locale menu
-_freefile=""                                                    # File of comand "free -h"
-_swappiness=""                                                  # Variable to save parameter swappiness
+_multilib=0                                                    # Multilib additional repositoryes to qestion
+_user_local=""                                                 # Forms User Locale in auto forms on Locale menu
+_freefile=""                                                   # File of comand "free -h"
+_swappiness=""                                                 # Variable to save parameter swappiness
 _mem_file="/tmp/mem.conf"                                       # file of info memory
-_mem_msg_file="/tmp/msginfo.nfo"                                # Information on swappiness
-_File_of_Config="/tmp/00-sysctl.conf"                           # Temp configuration swappiness
-_real_dir_swpns="${MOUNTPOINT}/etc/sysctl.d/"                   # Real dir to swappiness on config
-_real_swappiness="${MOUNTPOINT}/etc/sysctl.d/00-sysctl.conf"    # File of full path swappiness config to install system
+_mem_msg_file="/tmp/msginfo.nfo"                                 # Information on swappiness
+_File_of_Config="/tmp/00-sysctl.conf"                             # Temp configuration swappiness
+_real_dir_swpns="${MOUNTPOINT}/etc/sysctl.d/"                      # Real dir to swappiness on config
+_real_swappiness="${MOUNTPOINT}/etc/sysctl.d/00-sysctl.conf"         # File of full path swappiness config to install system
 
-declare -a _devices                                             # Array scan mnt mount devices variables declare
+declare -a _devices                                            # Array scan mnt mount devices variables declare
 declare -a _device_menu                                         # Array menu form on scan mnt mount devices variables declare
-DEVICES=""                                                      # Array devices to clear
-_isreserved=""                                                  # Percentage to setup reserved block count on root
-_rsrvd_file="/tmp/rsrvd.nfo"                                    # File information to reserved block count
-_tmp_fstab="/tmp/tmp.fstab"                                     # File information on tmp folder to FSTAB
-_once_shwram=0                                                  # Once form memory information to mem file
+DEVICES=""                                                     # Array devices to clear
+_isreserved=""                                                 # Percentage to setup reserved block count on root
+_rsrvd_file="/tmp/rsrvd.nfo"                                     # File information to reserved block count
+_tmp_fstab="/tmp/tmp.fstab"                                      # File information on tmp folder to FSTAB
+_once_shwram=0                                                 # Once form memory information to mem file
 
-_net_cntrl=0                                                    # Once run install qestion wireless programm
-_shara_p=0                                                      # Once run install qestion shara programm
-file_list_pkg="/tmp/flpkg.conf"                                 # File to forms on new lists to pkgs
+_net_cntrl=0                                                  # Once run install qestion wireless programm
+_shara_p=0                                                    # Once run install qestion shara programm
+file_list_pkg="/tmp/flpkg.conf"                                  # File to forms on new lists to pkgs
 
 _wifi_menu_form=0                                               # Once forms wifi menu on wifi adapter your PC
-_list_wifi_adapter_pkg=""                                       # Search package to wifi adapter driver
+_list_wifi_adapter_pkg=""                                        # Search package to wifi adapter driver
 _wifi_menu=""                                                   # Forms wifi menu to save
 
 # Variables of keyboard parameters
@@ -88,6 +88,7 @@ xkb_layout=""
 xkb_variant=""
 xkb_options=""
 
+# SHELL
 _once_conf_fscr=0                   # once config to windows fonts and screenfetch startup console
 _usr_list=""                        # list of user to home folder
 _usr_lst_menu=""                    # dialog menu list of user to home folder
@@ -139,6 +140,7 @@ BYPASS="$MOUNTPOINT/bypass/"   # Root image mountpoint
 MOUNT_OPTS="/tmp/.mnt_opts"    # Filesystem Mount options
 FS_OPTS=""						# FS mount options available
 CHK_NUM=16						# Used for FS mount options checklist length
+_orders=0                    # Skip, resume installation
 
 # Language Support
 CURR_LOCALE="en_US.UTF-8"   # Default Locale

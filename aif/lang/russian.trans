@@ -249,7 +249,7 @@ _TimeSubZBody="\nВыберите ближайший к Вам город."
 _TimeZQ="Установить часовой пояс следующим образом:"
 
 # Set Hardware Clock
-_HwCTitle=" Установка аппаратных часов " \
+_HwCTitle=" Установка аппаратных часов " 
 _HwCBody="\nUTC - это универсальное стандартное время и рекомендуется для выбора, но только если на компьютере нет двойной загрузки с Windows."
 _HwCUTC="UTC"
 _HwLocal="Местное время"
@@ -638,3 +638,7 @@ _Done="Завершить"
 
 # Close Installer
 _CloseInstBody="Закрыть установщик?"
+
+# Skip and resume installation
+_yesno_order_ttl="Пропуск нескольких меню"
+_yesno_order_bd="\nУстановлено ли у вас ядро LTS?\n"

@@ -634,3 +634,7 @@ _Done="Kész"
  
 # Close Installer
 _CloseInstBody="Bezárod a telepítőt?"
+
+# Skip and resume installation
+_yesno_order_ttl="Több menük átadása"
+_yesno_order_bd="\nVan telepítve LTS kernel?\n"

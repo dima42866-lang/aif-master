@@ -287,7 +287,7 @@ set_keymap() {
 set_locale() {
   
   sed -i '/^[a-z]/s/^/#/g' ${MOUNTPOINT}/etc/locale.gen
-
+  
   LOCALES=""    
   for i in $(cat /etc/locale.gen | grep -v "#  " | sed 's/#//g' | sed 's/ UTF-8//g' | grep .UTF-8); do
       LOCALES="${LOCALES} ${i} -"

@@ -615,3 +615,7 @@ _Done="Fertig"
 
 # Close Installer
 _CloseInstBody="Installer schliessen und neu starten?"
+
+# Skip and resume installation
+_yesno_order_ttl="Überspringen mehrerer Menüs"
+_yesno_order_bd="\nHaben Sie den LTS-Kernel installiert?\n"

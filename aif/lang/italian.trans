@@ -607,3 +607,7 @@ _Done="Fatto"
 
 # Chiudere il programma di istallazione
 _CloseInstBody="Chiudere il programma di installazione?"
+
+# Skip and resume installation
+_yesno_order_ttl="Saltare più menu"
+_yesno_order_bd="\nHai installato un kernel LTS?\n"

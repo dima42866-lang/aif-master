@@ -169,3 +169,15 @@ show_devices() {
      lsblk -o NAME,MODEL,TYPE,FSTYPE,SIZE,MOUNTPOINT | grep -v "loop" | grep -v "rom" | grep -v "arch_airootfs" > /tmp/.devlist
      dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_DevShowTitle" --textbox /tmp/.devlist 0 0
 }
+
+skip_orderers_resume()
+{
+    if [[ $_orders == "0" ]]; then
+	    _orders=1
+        dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_yesno_order_ttl" --yesno "$_yesno_order_bd" 0 0
+        if [[ $? -eq 0 ]]; then
+            LTS=1
+        fi
+    fi
+}
+

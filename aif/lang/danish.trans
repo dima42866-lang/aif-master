@@ -623,3 +623,7 @@ _Done="Færdig"
 
 # Close Installer
 _CloseInstBody="Luk Installationen?"
+
+# Skip and resume installation
+_yesno_order_ttl="Pass flere menuer"
+_yesno_order_bd="\nHar du en LTS-kerne installeret?\n"
