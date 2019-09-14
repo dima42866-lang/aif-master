@@ -8,8 +8,8 @@
 
 # Install base menu
 _rank_mirror=(pacman-contrib)
-_base_pkg=(bash btrfs-progs ntp sudo f2fs-tools dialog htop nano vi ntfs-3g)
-_base_devel_pkg=(bash bzip2 coreutils cryptsetup device-mapper dhcpcd diffutils e2fsprogs file filesystem findutils gawk gcc-libs gettext glibc grep gzip inetutils iproute2 iputils jfsutils less licenses logrotate lvm2 man-db man-pages mdadm nano netctl pacman pciutils perl procps-ng psmisc reiserfsprogs s-nail sed shadow sysfsutils systemd-sysvcompat tar texinfo usbutils util-linux vi which xfsprogs btrfs-progs ntp sudo f2fs-tools dialog htop mc ntfs-3g bash-completion gparted net-tools)
+_base_pkg=(bash btrfs-progs ntp sudo f2fs-tools dialog htop nano vi ntfs-3g linux-headers)
+_base_devel_pkg=(bash bzip2 coreutils cryptsetup device-mapper dhcpcd diffutils e2fsprogs file filesystem findutils gawk gcc-libs gettext glibc grep gzip inetutils iproute2 iputils jfsutils less licenses logrotate lvm2 man-db man-pages mdadm nano netctl pacman pciutils perl procps-ng psmisc reiserfsprogs s-nail sed shadow sysfsutils systemd-sysvcompat tar texinfo usbutils util-linux vi which xfsprogs btrfs-progs ntp sudo f2fs-tools dialog htop mc ntfs-3g bash-completion gparted net-tools linux-headers)
 _lts_pkg=(linux-lts linux-lts-headers linux-lts-docs)
 
 # Package Network tools
@@ -80,7 +80,7 @@ _pekwm_pkg=(pekwm pekwm-themes polkit-gnome)
 _windowmaker_pkg=(windowmaker polkit-gnome)
 
 # Common for Desktop packages
-_general_pkg=(gnome-keyring dconf dconf-editor python2-xdg xdg-user-dirs xdg-utils rp-pppoe polkit gvfs gvfs-afc gvfs-smb)
+_general_pkg=(gnome-keyring dconf dconf-editor python2-xdg xdg-user-dirs xdg-utils rp-pppoe polkit gvfs gvfs-afc gvfs-smb print-manager system-config-printer)
 
 # DM packages
 _user_dm_menu=(lxdm lightdm sddm gdm slim)
@@ -100,13 +100,13 @@ _fish_sh=(fish)
 
 # User Package
 _archivers_pkg=(ark xarchiver unzip zip unrar p7zip)
-_ttf_theme_pkg=(gnome-icon-theme ttf-liberation ttf-dejavu opendesktop-fonts ttf-bitstream-vera ttf-arphic-ukai ttf-arphic-uming ttf-hanazono terminus-font breeze breeze-grub breeze-icons)
+_ttf_theme_pkg=(gnome-icon-theme ttf-liberation ttf-dejavu opendesktop-fonts ttf-bitstream-vera ttf-arphic-ukai ttf-arphic-uming ttf-hanazono terminus-font breeze breeze-grub breeze-icons fontforge faenza-icon-theme adwaita-icon-theme)
 # gimp gimp-help-ru
 _gr_editor=(gimp)
 _office=(libreoffice-fresh)
 # libreoffice-fresh libreoffice-fresh-ru
 _minimal_pkg=(grub-customizer xterm gnome-terminal lxterminal cmake brasero acetoneiso2 fuseiso chromium opera transmission-gtk curl git wget gwget ksysguard doublecmd-gtk2 krusader blender vlc inkscape okular gedit geany leafpad parcellite)
-_other_pkg=(keepassxc veracrypt virtualbox kicad kicad-library kicad-library-3d smplayer wine wine-mono wine_gecko winetricks) # truecrypt
+_other_pkg=(keepassxc veracrypt virtualbox kicad kicad-library kicad-library-3d smplayer wine wine-mono wine_gecko winetricks supertuxkart) # truecrypt
 ABS_FILENAME=`readlink -e "$0"`
 filedir=`dirname "$ABS_FILENAME"`
 _package_query="$filedir/packages/package-query-1.9-3-x86_64.pkg.tar.xz"
