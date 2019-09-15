@@ -104,6 +104,8 @@ install_gengen()
     _ch_gengen=$(cat ${ANSWER})
     clear
     [[ ${_ch_gengen[*]} != "" ]] && pacstrap ${MOUNTPOINT} ${_ch_gengen[*]} 2>/tmp/.errlog
+    arch_chroot "systemctl enable acpid avahi-daemon cronie org.cups.cupsd.service systemd-timesyncd.service" 2>/tmp/.errlog
+    check_for_error
 }
 install_archivers()
 {
