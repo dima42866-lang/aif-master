@@ -80,7 +80,7 @@ _pekwm_pkg=(pekwm pekwm-themes polkit-gnome)
 _windowmaker_pkg=(windowmaker polkit-gnome)
 
 # Common for Desktop packages
-_general_pkg=(gnome-keyring dconf dconf-editor python2-xdg xdg-user-dirs xdg-utils rp-pppoe polkit gvfs gvfs-afc gvfs-smb print-manager system-config-printer)
+_general_pkg=(gnome-keyring dconf dconf-editor python2-xdg xdg-user-dirs xdg-utils rp-pppoe polkit gvfs gvfs-afc gvfs-smb print-manager system-config-printer acpid avahi cups cronie)
 
 # DM packages
 _user_dm_menu=(lxdm lightdm sddm gdm slim)
