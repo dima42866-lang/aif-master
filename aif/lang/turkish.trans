@@ -646,3 +646,7 @@ _CloseInstBody="Yükleyici kapatılsın mı?"
 # Skip and resume installation
 _yesno_order_ttl="Birden fazla menü atlama"
 _yesno_order_bd="\nLTS çekirdeğiniz yüklü mü?\n"
+
+# RPCS3
+_yesno_rpcs3_ttl="PlayStation-3 emülatörünü yükleme"
+_yesno_rpcs3_bd="\nPlayStation-3 emülatörünü yükleyin?\n"

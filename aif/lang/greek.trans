@@ -629,3 +629,6 @@ _CloseInstBody="Τερματισμός προγράμματος εγκατάστ
 _yesno_order_ttl="Το πέρασμα λίγων μενού"
 _yesno_order_bd="\nΈχει εγκατασταθεί αν έχετε πυρήνα LTS;\n"
 
+# RPCS3
+_yesno_rpcs3_ttl="Εγκατάσταση εξομοιωτών PlayStation-3 "
+_yesno_rpcs3_bd="\nΟρισμός εξομοιωτής PlayStation-3;\n"

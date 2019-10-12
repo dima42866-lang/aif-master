@@ -616,3 +616,7 @@ _CloseInstBody="Installer Afsluiten?"
 # Skip and resume installation
 _yesno_order_ttl="Meerdere menu ' s doorgeven"
 _yesno_order_bd="\nHeb je een LTS kernel geïnstalleerd?\n"
+
+# RPCS3
+_yesno_rpcs3_ttl="Installeren van de PlayStation-3 emulator"
+_yesno_rpcs3_bd="\nPlayStation-3 emulator installeren?\n"

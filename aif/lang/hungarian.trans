@@ -638,3 +638,7 @@ _CloseInstBody="Bezárod a telepítőt?"
 # Skip and resume installation
 _yesno_order_ttl="Több menük átadása"
 _yesno_order_bd="\nVan telepítve LTS kernel?\n"
+
+# RPCS3
+_yesno_rpcs3_ttl="A PlayStation-3 emulátor telepítése"
+_yesno_rpcs3_bd="\nTelepítse PlayStation-3 emulátort?\n"

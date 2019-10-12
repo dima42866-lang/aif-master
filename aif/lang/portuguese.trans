@@ -621,3 +621,7 @@ _CloseInstBody="Fechar instalador ?"
 # Skip and resume installation
 _yesno_order_ttl="A passagem de vários menus"
 _yesno_order_bd="\nSe você tem um kernel LTS?\n"
+
+# RPCS3
+_yesno_rpcs3_ttl="Instalar um emulador de PlayStation-3 "
+_yesno_rpcs3_bd="\nInstalar um emulador de PlayStation-3?\n"

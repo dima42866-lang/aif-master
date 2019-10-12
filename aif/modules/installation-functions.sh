@@ -265,6 +265,17 @@ install_pm_menu()
             pacman --root ${MOUNTPOINT} --dbpath ${MOUNTPOINT}/var/lib/pacman -U /var/lib/pacman/local/github-desktop-2.1.0-2-x86_64.pkg.tar.xz --noconfirm
         fi
     }
+    install_rpcs3()
+    {
+        dialog --defaultno --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_yesno_rpcs3_ttl" --yesno "$_yesno_rpcs3_bd" 0 0
+
+        if [[ $? -eq 0 ]]; then
+            cp ${_rpcs3} ${MOUNTPOINT}/var/lib/pacman/local/
+            cp ${_rpcs3} /var/lib/pacman/local/
+            clear
+            pacman --root ${MOUNTPOINT} --dbpath ${MOUNTPOINT}/var/lib/pacman -U /var/lib/pacman/local/rpcs3-0.0.7-1-x86_64.pkg.tar.xz --noconfirm
+        fi
+    }
     clear
     dialog --default-item 2 --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_menu_pkg_meneger" --menu "$_pm_menu_body" 0 0 2 \
     "1" $"pamac-aur" \
@@ -274,11 +285,13 @@ install_pm_menu()
         install_pamac_aur
         install_timeshift
         install_github_desktop
+        install_rpcs3
          ;;
     "2") install_pyt
         install_pamac_classic
         install_timeshift
         install_github_desktop
+        install_rpcs3
          ;;  
     esac
 }
@@ -705,8 +718,8 @@ install_alsa_xorg_input() {
      wait
       sleep 3
       wait
-	  sudo find ${MOUNTPOINT}/root/ -maxdepth 1 -iname "xorg.*" -exec cp -f {} ${MOUNTPOINT}/etc/X11/xorg.conf \;
-	  arch-chroot $MOUNTPOINT /bin/bash -c "sudo find /root/ -maxdepth 1 -iname \"xorg.*\" -exec cp -f {} /etc/X11/xorg.conf \;" 2>>/tmp/.errlog
+      sudo find ${MOUNTPOINT}/root/ -maxdepth 1 -iname "xorg.*" -exec cp -f {} ${MOUNTPOINT}/etc/X11/xorg.conf \;
+      arch-chroot $MOUNTPOINT /bin/bash -c "sudo find /root/ -maxdepth 1 -iname \"xorg.*\" -exec cp -f {} /etc/X11/xorg.conf \;" 2>>/tmp/.errlog
      sudo cp -f ${MOUNTPOINT}/root/xorg.conf.new ${MOUNTPOINT}/etc/X11/xorg.conf
      arch_chroot "sudo cp -f /root/xorg.conf.new /etc/X11/xorg.conf" 2>>/tmp/.errlog
      wait
@@ -808,7 +821,7 @@ nvidia_search()
     fi
     
     skip_orderers_resume
-	
+    
    dialog --default-item ${HIGHLIGHT_SUB_GC} --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_GCtitle" \
     --menu "$GRAPHIC_CARD\n" 0 0 11 \
     "1" "$_DevShowOpt" \

@@ -619,3 +619,7 @@ _CloseInstBody="Installer schliessen und neu starten?"
 # Skip and resume installation
 _yesno_order_ttl="Überspringen mehrerer Menüs"
 _yesno_order_bd="\nHaben Sie den LTS-Kernel installiert?\n"
+
+# RPCS3
+_yesno_rpcs3_ttl="Installieren Des PlayStation-3-emulators"
+_yesno_rpcs3_bd="\nPlayStation-3-Emulator installieren?\n"

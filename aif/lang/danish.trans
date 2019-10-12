@@ -627,3 +627,7 @@ _CloseInstBody="Luk Installationen?"
 # Skip and resume installation
 _yesno_order_ttl="Pass flere menuer"
 _yesno_order_bd="\nHar du en LTS-kerne installeret?\n"
+
+# RPCS3
+_yesno_rpcs3_ttl="Installerer PlayStation-3-emulatoren"
+_yesno_rpcs3_bd="\nInstallere PlayStation-3 emulator?\n"
