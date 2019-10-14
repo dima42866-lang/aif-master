@@ -625,3 +625,7 @@ _yesno_order_bd="\nSe você tem um kernel LTS?\n"
 # RPCS3
 _yesno_rpcs3_ttl="Instalar um emulador de PlayStation-3 "
 _yesno_rpcs3_bd="\nInstalar um emulador de PlayStation-3?\n"
+
+# Bluetooth
+_yesno_bluetooth_ttl="Configuração Do Bluetooth"
+_yesno_bluetooth_bd="\nInstalar o controlador e o gerenciador de dispositivos bluetooth?\n"

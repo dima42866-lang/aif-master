@@ -620,3 +620,7 @@ _yesno_order_bd="\nHeb je een LTS kernel geïnstalleerd?\n"
 # RPCS3
 _yesno_rpcs3_ttl="Installeren van de PlayStation-3 emulator"
 _yesno_rpcs3_bd="\nPlayStation-3 emulator installeren?\n"
+
+# Bluetooth
+_yesno_bluetooth_ttl="Instellen Van Bluetooth"
+_yesno_bluetooth_bd="\nOm drivers en de apparaatbeheerder de bluetooth te installeren?\n"

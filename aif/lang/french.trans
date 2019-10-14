@@ -615,3 +615,7 @@ _yesno_order_bd="\nAvez-vous installé le noyau LTS?\n"
 # RPCS3
 _yesno_rpcs3_ttl="Installation de l'émulateur PlayStation-3"
 _yesno_rpcs3_bd="\nInstaller un émulateur PlayStation-3?\n"
+
+# Bluetooth
+_yesno_bluetooth_ttl="Installation Bluetooth"
+_yesno_bluetooth_bd="\nInstaller le pilote et le gestionnaire de périphériques bluetooth?\n"

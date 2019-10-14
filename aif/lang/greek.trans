@@ -632,3 +632,7 @@ _yesno_order_bd="\nΈχει εγκατασταθεί αν έχετε πυρήν�
 # RPCS3
 _yesno_rpcs3_ttl="Εγκατάσταση εξομοιωτών PlayStation-3 "
 _yesno_rpcs3_bd="\nΟρισμός εξομοιωτής PlayStation-3;\n"
+
+# Bluetooth
+_yesno_bluetooth_ttl="Εγκατάσταση Bluetooth"
+_yesno_bluetooth_bd="\nΝα εγκαταστήσετε το πρόγραμμα οδήγησης και ο διευθυντής συσκευές bluetooth;\n"

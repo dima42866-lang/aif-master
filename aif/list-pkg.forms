@@ -31,6 +31,7 @@ _list_intel_2100=""
 _intel_2200=(ipw2200-fw)
 _list_intel_2200=""
 _menu_wifi=("Show_Devices" "Broadcom_802.11b/g/n" "Intel_PRO/Wireless_2100" "Intel_PRO/Wireless_2200" "All" "Back")
+_bluetooth=(blueman bluez bluez-libs bluez-plugins bluez-utils bluez-tools)
 
 # Package for grub and uefi menu
 _grub_pkg=(grub os-prober)

@@ -650,3 +650,7 @@ _yesno_order_bd="\nLTS çekirdeğiniz yüklü mü?\n"
 # RPCS3
 _yesno_rpcs3_ttl="PlayStation-3 emülatörünü yükleme"
 _yesno_rpcs3_bd="\nPlayStation-3 emülatörünü yükleyin?\n"
+
+# Bluetooth
+_yesno_bluetooth_ttl="Bluetooth Kurulumu"
+_yesno_bluetooth_bd="\nSürücüleri ve Bluetooth cihaz Yöneticisini yükleyin?\n"

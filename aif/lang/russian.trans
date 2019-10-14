@@ -646,3 +646,7 @@ _yesno_order_bd="\nУстановлено ли у вас ядро LTS?\n"
 # RPCS3
 _yesno_rpcs3_ttl="Установка эмулятора PlayStation-3"
 _yesno_rpcs3_bd="\nУстановить эмулятор PlayStation-3?\n"
+
+# Bluetooth
+_yesno_bluetooth_ttl="Установка Bluetooth"
+_yesno_bluetooth_bd="\nУстановить драйвера и менеджер устройств bluetooth?\n"

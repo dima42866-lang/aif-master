@@ -70,17 +70,18 @@ install_base_menu() {
        SUB_MENU="install_base_menu"
        HIGHLIGHT_SUB=1
     else
-       if [[ $HIGHLIGHT_SUB != 5 ]]; then
+       if [[ $HIGHLIGHT_SUB != 6 ]]; then
           HIGHLIGHT_SUB=$(( HIGHLIGHT_SUB + 1 ))
        fi
     fi
 
-   dialog --default-item ${HIGHLIGHT_SUB} --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_InstBsMenuTitle" --menu "$_InstBseMenuBody" 0 0 5 \
+   dialog --default-item ${HIGHLIGHT_SUB} --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_InstBsMenuTitle" --menu "$_InstBseMenuBody" 0 0 6 \
     "1" "$_PrepPacKey" \
     "2" "$_InstBse" \
     "3" "$_InstBootldr" \
     "4" "$_InstWirelessFirm" \
-    "5" "$_Back" 2>${ANSWER}    
+    "5" "$_yesno_bluetooth_ttl" \
+    "6" "$_Back" 2>${ANSWER}    
     
     HIGHLIGHT_SUB=$(cat ${ANSWER})
     case $(cat ${ANSWER}) in
@@ -95,6 +96,8 @@ install_base_menu() {
         "3") install_bootloader
              ;;
         "4") install_wireless_firmware
+             ;;
+        "5") bluetooth_question
              ;;
           *) main_menu_online
              ;;

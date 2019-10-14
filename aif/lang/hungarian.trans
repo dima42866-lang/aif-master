@@ -642,3 +642,7 @@ _yesno_order_bd="\nVan telepítve LTS kernel?\n"
 # RPCS3
 _yesno_rpcs3_ttl="A PlayStation-3 emulátor telepítése"
 _yesno_rpcs3_bd="\nTelepítse PlayStation-3 emulátort?\n"
+
+# Bluetooth
+_yesno_bluetooth_ttl="A Bluetooth Beállítása"
+_yesno_bluetooth_bd="\nAz illesztőprogramok, valamint az Eszközkezelő telepítéséhez a bluetooth?\n"

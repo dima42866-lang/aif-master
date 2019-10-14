@@ -696,6 +696,47 @@ install_wireless_firmware() {
 
 }
 
+bluetooth_install()
+{
+    clear
+    info_search_pkg
+    _list_bluetooth=$(check_s_lst_pkg "${_bluetooth[*]}")
+    wait
+    clear
+    if [[ ${_list_bluetooth[*]} != "" ]]; then
+        pacstrap ${MOUNTPOINT} ${_list_bluetooth[*]} 2>/tmp/.errlog
+        check_for_error
+        sed -i 's/\#AutoEnable=false/AutoEnable=true/' ${MOUNTPOINT}/etc/bluetooth/main.conf
+        if [ -e ${MOUNTPOINT}/etc/modprobe.d ]; then
+                if [ -e ${MOUNTPOINT}/etc/modprobe.d/disable_bluetooth_ertm.conf ]; then
+                    echo "options bluetooth disable_ertm=1" >> ${MOUNTPOINT}/etc/modprobe.d/disable_bluetooth_ertm.conf
+                else
+                    echo "options bluetooth disable_ertm=1" > ${MOUNTPOINT}/etc/modprobe.d/disable_bluetooth_ertm.conf
+                fi
+            else
+                sudo mkdir /etc/modprobe.d
+                if [ -e ${MOUNTPOINT}/etc/modprobe.d/disable_bluetooth_ertm.conf ]; then
+                    echo "options bluetooth disable_ertm=1" >> ${MOUNTPOINT}/etc/modprobe.d/disable_bluetooth_ertm.conf
+                else
+                    echo "options bluetooth disable_ertm=1" > ${MOUNTPOINT}/etc/modprobe.d/disable_bluetooth_ertm.conf
+                fi
+        fi
+        arch_chroot "systemctl enable bluetooth.service" 2>/tmp/.errlog
+    fi  
+    check_for_error
+}
+
+bluetooth_question()
+{
+    if [[ _bltth == "0"  ]]; then
+        dialog --defaultno --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_yesno_bluetooth_ttl" --yesno "$_yesno_bluetooth_bd" 0 0
+        if [[ $? -eq 0 ]]; then
+            bluetooth_install
+            _bltth=1
+        fi
+    fi
+}
+
 # Install alsa, xorg and input drivers. Also copy the xkbmap configuration file created earlier to the installed system
 # This will run only once.
 install_alsa_xorg_input() {

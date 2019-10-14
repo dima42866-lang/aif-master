@@ -75,6 +75,8 @@ _wifi_menu_form=0                                               # Once forms wif
 _list_wifi_adapter_pkg=""                                        # Search package to wifi adapter driver
 _wifi_menu=""                                                   # Forms wifi menu to save
 
+_bltth=0                                                       # Bluetooth once setup drivers
+
 # Variables of keyboard parameters
 _is_xkb=0
 _skip=0
@@ -138,8 +140,8 @@ BTRFS_OPTS="/tmp/.btrfs_opts"  #BTRFS Mount options
 BTRFS_MNT=""                 # used for syslinux where /mnt is a btrfs subvolume
 BYPASS="$MOUNTPOINT/bypass/"   # Root image mountpoint
 MOUNT_OPTS="/tmp/.mnt_opts"    # Filesystem Mount options
-FS_OPTS=""						# FS mount options available
-CHK_NUM=16						# Used for FS mount options checklist length
+FS_OPTS=""                      # FS mount options available
+CHK_NUM=16                      # Used for FS mount options checklist length
 _orders=0                    # Skip, resume installation
 
 # Language Support
