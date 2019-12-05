@@ -646,3 +646,17 @@ _yesno_rpcs3_bd="\nTelepítse PlayStation-3 emulátort?\n"
 # Bluetooth
 _yesno_bluetooth_ttl="A Bluetooth Beállítása"
 _yesno_bluetooth_bd="\nAz illesztőprogramok, valamint az Eszközkezelő telepítéséhez a bluetooth?\n"
+
+# Aur package menu
+_aur_pkg_ttl="Csomagok telepítése az AUR-ból"
+_aur_pkg_bd="\nKérjük, válassza ki a csomagokat telepíteni kell!\n"
+_aur_dbl_pkg_ttl="A csomag verziója"
+_aur_dbl_pkg_bd="\nEnnek a csomagnak több változata is van.\nKérem, válassza ki azt, amire szüksége van!\n"
+
+# Emulator package menu
+_eml_pkg_ttl="Emulátorok telepítése"
+_eml_pkg_bd="\nKérjük, válassza ki a emulátorok telepíteni kell!\n"
+
+# Remove packages log
+_yesno_rmrf_ttl="Törölni a naplófájlt?"
+_yesno_rmrf_bd="\nLétrehoztak egy naplófájlt a csomagok törölt régi verzióiból.\nTörölni ezt a naplófájlt?\n"

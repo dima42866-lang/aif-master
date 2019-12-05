@@ -1,4 +1,6 @@
-﻿######################################################################
+#!/bin/bash
+#
+######################################################################
 ##                                                                  ##
 ##                    Installation Functions                        ##
 ##                                                                  ##
@@ -214,87 +216,6 @@ install_otherpkg()
     clear
     [[ ${_ch_other_pkg[*]} != "" ]] && pacstrap ${MOUNTPOINT} ${_ch_other_pkg[*]} 2>/tmp/.errlog
 }
-install_pm_menu()
-{
-    install_pamac_aur()
-    {
-        cp ${_pamac_aur} /var/lib/pacman/local/
-        cp ${_pamac_aur} ${MOUNTPOINT}/var/lib/pacman/local/
-        pacman --root ${MOUNTPOINT} --dbpath ${MOUNTPOINT}/var/lib/pacman -U /var/lib/pacman/local/pamac-aur-7.3.3-1-x86_64.pkg.tar.xz --noconfirm
-    }
-    install_pamac_classic()
-    {
-        cp ${_pamac_classic} ${MOUNTPOINT}/var/lib/pacman/local/
-        cp ${_pamac_classic} /var/lib/pacman/local/
-        pacman --root ${MOUNTPOINT} --dbpath ${MOUNTPOINT}/var/lib/pacman -U /var/lib/pacman/local/pamac-classic-7.0.0-1-x86_64.pkg.tar.xz --noconfirm
-    }
-    install_pyt()
-    {
-        cp ${_package_query} ${MOUNTPOINT}/var/lib/pacman/local/
-        cp ${_package_query} /var/lib/pacman/local/
-        cp ${_pikaur} ${MOUNTPOINT}/var/lib/pacman/local/
-        cp ${_pikaur} /var/lib/pacman/local/
-        cp ${_yay} ${MOUNTPOINT}/var/lib/pacman/local/
-        cp ${_yay} /var/lib/pacman/local/
-        cp ${_gksu} ${MOUNTPOINT}/var/lib/pacman/local/
-        cp ${_gksu} /var/lib/pacman/local/
-        pacman --root ${MOUNTPOINT} --dbpath ${MOUNTPOINT}/var/lib/pacman -U /var/lib/pacman/local/package-query-1.9-3-x86_64.pkg.tar.xz --noconfirm
-        pacman --root ${MOUNTPOINT} --dbpath ${MOUNTPOINT}/var/lib/pacman -U /var/lib/pacman/local/pikaur-1.4.3-1-any.pkg.tar.xz --noconfirm
-        pacman --root ${MOUNTPOINT} --dbpath ${MOUNTPOINT}/var/lib/pacman -U /var/lib/pacman/local/yay-9.2.1-1-x86_64.pkg.tar.xz --noconfirm
-        pacman --root ${MOUNTPOINT} --dbpath ${MOUNTPOINT}/var/lib/pacman -U /var/lib/pacman/local/gksu-2.0.2-6-x86_64.pkg.tar.xz --noconfirm
-    }
-    install_timeshift()
-    {
-        dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_yesno_timeshift_title" --yesno "$_yesno_timeshift_body" 0 0
-        
-        if [[ $? -eq 0 ]]; then
-            cp ${_timeshift} ${MOUNTPOINT}/var/lib/pacman/local/
-            cp ${_timeshift} /var/lib/pacman/local/
-            clear
-            pacman --root ${MOUNTPOINT} --dbpath ${MOUNTPOINT}/var/lib/pacman -U /var/lib/pacman/local/timeshift-19.01-2-x86_64.pkg.tar.xz --noconfirm
-        fi
-    }
-    install_github_desktop()
-    {
-        dialog --defaultno --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_yesno_github_desktop_title" --yesno "$_yesno_github_desktop_body" 0 0
-
-        if [[ $? -eq 0 ]]; then
-            cp ${_github_desktop} ${MOUNTPOINT}/var/lib/pacman/local/
-            cp ${_github_desktop} /var/lib/pacman/local/
-            clear
-            pacman --root ${MOUNTPOINT} --dbpath ${MOUNTPOINT}/var/lib/pacman -U /var/lib/pacman/local/github-desktop-2.1.0-2-x86_64.pkg.tar.xz --noconfirm
-        fi
-    }
-    install_rpcs3()
-    {
-        dialog --defaultno --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_yesno_rpcs3_ttl" --yesno "$_yesno_rpcs3_bd" 0 0
-
-        if [[ $? -eq 0 ]]; then
-            cp ${_rpcs3} ${MOUNTPOINT}/var/lib/pacman/local/
-            cp ${_rpcs3} /var/lib/pacman/local/
-            clear
-            pacman --root ${MOUNTPOINT} --dbpath ${MOUNTPOINT}/var/lib/pacman -U /var/lib/pacman/local/rpcs3-0.0.7-1-x86_64.pkg.tar.xz --noconfirm
-        fi
-    }
-    clear
-    dialog --default-item 2 --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_menu_pkg_meneger" --menu "$_pm_menu_body" 0 0 2 \
-    "1" $"pamac-aur" \
-    "2" $"pamac-classic" 2>${ANSWER}
-    case $(cat ${ANSWER}) in
-    "1") install_pyt
-        install_pamac_aur
-        install_timeshift
-        install_github_desktop
-        install_rpcs3
-         ;;
-    "2") install_pyt
-        install_pamac_classic
-        install_timeshift
-        install_github_desktop
-        install_rpcs3
-         ;;  
-    esac
-}
 
 install_base() {
     ipv6_disable()
@@ -388,8 +309,8 @@ install_base() {
     
     mirrorlist_question 
     
-	sed -i 's/\# include \"\/usr\/share\/nano\/\*.nanorc\"/include \"\/usr\/share\/nano\/\*.nanorc\"/' ${MOUNTPOINT}/etc/nanorc 2>>/tmp/.errlog
-	
+    sed -i 's/\# include \"\/usr\/share\/nano\/\*.nanorc\"/include \"\/usr\/share\/nano\/\*.nanorc\"/' ${MOUNTPOINT}/etc/nanorc 2>>/tmp/.errlog
+    	
     # If the virtual console has been set, then copy config file to installation
    # [[ -e /tmp/vconsole.conf ]] && cp /tmp/vconsole.conf ${MOUNTPOINT}/etc/vconsole.conf 2>>/tmp/.errlog
     check_for_error
@@ -1470,19 +1391,21 @@ install_gep()
        SUB_MENU="general_package"
        HIGHLIGHT_SUB=1
     else
-       if [[ $HIGHLIGHT_SUB != 7 ]]; then
+       if [[ $HIGHLIGHT_SUB != 9 ]]; then
           HIGHLIGHT_SUB=$(( HIGHLIGHT_SUB + 1 ))
        fi
     fi
     
-    dialog --default-item ${HIGHLIGHT_SUB} --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_menu_gen_title" --menu "$_menu_gen_body" 0 0 7 \
+    dialog --default-item ${HIGHLIGHT_SUB} --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_menu_gen_title" --menu "$_menu_gen_body" 0 0 9 \
     "1" "$_menu_gengen" \
     "2" "$_menu_archivers" \
     "3" "$_menu_ttf_theme" \
     "4" "$_menu_add_pkg" \
     "5" "$_menu_extra_pkg" \
     "6" "$_menu_pkg_meneger" \
-    "7" "$_Back" 2>${ANSWER}
+    "7" "$_eml_pkg_ttl" \
+    "8" "$_aur_pkg_ttl" \
+    "9" "$_Back" 2>${ANSWER}
     
     HIGHLIGHT_SUB=$(cat ${ANSWER})
     case $(cat ${ANSWER}) in
@@ -1496,8 +1419,12 @@ install_gep()
          ;;
     "5") install_otherpkg
          ;;
-    "6") install_pm_menu
+    "6") pkg_manager_install
          ;;
+    "7") eml_ustanovka
+        ;;
+    "8") aur_pkginstall
+        ;;
       *) # Back to NAME Menu
         install_desktop_menu
          ;;

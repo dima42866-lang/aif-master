@@ -654,3 +654,17 @@ _yesno_rpcs3_bd="\nPlayStation-3 emülatörünü yükleyin?\n"
 # Bluetooth
 _yesno_bluetooth_ttl="Bluetooth Kurulumu"
 _yesno_bluetooth_bd="\nSürücüleri ve Bluetooth cihaz Yöneticisini yükleyin?\n"
+
+# Aur package menu
+_aur_pkg_ttl="AUR & # 39; dan paketleri yükleme"
+_aur_pkg_bd="\nLütfen yüklemek için ihtiyacınız olan paketleri seçin!\n"
+_aur_dbl_pkg_ttl="Paket sürümünü seçme"
+_aur_dbl_pkg_bd="\nBu paketin çeşitli sürümleri vardır.\nLütfen ihtiyacınız olanı seçin!\n"
+
+# Emulator package menu
+_eml_pkg_ttl="Emülatör kurulumu"
+_eml_pkg_bd="\nLütfen yüklemek için ihtiyacınız olan emülatörleri seçin!\n"
+
+# Remove packages log
+_yesno_rmrf_ttl="Günlük dosyasını sil?"
+_yesno_rmrf_bd="\nPaketlerin uzak eski sürümleri için bir günlük dosyası oluşturuldu.\nBu günlük dosyasını sil?\n"

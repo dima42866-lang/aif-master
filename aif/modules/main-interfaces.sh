@@ -1,4 +1,6 @@
-﻿######################################################################
+#!/bin/bash
+#
+######################################################################
 ##                                                                  ##
 ##                 Main Interfaces                                  ##
 ##                                                                  ##
@@ -377,6 +379,24 @@ main_menu_online() {
              if [[ $? -eq 0 ]]; then
                 umount_partitions
                 clear
+                pkg_manager_unset
+                eml_zavershenie
+                aur_pkg_finish
+		if [[ -f "$filesdir/remove_pkg.log" ]]; then
+	                dialog --defaultno --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_yesno_rmrf_ttl" --yesno "$_yesno_rmrf_bd" 0 0
+	                if [[ $? -eq 0 ]]; then
+	                    clear
+	                    echo ""
+	                    cat "$filesdir/remove_pkg.log"
+	                    echo ""
+	                    rm -rf "$filesdir/remove_pkg.log"
+	                else
+	                    clear
+	                    echo ""
+	                    cat "$filesdir/remove_pkg.log"
+	                    echo ""
+                	fi
+		fi
                 exit 0
              else
                 main_menu_online

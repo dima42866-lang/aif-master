@@ -619,3 +619,17 @@ _yesno_rpcs3_bd="\nInstaller un émulateur PlayStation-3?\n"
 # Bluetooth
 _yesno_bluetooth_ttl="Installation Bluetooth"
 _yesno_bluetooth_bd="\nInstaller le pilote et le gestionnaire de périphériques bluetooth?\n"
+
+# Aur package menu
+_aur_pkg_ttl="Installation de paquets depuis AUR"
+_aur_pkg_bd="\nVeuillez sélectionner les paquets dont vous avez besoin pour l'installation!\n"
+_aur_dbl_pkg_ttl="Sélection de la version du package"
+_aur_dbl_pkg_bd="\nCe paquet a plusieurs versions.\nVeuillez choisir ce dont vous avez besoin!\n"
+
+# Emulator package menu
+_eml_pkg_ttl="Installation des émulateurs"
+_eml_pkg_bd="\nVeuillez sélectionner les émulateurs dont vous avez besoin pour l'installation!\n"
+
+# Remove packages log
+_yesno_rmrf_ttl="Supprimer le fichier Journal?"
+_yesno_rmrf_bd="\nUn fichier journal des anciennes versions supprimées des paquets a été créé.\nSupprimer ce fichier journal?\n"

@@ -1,4 +1,6 @@
-﻿######################################################################
+#!/bin/bash
+#
+######################################################################
 ##                                                                  ##
 ##                   Installer Variables                            ##
 ##                                                                  ##
@@ -151,3 +153,29 @@ FONT=""                     # Set new font if necessary
 # Edit Files
 FILE=""                     # Which file is to be opened?
 FILE2=""                    # Which second file is to be opened?
+
+# Emulator packages Init
+_eml_pkg_once=0
+else_eml_package_list=""
+eml_check_dbl_list=""
+eml_dbl_name=""
+eml_dbl_list=""
+eml_all_name=""
+eml_full_name=""
+full_eml_menu=""
+
+# Aur packages init
+dbl_name=""
+dbl_list=""
+check_dbl_list=""
+all_name=""
+full_name=""
+full_menu=""
+aur_pkg_once=0
+
+# Package manager init
+_pm_uniq=""
+_pm_n=""
+_pm_menu=""
+_required_packages=""
+_pm_once=0
