@@ -17,29 +17,29 @@
 
 # Create a temporary file to store menu selections
 ANSWER="/tmp/.aif"
-ABSOLUT_FILENAME=`readlink -e "$0"`
-filesdir=`dirname "$ABSOLUT_FILENAME"`
+ABSOLUT_FILENAME=$(readlink -e "$0")
+filesdir=$(dirname "$ABSOLUT_FILENAME")
 # Save retyping
 VERSION="MAXIMALISIMUS Installation Framework 2.3"
 
-source "./modules/installer-variables.sh"                 # list of variables
-source "./config/list-pkg-forms.sh"                       # list of packages for uses the script
-source "./config/setup_function.sh"                       # Function to setup on local package, p.c. build package in aur
-source "./config/package-manager_function.sh"             # Setup function to package manager - pamac
-source "./config/package_function.sh"                     # Setup local package on build in aur
-source "./config/emulators_function.sh"                   # Setup packages on emulators
-source "./config/remove_old_v_pkg_function.sh"            # Remove duble package on old version
-source "./config/dependences_function.sh"				  # Dependences for script
-source "./modules/core-functions.sh"                      # language, checks
-source "./modules/configuration-functions.sh"             # Keyboard, locale, time zone, FSTAB, mkinitcpio, user controls
-source "./modules/system-partitioning.sh"                 # managing partitions, installing the boot
-source "./modules/encryption-functions.sh"                # Encryption
-source "./modules/logical-volume.sh"                      # LVM control
-source "./modules/installation-functions.sh"              # system installation functions
-source "./modules/swappiness-config.sh"                   # SWAPPINESS
-source "./modules/devices-config.sh"                      # tune2fs
-source "./modules/shell_installer.sh"                     # SHELL installer functions
-source "./modules/main-interfaces.sh"                     # main menu interface
+source "$filesdir"/modules/installer-variables.sh                 # list of variables
+source "$filesdir"/config/list-pkg-forms.sh                       # list of packages for uses the script
+source "$filesdir"/config/setup_function.sh                       # Function to setup on local package, p.c. build package in aur
+source "$filesdir"/config/package-manager_function.sh             # Setup function to package manager - pamac
+source "$filesdir"/config/package_function.sh                     # Setup local package on build in aur
+source "$filesdir"/config/emulators_function.sh                   # Setup packages on emulators
+source "$filesdir"/config/remove_old_v_pkg_function.sh            # Remove duble package on old version
+source "$filesdir"/config/dependences_function.sh				  # Dependences for script
+source "$filesdir"/modules/core-functions.sh                      # language, checks
+source "$filesdir"/modules/configuration-functions.sh             # Keyboard, locale, time zone, FSTAB, mkinitcpio, user controls
+source "$filesdir"/modules/system-partitioning.sh                 # managing partitions, installing the boot
+source "$filesdir"/modules/encryption-functions.sh                # Encryption
+source "$filesdir"/modules/logical-volume.sh                      # LVM control
+source "$filesdir"/modules/installation-functions.sh              # system installation functions
+source "$filesdir"/modules/swappiness-config.sh                   # SWAPPINESS
+source "$filesdir"/modules/devices-config.sh                      # tune2fs
+source "$filesdir"/modules/shell_installer.sh                     # SHELL installer functions
+source "$filesdir"/modules/main-interfaces.sh                     # main menu interface
 
 ######################################################################
 ##                                                                  ##

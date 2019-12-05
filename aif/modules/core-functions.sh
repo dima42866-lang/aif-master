@@ -23,41 +23,41 @@ select_language() {
    "11" $"French        (fr)" 2>${ANSWER}
 
     case $(cat "${ANSWER}") in
-        "1") source "./lang/english.trans"
+        "1") source "$filesdir"/lang/english.trans
              CURR_LOCALE="en_US.UTF-8"
              ;;
-        "2") source "./lang/italian.trans"
+        "2") source "$filesdir"/lang/italian.trans
              CURR_LOCALE="it_IT.UTF-8"
              ;; 
-        "3") source "./lang/russian.trans"
+        "3") source "$filesdir"/lang/russian.trans
              CURR_LOCALE="ru_RU.UTF-8"
              FONT="LatKaCyrHeb-14.psfu"
              ;;
-        "4") source "./lang/turkish.trans"
+        "4") source "$filesdir"/lang/turkish.trans
              CURR_LOCALE="tr_TR.UTF-8"
              FONT="LatKaCyrHeb-14.psfu"
              ;;
-        "5") source "./lang/dutch.trans"
+        "5") source "$filesdir"/lang/dutch.trans
              CURR_LOCALE="nl_NL.UTF-8"
              ;;             
-        "6") source "./lang/greek.trans"
+        "6") source "$filesdir"/lang/greek.trans
              CURR_LOCALE="el_GR.UTF-8"
              FONT="iso07u-16.psfu"       
              ;;
-        "7") source "./lang/danish.trans"
+        "7") source "$filesdir"/lang/danish.trans
              CURR_LOCALE="da_DK.UTF-8"
              ;;   
-        "8") source "./lang/hungarian.trans"
+        "8") source "$filesdir"/lang/hungarian.trans
              CURR_LOCALE="hu_HU.UTF-8"
              FONT="lat2-16.psfu"
              ;;
-        "9") source "./lang/portuguese.trans"
+        "9") source "$filesdir"/lang/portuguese.trans
              CURR_LOCALE="pt_BR.UTF-8"    
              ;;      
-       "10") source "./lang/german.trans"
+       "10") source "$filesdir"/lang/german.trans
              CURR_LOCALE="de_DE.UTF-8"
              ;;
-       "11") source "./lang/french.trans"
+       "11") source "$filesdir"/lang/french.trans
              CURR_LOCALE="fr_FR.UTF-8"
              ;;
           *) exit 0
