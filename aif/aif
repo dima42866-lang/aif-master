@@ -61,9 +61,6 @@ echo ""
 find_and_remode "$_aur_pkg_folder"
 multilib_question
 check_requirements
-clear
-echo ""
-find_and_remode "$_aur_pkg_folder"
 greeting
     while true; do
           main_menu_online      
