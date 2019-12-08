@@ -28,7 +28,7 @@ vrf_cnt_fls()
     {
         [[ -e "$_aif_temp_folder" ]] || gt_cln_all
         wait
-        find "$_aif_temp_aur_dir" -maxdepth 1 -type f -exec cp -fa {} "$_aur_pkg_folder" \;
+        find "$_aif_temp_aur_dir" -maxdepth 1 -type f -exec cp -f {} "$_aur_pkg_folder"/ \;
         wait
     }
     echo -e -n "\n\e[1;37mПроверка наличия обязательных директорий и файлов.\e[0m\n"
@@ -39,9 +39,9 @@ vrf_cnt_fls()
         echo -e -n "\n\e[1;32m$_aur_pkg_folder/\n\e[1;37mThe required directory is exists.\e[0m"
         outin_success
         echo ""
-        _temp=$(find "$_aur_pkg_folder" -maxdepth 1 -type f | grep -iv "windows" | wc -l)
+        _temp=$(find "$_aur_pkg_folder" -maxdepth 1 -type f | grep -Eiv "windowsfonts" | wc -l)
         if [ $_temp  -le 1 ]; then
-            echo -e -n "\n\e[1;31m$_aur_pkg_folder\n\e[1;37mВ директории менее 2 файлов.\nЭто может нарушить работы программы.\e[1;0m"
+            echo -e -n "\n\e[1;31m$_aur_pkg_folder\n\e[1;37mВ директории менее 2 файлов.\nЭто может нарушить работу программы.\e[1;0m"
             outin_failure
             echo -e -n "\n\e[1;31m$_aur_pkg_folder\n\e[1;37mThere are less than 2 files in the directory.\nIt may interfere with the operation of the program.\e[1;0m"
             outin_failure
@@ -53,7 +53,7 @@ vrf_cnt_fls()
         if [[ -e "$_eml_folder" ]]; then
             _temp=$(find "$_eml_folder" -maxdepth 1 -type f | wc -l)
             if [ $_temp  -le 1 ]; then
-                echo -e -n "\n\e[1;31m$_eml_folder\n\e[1;37mВ директории менее 2 файлов.\nЭто может нарушить работы программы.\e[1;0m"
+                echo -e -n "\n\e[1;31m$_eml_folder\n\e[1;37mВ директории менее 2 файлов.\nЭто может нарушить работу программы.\e[1;0m"
                 outin_failure
                 echo -e -n "\n\e[1;31m$_eml_folder\n\e[1;37mThere are less than 2 files in the directory.\nIt may interfere with the operation of the program.\e[1;0m"
                 outin_failure
@@ -75,7 +75,7 @@ vrf_cnt_fls()
         if [[ -e "$_pkg_manager_folder" ]]; then
             _temp=$(find "$_pkg_manager_folder" -maxdepth 1 -type f | wc -l)
             if [ $_temp  -le 2 ]; then
-                echo -e -n "\n\e[1;31m$_pkg_manager_folder\n\e[1;37mВ директории менее 3 файлов.\nЭто может нарушить работы программы.\e[1;0m"
+                echo -e -n "\n\e[1;31m$_pkg_manager_folder\n\e[1;37mВ директории менее 3 файлов.\nЭто может нарушить работу программы.\e[1;0m"
                 outin_failure
                 echo -e -n "\n\e[1;31m$_pkg_manager_folder\n\e[1;37mThere are less than 3 files in the directory.\nIt may interfere with the operation of the program.\e[1;0m"
                 outin_failure
