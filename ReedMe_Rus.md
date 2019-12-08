@@ -28,6 +28,7 @@ E-Mail: maximalis171091@yandex.ru
 Достаточно сделать один из файлов - испольняемым и запустить его непосредственно в консоли.
 
 $ chmod ugo+x aif-installation/aif
+
 $ sudo sh aif-installation/aif
 
 Далее просто следуйсте указаниям мастер-установки.
