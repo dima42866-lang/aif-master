@@ -28,6 +28,7 @@ This script can be run from anywhere.
 It is enough to make one of the files - used and run it directly in the console.
 
 $ chmod ugo+x aif-installation/aif
+
 $ sudo sh aif-installation/aif
 
 Then just follow the instructions of the master installation.
