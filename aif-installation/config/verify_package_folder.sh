@@ -24,6 +24,13 @@ vrf_cnt_fls()
         cp -Rfa "$_aif_temp_pm_dir"/* "$_pkg_manager_folder"
         wait
     }
+    gt_cln_aur()
+    {
+        [[ -e "$_aif_temp_folder" ]] || gt_cln_all
+        wait
+        find "$_aif_temp_aur_dir" -maxdepth 1 -type f -exec cp -fa {} "$_aur_pkg_folder" \;
+        wait
+    }
     echo -e -n "\n\e[1;37mПроверка наличия обязательных директорий и файлов.\e[0m\n"
     echo -e -n "\e[1;37mCheck the availability of the required file and directories.\e[0m\n"
     if [[ -e "$_aur_pkg_folder" ]]; then
@@ -32,12 +39,23 @@ vrf_cnt_fls()
         echo -e -n "\n\e[1;32m$_aur_pkg_folder/\n\e[1;37mThe required directory is exists.\e[0m"
         outin_success
         echo ""
+        _temp=$(find "$_aur_pkg_folder" -maxdepth 1 -type f | grep -iv "windows" | wc -l)
+        if [ $_temp  -le 1 ]; then
+            echo -e -n "\n\e[1;31m$_aur_pkg_folder\n\e[1;37mВ директории менее 2 файлов.\nЭто может нарушить работы программы.\e[1;0m"
+            outin_failure
+            echo -e -n "\n\e[1;31m$_aur_pkg_folder\n\e[1;37mThere are less than 2 files in the directory.\nIt may interfere with the operation of the program.\e[1;0m"
+            outin_failure
+            echo -e -n "\n\e[1;37mНедостающие пакеты будут загружены из удаленного репозитория.\e[0m"
+            echo -e -n "\n\e[1;37mThe missing packages will be downloaded from the remote repository.\e[0m\n"
+            echo ""
+            gt_cln_aur
+        fi
         if [[ -e "$_eml_folder" ]]; then
             _temp=$(find "$_eml_folder" -maxdepth 1 -type f | wc -l)
-            if [ $_temp  -le 2 ]; then
-                echo -e -n "\n\e[1;31m$_eml_folder\n\e[1;37mВ директории менее 3 файлов.\nЭто может нарушить работы программы.\e[1;0m"
+            if [ $_temp  -le 1 ]; then
+                echo -e -n "\n\e[1;31m$_eml_folder\n\e[1;37mВ директории менее 2 файлов.\nЭто может нарушить работы программы.\e[1;0m"
                 outin_failure
-                echo -e -n "\n\e[1;31m$_eml_folder\n\e[1;37mThere are less than 3 files in the directory.\nIt may interfere with the operation of the program.\e[1;0m"
+                echo -e -n "\n\e[1;31m$_eml_folder\n\e[1;37mThere are less than 2 files in the directory.\nIt may interfere with the operation of the program.\e[1;0m"
                 outin_failure
                 echo -e -n "\n\e[1;37mНедостающие пакеты будут загружены из удаленного репозитория.\e[0m"
                 echo -e -n "\n\e[1;37mThe missing packages will be downloaded from the remote repository.\e[0m\n"
