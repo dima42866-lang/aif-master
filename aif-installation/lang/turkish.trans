@@ -668,3 +668,7 @@ _eml_pkg_bd="\nLütfen yüklemek için ihtiyacınız olan emülatörleri seçin!
 # Remove packages log
 _yesno_rmrf_ttl="Günlük dosyasını sil?"
 _yesno_rmrf_bd="\nPaketlerin uzak eski sürümleri için bir günlük dosyası oluşturuldu.\nBu günlük dosyasını sil?\n"
+
+# Remote repository
+_rmt_rpstr_ttl="Uzak depodan paketleri güncelleme"
+

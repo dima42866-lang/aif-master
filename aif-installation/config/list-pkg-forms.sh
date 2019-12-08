@@ -115,3 +115,12 @@ emulator_packages=(desmume gens mednafen mupen64plus pcsx2 ppsspp)
 _eml_folder="$filesdir/packages/emulators"
 _aur_pkg_folder="$filesdir/packages"
 _pkg_manager_folder="$filesdir/packages/package-manager"
+_rmt_rpstr_info="$filesdir/rmt.nfo"
+_aur_pkg_winfnts="$_aur_pkg_folder/windowsfonts.tar.gz"
+_aif_temp_folder="$filesdir/aif-temp"
+_aif_temp_aur_dir="$_aif_temp_folder/aif/packages"
+_aif_temp_eml_dir="$_aif_temp_aur_dir/emulators"
+_aif_temp_pm_dir="$_aif_temp_aur_dir/package-manager"
+_aif_temp_winfnts="$_aif_temp_aur_dir/windowsfonts.tar.gz"
+aif_master_git="https://github.com/maximalisimus/aif-master.git"
+

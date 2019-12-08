@@ -30,6 +30,7 @@ source "$filesdir"/config/package_function.sh                     # Setup local 
 source "$filesdir"/config/emulators_function.sh                   # Setup packages on emulators
 source "$filesdir"/config/remove_old_v_pkg_function.sh            # Remove duble package on old version
 source "$filesdir"/config/dependences_function.sh				  # Dependences for script
+source "$filesdir"/config/verify_package_folder.sh                # Check required folder and required files
 source "$filesdir"/modules/core-functions.sh                      # language, checks
 source "$filesdir"/modules/configuration-functions.sh             # Keyboard, locale, time zone, FSTAB, mkinitcpio, user controls
 source "$filesdir"/modules/system-partitioning.sh                 # managing partitions, installing the boot
@@ -56,6 +57,13 @@ if [[ $? != "0" ]]; then
 fi
 id_system
 select_language
+clear
+git --version 1>/dev/null 2>/dev/null
+if [[ $? != "0" ]]; then
+    sudo pacman -S git --noconfirm
+fi
+vrf_cnt_fls
+wait
 clear
 echo ""
 find_and_remode "$_aur_pkg_folder"

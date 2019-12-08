@@ -27,8 +27,8 @@ How to use this wizard?
 This script can be run from anywhere. 
 It is enough to make one of the files - used and run it directly in the console.
 
-$ chmod ugo+x aif/aif
-$ sudo sh aif/aif
+$ chmod ugo+x aif-installation/aif
+$ sudo sh aif-installation/aif
 
 Then just follow the instructions of the master installation.
 

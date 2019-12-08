@@ -643,3 +643,7 @@ _eml_pkg_bd="\nPor favor, seleccione as emuladores para instalar!\n"
 # Remove packages log
 _yesno_rmrf_ttl="Remover o arquivo de Log?"
 _yesno_rmrf_bd="\nCriado um log do arquivo de área de versões mais antigas do pacote.\nRemover este arquivo de log?\n"
+
+# Remote repository
+_rmt_rpstr_ttl="A atualização dos pacotes do repositório remoto"
+

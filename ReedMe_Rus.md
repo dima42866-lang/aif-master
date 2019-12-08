@@ -27,8 +27,8 @@ E-Mail: maximalis171091@yandex.ru
 Данный скрипт можно запустить из любого места. 
 Достаточно сделать один из файлов - испольняемым и запустить его непосредственно в консоли.
 
-$ chmod ugo+x aif/aif
-$ sudo sh aif/aif
+$ chmod ugo+x aif-installation/aif
+$ sudo sh aif-installation/aif
 
 Далее просто следуйсте указаниям мастер-установки.
 
