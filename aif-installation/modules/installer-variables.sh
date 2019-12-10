@@ -60,6 +60,9 @@ _mem_msg_file="/tmp/msginfo.nfo"                                 # Information o
 _File_of_Config="/tmp/00-sysctl.conf"                             # Temp configuration swappiness
 _real_dir_swpns="${MOUNTPOINT}/etc/sysctl.d/"                      # Real dir to swappiness on config
 _real_swappiness="${MOUNTPOINT}/etc/sysctl.d/00-sysctl.conf"         # File of full path swappiness config to install system
+_mem_head=""
+_memory=""
+_mem_2=""
 
 declare -a _devices                                            # Array scan mnt mount devices variables declare
 declare -a _device_menu                                         # Array menu form on scan mnt mount devices variables declare
