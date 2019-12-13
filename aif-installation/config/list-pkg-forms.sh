@@ -101,7 +101,7 @@ _zsh_sh=(zsh zsh-completions)
 _fish_sh=(fish)
 #
 # User Package
-_archivers_pkg=(ark xarchiver unzip zip unrar p7zip)
+_archivers_pkg=(ark xarchiver unzip zip unrar p7zip file-roller)
 _ttf_theme_pkg=(gnome-icon-theme ttf-liberation ttf-dejavu opendesktop-fonts ttf-bitstream-vera ttf-arphic-ukai ttf-arphic-uming ttf-hanazono terminus-font breeze breeze-grub breeze-icons fontforge faenza-icon-theme adwaita-icon-theme alacarte)
 # gimp gimp-help-ru
 _gr_editor=(gimp)
