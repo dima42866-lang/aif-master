@@ -935,23 +935,23 @@ nvidia_search()
 
  # Create a basic xorg configuration file for NVIDIA proprietary drivers where installed
  # if that file does not already exist.
- if [[ $NVIDIA_INST == 1 ]] && [[ ! -e ${MOUNTPOINT}/etc/X11/xorg.conf.d/20-nvidia.conf ]]; then
-    echo -e -n "# /etc/X11/xorg.conf.d/20-nvidia.conf\n" > ${MOUNTPOINT}/etc/X11/xorg.conf.d/20-nvidia.conf
-    echo -e -n "Section \"Device\"\n" >> ${MOUNTPOINT}/etc/X11/xorg.conf.d/20-nvidia.conf
-    echo -e -n "\tIdentifier \"Nvidia Card\"\n" >> ${MOUNTPOINT}/etc/X11/xorg.conf.d/20-nvidia.conf
-    echo -e -n "\tDriver \"nvidia\"\n" >> ${MOUNTPOINT}/etc/X11/xorg.conf.d/20-nvidia.conf
-    echo -e -n "\tVendorName \"NVIDIA Corporation\"\n" >> ${MOUNTPOINT}/etc/X11/xorg.conf.d/20-nvidia.conf
-    echo -e -n "\tOption \"NoLogo\" \"true\"\n" >> ${MOUNTPOINT}/etc/X11/xorg.conf.d/20-nvidia.conf
-    echo -e -n "\t#Option \"UseEDID\" \"false\"\n" >> ${MOUNTPOINT}/etc/X11/xorg.conf.d/20-nvidia.conf
-    echo -e -n "\t#Option \"ConnectedMonitor\" \"DFP\"\n" >> ${MOUNTPOINT}/etc/X11/xorg.conf.d/20-nvidia.conf
-    echo -e -n "\t# ...\n" >> ${MOUNTPOINT}/etc/X11/xorg.conf.d/20-nvidia.conf
-    echo -e -n "EndSection\n" >> ${MOUNTPOINT}/etc/X11/xorg.conf.d/20-nvidia.conf
+ if [[ $NVIDIA_INST == 1 ]] && [[ ! -e "${MOUNTPOINT}/etc/X11/xorg.conf.d/20-nvidia.conf" ]]; then
+    echo -e -n "# /etc/X11/xorg.conf.d/20-nvidia.conf\n" > "${MOUNTPOINT}/etc/X11/xorg.conf.d/20-nvidia.conf"
+    echo -e -n "Section \"Device\"\n" >> "${MOUNTPOINT}/etc/X11/xorg.conf.d/20-nvidia.conf"
+    echo -e -n "\tIdentifier \"Nvidia Card\"\n" >> "${MOUNTPOINT}/etc/X11/xorg.conf.d/20-nvidia.conf"
+    echo -e -n "\tDriver \"nvidia\"\n" >> "${MOUNTPOINT}/etc/X11/xorg.conf.d/20-nvidia.conf"
+    echo -e -n "\tVendorName \"NVIDIA Corporation\"\n" >> "${MOUNTPOINT}/etc/X11/xorg.conf.d/20-nvidia.conf"
+    echo -e -n "\tOption \"NoLogo\" \"true\"\n" >> "${MOUNTPOINT}/etc/X11/xorg.conf.d/20-nvidia.conf"
+    echo -e -n "\t#Option \"UseEDID\" \"false\"\n" >> "${MOUNTPOINT}/etc/X11/xorg.conf.d/20-nvidia.conf"
+    echo -e -n "\t#Option \"ConnectedMonitor\" \"DFP\"\n" >> "${MOUNTPOINT}/etc/X11/xorg.conf.d/20-nvidia.conf"
+    echo -e -n "\t# ...\n" >> "${MOUNTPOINT}/etc/X11/xorg.conf.d/20-nvidia.conf"
+    echo -e -n "EndSection\n" >> "${MOUNTPOINT}/etc/X11/xorg.conf.d/20-nvidia.conf"
  fi
  
  # Where NVIDIA has been installed allow user to check and amend the file
  if [[ $NVIDIA_INST == 1 ]]; then
     dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_NvidiaConfTitle" --msgbox "$_NvidiaConfBody" 0 0
-    nano ${MOUNTPOINT}/etc/X11/xorg.conf.d/20-nvidia.conf
+    nano "${MOUNTPOINT}/etc/X11/xorg.conf.d/20-nvidia.conf"
  fi
 
 }
