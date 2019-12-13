@@ -29,17 +29,17 @@ mirror_by_country() {
  # Get latest mirror list and save to tmpfile
  dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_MirrorGenTitle" --infobox "$_MirrorGenBody" 0 0
   
- curl -so ${MIRROR_TEMP} ${URL} 2>/tmp/.errlog
+ curl -so "${MIRROR_TEMP}" "${URL}" 2>/tmp/.errlog
  check_for_error
- sed -i 's/^#Server/Server/g' ${MIRROR_TEMP}
- nano ${MIRROR_TEMP}
+ sed -i 's/^#Server/Server/g' "${MIRROR_TEMP}"
+ nano "${MIRROR_TEMP}"
 
  dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --yesno "$_MirrorGenQ" 0 0
 
  if [[ $? -eq 0 ]];then
-    mv -f /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.orig
-    mv -f ${MIRROR_TEMP} /etc/pacman.d/mirrorlist
-    chmod +r /etc/pacman.d/mirrorlist
+    mv -f "/etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.orig"
+    mv -f "${MIRROR_TEMP}" "/etc/pacman.d/mirrorlist"
+    chmod +r "/etc/pacman.d/mirrorlist"
     dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --infobox "$_DoneMsg" 0 0
     sleep 2
  else
@@ -58,7 +58,7 @@ dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_MirrorlistTitle" \
     case $(cat ${ANSWER}) in
         "1") mirror_by_country
              ;;
-        "2") nano /etc/pacman.d/mirrorlist
+        "2") nano "/etc/pacman.d/mirrorlist"
              ;;
         "3") dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_MirrorRankTitle" --infobox "$_MirrorRankBody" 0 0
              if [[ $_mlpcrm == "0" ]]; then
@@ -68,20 +68,20 @@ dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_MirrorlistTitle" \
                 _list_rank_mirror=$(check_s_lst_pkg "${_rank_mirror[*]}")
                 wait
                 if [[ ${_list_rank_mirror[*]} != "" ]]; then
-                    pacman -Qs ${_list_rank_mirror[*]} 1>/dev/null 2>/dev/null
-                    [[ $? != "0" ]] && sudo pacman -S ${_list_rank_mirror[*]} --noconfirm
+                    pacman -Qs "${_list_rank_mirror[*]}" 1>/dev/null 2>/dev/null
+                    [[ $? != "0" ]] && sudo pacman -S "${_list_rank_mirror[*]}" --noconfirm
                 fi
                 wait
                 clear
             fi  
-             cp -f /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup
-             rankmirrors -n 10 /etc/pacman.d/mirrorlist.backup > /etc/pacman.d/mirrorlist 2>/tmp/.errlog
+             cp -f "/etc/pacman.d/mirrorlist" "/etc/pacman.d/mirrorlist.backup"
+             rankmirrors -n 10 "/etc/pacman.d/mirrorlist.backup" > "/etc/pacman.d/mirrorlist" 2>/tmp/.errlog
              check_for_error
              dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --infobox "$_DoneMsg" 0 0
              sleep 2
              ;;
-         "4") if [[ -e /etc/pacman.d/mirrorlist.orig ]]; then       
-                 mv -f /etc/pacman.d/mirrorlist.orig /etc/pacman.d/mirrorlist
+         "4") if [[ -e "/etc/pacman.d/mirrorlist.orig" ]]; then       
+                 mv -f "/etc/pacman.d/mirrorlist.orig" "/etc/pacman.d/mirrorlist"
                  dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --msgbox "$_MirrorRestDone" 0 0
               else
                  dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_MirrorNoneTitle" --msgbox "$_MirrorNoneBody" 0 0
