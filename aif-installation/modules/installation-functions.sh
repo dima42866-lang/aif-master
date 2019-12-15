@@ -955,38 +955,7 @@ nvidia_search()
  fi
 
 }
-fixed_deepin_desktop()
-{
-    # /etc/systemd/system/resume@.service
-    echo "# /etc/systemd/system/resume@.service" >> "${MOUNTPOINT}/etc/systemd/system/resume@.service"
-    echo "[Unit]" >> "${MOUNTPOINT}/etc/systemd/system/resume@.service"
-    echo "Description=User resume actions" >> "${MOUNTPOINT}/etc/systemd/system/resume@.service"
-    echo "After=suspend.target" >> "${MOUNTPOINT}/etc/systemd/system/resume@.service"
-    echo "" >> "${MOUNTPOINT}/etc/systemd/system/resume@.service"
-    echo "[Service]" >> "${MOUNTPOINT}/etc/systemd/system/resume@.service"
-    echo "User=%I" >> "${MOUNTPOINT}/etc/systemd/system/resume@.service"
-    echo "Type=simple" >> "${MOUNTPOINT}/etc/systemd/system/resume@.service"
-    echo "ExecStart=/usr/bin/deepin-wm-restart.sh" >> "${MOUNTPOINT}/etc/systemd/system/resume@.service"
-    echo "" >> "${MOUNTPOINT}/etc/systemd/system/resume@.service"
-    echo "[Install]" >> "${MOUNTPOINT}/etc/systemd/system/resume@.service"
-    echo "WantedBy=suspend.target" >> "${MOUNTPOINT}/etc/systemd/system/resume@.service"
-    
-    # /usr/bin/deepin-wm-restart.sh
-    echo "#!/bin/bash" >> "${MOUNTPOINT}/usr/bin/deepin-wm-restart.sh"
-    echo "#" >> "${MOUNTPOINT}/usr/bin/deepin-wm-restart.sh"
-    echo "# /usr/bin/deepin-wm-restart.sh" >> "${MOUNTPOINT}/usr/bin/deepin-wm-restart.sh"
-    echo "export DISPLAY=:0" >> "${MOUNTPOINT}/usr/bin/deepin-wm-restart.sh"
-    echo "deepin-wm --replace" >> "${MOUNTPOINT}/usr/bin/deepin-wm-restart.sh"
-    chmod +x "${MOUNTPOINT}/usr/bin/deepin-wm-restart.sh"
 
-    # systemctl enable resume@.service
-    _users_list=$(ls ${MOUNTPOINT}/home/ | sed "s/lost+found//")
-    for k in ${_users_list[*]}; do
-        arch-chroot $MOUNTPOINT /bin/bash -c "systemctl enable resume@$k" 2>>/tmp/.errlog
-    done
-    check_for_error
-    unset _users_list
-}
 
 install_de_wm() {
 
@@ -1005,49 +974,45 @@ install_de_wm() {
         clear
         for i in ${_list_d_menu[*]}; do
             case $i in
-                "${_d_menu[0]}") _dm_desktop_menu="${_dm_desktop_menu} ${_desktop_menu[0]}" # deepin
+                "${_d_menu[0]}") _dm_desktop_menu="${_dm_desktop_menu} ${_desktop_menu[0]}" # cinnamon
                     ;;
-                "${_d_menu[1]}") _dm_desktop_menu="${_dm_desktop_menu} ${_desktop_menu[1]}" # deepin+depping-extra
+                "${_d_menu[1]}") _dm_desktop_menu="${_dm_desktop_menu} ${_desktop_menu[1]}" # enlightenment
                     ;;
-                "${_d_menu[2]}") _dm_desktop_menu="${_dm_desktop_menu} ${_desktop_menu[2]}" # cinnamon
+                "${_d_menu[2]}") _dm_desktop_menu="${_dm_desktop_menu} ${_desktop_menu[2]}" # gnome-shell
                     ;;
-                "${_d_menu[3]}") _dm_desktop_menu="${_dm_desktop_menu} ${_desktop_menu[3]}" # enlightenment
+                "${_d_menu[3]}") _dm_desktop_menu="${_dm_desktop_menu} ${_desktop_menu[3]}" # gnome
                     ;;
-                "${_d_menu[4]}") _dm_desktop_menu="${_dm_desktop_menu} ${_desktop_menu[4]}" # gnome-shell
+                "${_d_menu[4]}") _dm_desktop_menu="${_dm_desktop_menu} ${_desktop_menu[4]}" # gnome-extra
                     ;;
-                "${_d_menu[5]}") _dm_desktop_menu="${_dm_desktop_menu} ${_desktop_menu[5]}" # gnome
+                "${_d_menu[5]}") _dm_desktop_menu="${_dm_desktop_menu} ${_desktop_menu[5]}" # plasma-desktop
                     ;;
-                "${_d_menu[6]}") _dm_desktop_menu="${_dm_desktop_menu} ${_desktop_menu[6]}" # gnome-extra
+                "${_d_menu[6]}") _dm_desktop_menu="${_dm_desktop_menu} ${_desktop_menu[6]}" # plasma
                     ;;
-                "${_d_menu[7]}") _dm_desktop_menu="${_dm_desktop_menu} ${_desktop_menu[7]}" # plasma-desktop
+                "${_d_menu[7]}") _dm_desktop_menu="${_dm_desktop_menu} ${_desktop_menu[7]}" # lxde
                     ;;
-                "${_d_menu[8]}") _dm_desktop_menu="${_dm_desktop_menu} ${_desktop_menu[8]}" # plasma
+                "${_d_menu[8]}") _dm_desktop_menu="${_dm_desktop_menu} ${_desktop_menu[8]}" # lxqt
                     ;;
-                "${_d_menu[9]}") _dm_desktop_menu="${_dm_desktop_menu} ${_desktop_menu[9]}" # lxde
+                "${_d_menu[9]}") _dm_desktop_menu="${_dm_desktop_menu} ${_desktop_menu[9]}" # mate
                     ;;
-                "${_d_menu[10]}") _dm_desktop_menu="${_dm_desktop_menu} ${_desktop_menu[10]}" # lxqt
+                "${_d_menu[10]}") _dm_desktop_menu="${_dm_desktop_menu} ${_desktop_menu[10]}" # mate-extra
                     ;;
-                "${_d_menu[11]}") _dm_desktop_menu="${_dm_desktop_menu} ${_desktop_menu[11]}" # mate
+                "${_d_menu[11]}") _dm_desktop_menu="${_dm_desktop_menu} ${_desktop_menu[11]}" # xfce4
                     ;;
-                "${_d_menu[12]}") _dm_desktop_menu="${_dm_desktop_menu} ${_desktop_menu[12]}" # mate-extra
+                "${_d_menu[12]}") _dm_desktop_menu="${_dm_desktop_menu} ${_desktop_menu[12]}" # xfce4-goodies
                     ;;
-                "${_d_menu[13]}") _dm_desktop_menu="${_dm_desktop_menu} ${_desktop_menu[13]}" # xfce4
+                "${_d_menu[13]}") _dm_desktop_menu="${_dm_desktop_menu} ${_desktop_menu[13]}" # awesome
                     ;;
-                "${_d_menu[14]}") _dm_desktop_menu="${_dm_desktop_menu} ${_desktop_menu[14]}" # xfce4-goodies
+                "${_d_menu[14]}") _dm_desktop_menu="${_dm_desktop_menu} ${_desktop_menu[14]}" # fluxbox
                     ;;
-                "${_d_menu[15]}") _dm_desktop_menu="${_dm_desktop_menu} ${_desktop_menu[15]}" # awesome
+                "${_d_menu[15]}") _dm_desktop_menu="${_dm_desktop_menu} ${_desktop_menu[15]}" # i3-wm
                     ;;
-                "${_d_menu[16]}") _dm_desktop_menu="${_dm_desktop_menu} ${_desktop_menu[16]}" # fluxbox
+                "${_d_menu[16]}") _dm_desktop_menu="${_dm_desktop_menu} ${_desktop_menu[16]}" # icewm
                     ;;
-                "${_d_menu[17]}") _dm_desktop_menu="${_dm_desktop_menu} ${_desktop_menu[17]}" # i3-wm
+                "${_d_menu[17]}") _dm_desktop_menu="${_dm_desktop_menu} ${_desktop_menu[17]}" # openbox
                     ;;
-                "${_d_menu[18]}") _dm_desktop_menu="${_dm_desktop_menu} ${_desktop_menu[18]}" # icewm
+                "${_d_menu[18]}") _dm_desktop_menu="${_dm_desktop_menu} ${_desktop_menu[18]}" # pekwm
                     ;;
-                "${_d_menu[19]}") _dm_desktop_menu="${_dm_desktop_menu} ${_desktop_menu[19]}" # openbox
-                    ;;
-                "${_d_menu[20]}") _dm_desktop_menu="${_dm_desktop_menu} ${_desktop_menu[20]}" # pekwm
-                    ;;
-                "${_d_menu[21]}") _dm_desktop_menu="${_dm_desktop_menu} ${_desktop_menu[21]}" # windowmaker
+                "${_d_menu[19]}") _dm_desktop_menu="${_dm_desktop_menu} ${_desktop_menu[19]}" # windowmaker
                     ;;
             esac
         done
@@ -1058,29 +1023,32 @@ install_de_wm() {
     fi
    
    dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_InstDETitle" --menu "$_InstDEBody" 0 0 16 ${_list_dm_menu} 2>${ANSWER}
-       
+   
+    #dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_InstDETitle" \
+    #--menu "$_InstDEBody" 0 0 11 \
+    #"1" $"Cinnamon" \
+    #"2" $"Enlightenment" \
+    #"3" $"Gnome-Shell (minimal)" \
+    #"4" $"Gnome" \
+    #"5" $"Gnome + Extras" \
+    #"6" $"KDE 5 Base (minimal)" \
+    #"7" $"KDE 5" \
+    #"8" $"LXDE" \
+    #"9" $"LXQT" \
+    #"10" $"MATE" \
+    #"11" $"MATE + Extras" \
+    #"12" $"Xfce" \
+    #"13" $"Xfce + Extras" \
+    #"14" $"Awesome WM" \
+    #"15" $"Fluxbox WM" \
+    #"16" $"i3 WM" \
+    #"17" $"Ice WM" \
+    #"18" $"Openbox WM" \
+    #"19" $"Pek WM" \
+    #"20" $"WindowMaker WM" 2>${ANSWER}
+
    case $(cat ${ANSWER}) in
-        "${_desktop_menu[0]}") # Deepin
-             clear
-             info_search_pkg
-            _list_deepin_pkg=$(check_s_lst_pkg "${_deepin_pkg[*]}")
-            wait
-            clear
-            [[ ${_list_deepin_pkg[*]} != "" ]] && pacstrap ${MOUNTPOINT} ${_list_deepin_pkg[*]} 2>/tmp/.errlog
-            LIGHTDM_INSTALLED=1
-            fixed_deepin_desktop
-             ;;
-        "${_desktop_menu[1]}") # Deepin+Deepin-Extra
-             clear
-             info_search_pkg
-            _list_deepine_pkg=$(check_s_lst_pkg "${_deepine_pkg[*]}")
-            wait
-            clear
-            [[ ${_list_deepine_pkg[*]} != "" ]] && pacstrap ${MOUNTPOINT} ${_list_deepine_pkg[*]} 2>/tmp/.errlog
-            LIGHTDM_INSTALLED=1
-            fixed_deepin_desktop
-             ;;
-        "${_desktop_menu[2]}") # Cinnamon
+        "${_desktop_menu[0]}") # Cinnamon
              clear
              info_search_pkg
             _list_cinnamon_pkg=$(check_s_lst_pkg "${_cinnamon_pkg[*]}")
@@ -1088,7 +1056,7 @@ install_de_wm() {
             clear
             [[ ${_list_cinnamon_pkg[*]} != "" ]] && pacstrap ${MOUNTPOINT} ${_list_cinnamon_pkg[*]} 2>/tmp/.errlog
              ;;
-        "${_desktop_menu[3]}") # Enlightement
+        "${_desktop_menu[1]}") # Enlightement
              clear
              info_search_pkg
             _list_enlightenment_pkg=$(check_s_lst_pkg "${_enlightenment_pkg[*]}")
@@ -1096,7 +1064,7 @@ install_de_wm() {
             clear
             [[ ${_list_enlightenment_pkg[*]} != "" ]] && pacstrap ${MOUNTPOINT} ${_list_enlightenment_pkg[*]} 2>/tmp/.errlog
              ;;
-        "${_desktop_menu[4]}") # Gnome-Shell
+        "${_desktop_menu[2]}") # Gnome-Shell
              clear
              info_search_pkg
              _list_gnome_shell_pkg=$(check_s_lst_pkg "${_gnome_shell_pkg[*]}")
@@ -1105,7 +1073,7 @@ install_de_wm() {
              [[ ${_list_gnome_shell_pkg[*]} != "" ]] && pacstrap ${MOUNTPOINT} ${_list_gnome_shell_pkg[*]} 2>/tmp/.errlog
              GNOME_INSTALLED=1
              ;;
-        "${_desktop_menu[5]}") # Gnome
+        "${_desktop_menu[3]}") # Gnome
              clear
              info_search_pkg
             _list_gnome_pkg=$(check_s_lst_pkg "${_gnome_pkg[*]}")
@@ -1115,7 +1083,7 @@ install_de_wm() {
            
              GNOME_INSTALLED=1
              ;;            
-        "${_desktop_menu[6]}") # Gnome + Extras
+        "${_desktop_menu[4]}") # Gnome + Extras
              clear
              info_search_pkg
             _list_gnome_extras_pkg=$(check_s_lst_pkg "${_gnome_extras_pkg[*]}")
@@ -1125,7 +1093,7 @@ install_de_wm() {
            
              GNOME_INSTALLED=1
              ;;
-        "${_desktop_menu[7]}") # KDE5 BASE
+        "${_desktop_menu[5]}") # KDE5 BASE
              clear
             info_search_pkg
             _list_kde5base_pkg=$(check_s_lst_pkg "${_kde5base_pkg[*]}")
@@ -1133,7 +1101,7 @@ install_de_wm() {
             clear
             [[ ${_list_kde5base_pkg[*]} != "" ]] && pacstrap ${MOUNTPOINT} ${_list_kde5base_pkg[*]} 2>/tmp/.errlog
              ;;
-        "${_desktop_menu[8]}") # KDE5 
+        "${_desktop_menu[6]}") # KDE5 
              clear
              info_search_pkg
             _list_kde_pkg=$(check_s_lst_pkg "${_kde_pkg[*]}")
@@ -1148,7 +1116,7 @@ install_de_wm() {
                
              KDE_INSTALLED=1
              ;;
-         "${_desktop_menu[9]}") # LXDE
+         "${_desktop_menu[7]}") # LXDE
               clear
               info_search_pkg
               _list_lxde_pkg=$(check_s_lst_pkg "${_lxde_pkg[*]}")
@@ -1157,7 +1125,7 @@ install_de_wm() {
               [[ ${_list_lxde_pkg[*]} != "" ]] && pacstrap ${MOUNTPOINT} ${_list_lxde_pkg[*]} 2>/tmp/.errlog
               LXDE_INSTALLED=1
              ;;
-         "${_desktop_menu[10]}") # LXQT
+         "${_desktop_menu[8]}") # LXQT
               clear
               info_search_pkg
             _list_lxqt_pkg=$(check_s_lst_pkg "${_lxqt_pkg[*]}")
@@ -1166,7 +1134,7 @@ install_de_wm() {
             [[ ${_list_lxqt_pkg[*]} != "" ]] && pacstrap ${MOUNTPOINT} ${_list_lxqt_pkg[*]} 2>/tmp/.errlog
               LXQT_INSTALLED=1
               ;;
-         "${_desktop_menu[11]}") # MATE
+         "${_desktop_menu[9]}") # MATE
               clear
               info_search_pkg
             _list_mate_pkg=$(check_s_lst_pkg "${_mate_pkg[*]}")
@@ -1174,14 +1142,14 @@ install_de_wm() {
             clear
             [[ ${_list_mate_pkg[*]} != "" ]] && pacstrap ${MOUNTPOINT} ${_list_mate_pkg[*]} 2>/tmp/.errlog
              ;;
-        "${_desktop_menu[12]}") # MATE + Extras
+        "${_desktop_menu[10]}") # MATE + Extras
                clear
               info_search_pkg
             _list_mateextra_pkg=$(check_s_lst_pkg "${_mateextra_pkg[*]}")
             wait
             [[ ${_list_mateextra_pkg[*]} != "" ]] && pacstrap ${MOUNTPOINT} ${_list_mateextra_pkg[*]} 2>/tmp/.errlog
              ;;                 
-        "${_desktop_menu[13]}") # Xfce
+        "${_desktop_menu[11]}") # Xfce
               clear
               info_search_pkg
             _list_xfce4_pkg=$(check_s_lst_pkg "${_xfce4_pkg[*]}")
@@ -1189,7 +1157,7 @@ install_de_wm() {
             clear
             [[ ${_list_xfce4_pkg[*]} != "" ]] && pacstrap ${MOUNTPOINT} ${_list_xfce4_pkg[*]} 2>/tmp/.errlog
              ;;            
-        "${_desktop_menu[14]}") # Xfce + Extras
+        "${_desktop_menu[12]}") # Xfce + Extras
               clear
               info_search_pkg
             _list_xfce4_extra_pkg=$(check_s_lst_pkg "${_xfce4_extra_pkg[*]}")
@@ -1197,7 +1165,7 @@ install_de_wm() {
             clear
             [[ ${_list_xfce4_extra_pkg[*]} != "" ]] && pacstrap ${MOUNTPOINT} ${_list_xfce4_extra_pkg[*]} 2>/tmp/.errlog
              ;;
-        "${_desktop_menu[15]}") # Awesome
+        "${_desktop_menu[13]}") # Awesome
               clear
               info_search_pkg
             _list_awesome_pkg=$(check_s_lst_pkg "${_awesome_pkg[*]}")
@@ -1205,7 +1173,7 @@ install_de_wm() {
             clear
             [[ ${_list_awesome_pkg[*]} != "" ]] && pacstrap ${MOUNTPOINT} ${_list_awesome_pkg[*]} 2>/tmp/.errlog
              ;;
-        "${_desktop_menu[16]}") #Fluxbox
+        "${_desktop_menu[14]}") #Fluxbox
               clear
               info_search_pkg
             _list_fluxbox_pkg=$(check_s_lst_pkg "${_fluxbox_pkg[*]}")
@@ -1213,7 +1181,7 @@ install_de_wm() {
             clear
             [[ ${_list_fluxbox_pkg[*]} != "" ]] && pacstrap ${MOUNTPOINT} ${_list_fluxbox_pkg[*]} 2>/tmp/.errlog
              ;; 
-        "${_desktop_menu[17]}") #i3
+        "${_desktop_menu[15]}") #i3
               clear
               info_search_pkg
             _list_i3wm_pkg=$(check_s_lst_pkg "${_i3wm_pkg[*]}")
@@ -1221,7 +1189,7 @@ install_de_wm() {
             clear
             [[ ${_list_i3wm_pkg[*]} != "" ]] && pacstrap ${MOUNTPOINT} ${_list_i3wm_pkg[*]} 2>/tmp/.errlog
              ;; 
-        "${_desktop_menu[18]}") #IceWM
+        "${_desktop_menu[16]}") #IceWM
               clear
               info_search_pkg
             _list_icewm_pkg=$(check_s_lst_pkg "${_icewm_pkg[*]}")
@@ -1229,7 +1197,7 @@ install_de_wm() {
             clear
             [[ ${_list_icewm_pkg[*]} != "" ]] && pacstrap ${MOUNTPOINT} ${_list_icewm_pkg[*]} 2>/tmp/.errlog
              ;; 
-        "${_desktop_menu[19]}") #Openbox
+        "${_desktop_menu[17]}") #Openbox
               clear
               info_search_pkg
             _list_openbox_pkg=$(check_s_lst_pkg "${_openbox_pkg[*]}")
@@ -1237,7 +1205,7 @@ install_de_wm() {
             clear
             [[ ${_list_openbox_pkg[*]} != "" ]] && pacstrap ${MOUNTPOINT} ${_list_openbox_pkg[*]} 2>/tmp/.errlog
              ;; 
-        "${_desktop_menu[20]}") #PekWM
+        "${_desktop_menu[18]}") #PekWM
               clear
               info_search_pkg
             _list_pekwm_pkg=$(check_s_lst_pkg "${_pekwm_pkg[*]}")
@@ -1245,7 +1213,7 @@ install_de_wm() {
             clear
             [[ ${_list_pekwm_pkg[*]} != "" ]] && pacstrap ${MOUNTPOINT} ${_list_pekwm_pkg[*]} 2>/tmp/.errlog
              ;;
-        "${_desktop_menu[21]}") #WindowMaker
+        "${_desktop_menu[19]}") #WindowMaker
              clear
              info_search_pkg
             _list_windowmaker_pkg=$(check_s_lst_pkg "${_windowmaker_pkg[*]}")
@@ -1266,6 +1234,20 @@ install_dm() {
 # Function to save repetition
 dm_menu(){
 
+    #if [[ _dm_menu_once == 0 ]]; then
+    #   _dm_menu_once=1
+    #   clear
+    #   info_search_pkg
+    #   _list_dm_menu=$(check_s_lst_pkg "${_user_dm_menu[*]}")
+    #   wait
+    #   clear
+    #   _listdm_menu=""
+    #   for i in ${_list_dm_menu[*]}; do
+    #       _listdm_menu="${_listdm_menu} $i -"
+    #   done
+    #fi
+    
+#   dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_DmChTitle" --menu "$_DmChBody" 0 0 5 ${_listdm_menu} 2>${ANSWER}
   dialog --default-item 3 --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_DmChTitle" \
                --menu "$_DmChBody" 0 0 4 \
                "1" $"LXDM" \
@@ -1305,6 +1287,17 @@ dm_menu(){
                    arch_chroot "systemctl enable sddm.service" >/dev/null 2>>/tmp/.errlog
                    DM="SDDM"
                    ;;
+             # "4") # GDM
+            #       clear
+            #       info_search_pkg
+            #       _list_gdm_pkg=$(check_s_lst_pkg "${_gdm_pkg[*]}")
+            #       wait
+            #       clear
+             #      pacstrap ${MOUNTPOINT} ${_list_gdm_pkg[*]} 2>/tmp/.errlog
+             #      # arch_chroot "gdm --example-config > /etc/gdm.conf"
+             #      arch_chroot "systemctl enable gdm.service" >/dev/null 2>>/tmp/.errlog
+             #      DM="GDM"
+            #       ;;
               "4") # SLiM
                    clear
                    info_search_pkg
@@ -1366,11 +1359,6 @@ dm_menu(){
             arch_chroot "systemctl enable lxdm.service" >/dev/null 2>/tmp/.errlog
             DM="LXDM"
 
-        # LightDM + Deepin
-        elif [[ $LIGHTDM_INSTALLED -eq 1 ]]; then
-            arch_chroot "systemctl enable lightdm.service" >/dev/null 2>>/tmp/.errlog
-            DM="LightDM"
-            sed -i '/\[Seat:\*\]/a \greeter-session=lightdm-deepin-greeter' "${MOUNTPOINT}/etc/lightdm/lightdm.conf"
          # Otherwise, select a DM      
          else 
            dm_menu      

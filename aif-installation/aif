@@ -20,7 +20,7 @@ ANSWER="/tmp/.aif"
 ABSOLUT_FILENAME=$(readlink -e "$0")
 filesdir=$(dirname "$ABSOLUT_FILENAME")
 # Save retyping
-VERSION="MAXIMALISIMUS Installation Framework 2.4"
+VERSION="MAXIMALISIMUS Installation Framework 2.3"
 
 source "$filesdir"/modules/installer-variables.sh                 # list of variables
 source "$filesdir"/config/list-pkg-forms.sh                       # list of packages for uses the script
