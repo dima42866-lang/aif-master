@@ -955,7 +955,38 @@ nvidia_search()
  fi
 
 }
+fixed_deepin_desktop()
+{
+    # /etc/systemd/system/resume@.service
+    echo "# /etc/systemd/system/resume@.service" >> "${MOUNTPOINT}/etc/systemd/system/resume@.service"
+    echo "[Unit]" >> "${MOUNTPOINT}/etc/systemd/system/resume@.service"
+    echo "Description=User resume actions" >> "${MOUNTPOINT}/etc/systemd/system/resume@.service"
+    echo "After=suspend.target" >> "${MOUNTPOINT}/etc/systemd/system/resume@.service"
+    echo "" >> "${MOUNTPOINT}/etc/systemd/system/resume@.service"
+    echo "[Service]" >> "${MOUNTPOINT}/etc/systemd/system/resume@.service"
+    echo "User=%I" >> "${MOUNTPOINT}/etc/systemd/system/resume@.service"
+    echo "Type=simple" >> "${MOUNTPOINT}/etc/systemd/system/resume@.service"
+    echo "ExecStart=/usr/bin/deepin-wm-restart.sh" >> "${MOUNTPOINT}/etc/systemd/system/resume@.service"
+    echo "" >> "${MOUNTPOINT}/etc/systemd/system/resume@.service"
+    echo "[Install]" >> "${MOUNTPOINT}/etc/systemd/system/resume@.service"
+    echo "WantedBy=suspend.target" >> "${MOUNTPOINT}/etc/systemd/system/resume@.service"
+    
+    # /usr/bin/deepin-wm-restart.sh
+    echo "#!/bin/bash" >> "${MOUNTPOINT}/usr/bin/deepin-wm-restart.sh"
+    echo "#" >> "${MOUNTPOINT}/usr/bin/deepin-wm-restart.sh"
+    echo "# /usr/bin/deepin-wm-restart.sh" >> "${MOUNTPOINT}/usr/bin/deepin-wm-restart.sh"
+    echo "export DISPLAY=:0" >> "${MOUNTPOINT}/usr/bin/deepin-wm-restart.sh"
+    echo "deepin-wm --replace" >> "${MOUNTPOINT}/usr/bin/deepin-wm-restart.sh"
+    chmod +x "${MOUNTPOINT}/usr/bin/deepin-wm-restart.sh"
 
+    # systemctl enable resume@.service
+    _users_list=$(ls ${MOUNTPOINT}/home/ | sed "s/lost+found//")
+    for k in ${_users_list[*]}; do
+        arch-chroot $MOUNTPOINT /bin/bash -c "systemctl enable resume@$k" 2>>/tmp/.errlog
+    done
+    check_for_error
+    unset _users_list
+}
 
 install_de_wm() {
 
@@ -1035,6 +1066,7 @@ install_de_wm() {
             clear
             [[ ${_list_deepin_pkg[*]} != "" ]] && pacstrap ${MOUNTPOINT} ${_list_deepin_pkg[*]} 2>/tmp/.errlog
             LIGHTDM_INSTALLED=1
+            fixed_deepin_desktop
              ;;
         "${_desktop_menu[1]}") # Deepin+Deepin-Extra
              clear
@@ -1044,6 +1076,7 @@ install_de_wm() {
             clear
             [[ ${_list_deepine_pkg[*]} != "" ]] && pacstrap ${MOUNTPOINT} ${_list_deepine_pkg[*]} 2>/tmp/.errlog
             LIGHTDM_INSTALLED=1
+            fixed_deepin_desktop
              ;;
         "${_desktop_menu[2]}") # Cinnamon
              clear
@@ -1335,6 +1368,7 @@ dm_menu(){
         elif [[ $LIGHTDM_INSTALLED -eq 1 ]]; then
             arch_chroot "systemctl enable lightdm.service" >/dev/null 2>>/tmp/.errlog
             DM="LightDM"
+            sed -i '/\[Seat:\*\]/a \greeter-session=lightdm-deepin-greeter' "${MOUNTPOINT}/etc/lightdm/lightdm.conf"
          # Otherwise, select a DM      
          else 
            dm_menu      
