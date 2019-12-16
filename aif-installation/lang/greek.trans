@@ -558,6 +558,7 @@ _yesno_iwp_body="\nΝα εγκαταστήσετε τα πακέτα: iw, wirele
 # Installl Shara Programm Qestion
 _yesno_shara_title="Εγκατάσταση στοιχείων κοινής χρήσης"
 _yesno_shara_body="\nΝα εγκαταστήσετε τα πακέτα: samba, smb4k, smbclient, smbnetfs ;\n"
+_yesno_tnc_body="\nΝα ορίσετε ένα σύνολο διαφορετικών ενώσεων για τον Manager;\n"
 
 # Shara and type of network connection
 _yn_s_tnc_ttl="Εγκατάσταση συνδέσεων Manager"

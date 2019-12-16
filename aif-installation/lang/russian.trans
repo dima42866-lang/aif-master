@@ -576,6 +576,7 @@ _yesno_shara_body="\nУстановить пакеты: samba, smb4k, smbclient,
 # Shara and type of network connection
 _yn_s_tnc_ttl="Установка соединений NetworkManager"
 _yn_s_tnc_bd="\nЖелаете выбрать типы дополнительных соединений для NetworkManager?\n"
+_yesno_tnc_body="\nУстановить набор различных соединений для NetworkManager?\n"
 
 # Information to search and installation on packages your system
 _nfo_search_pkg_title="Пожалуйста подождите"

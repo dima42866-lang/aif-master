@@ -546,6 +546,7 @@ _yesno_iwp_body="\nInstalleer pakketten: iw, draadess_tools, wpa_supplicant, wic
 # Installl Shara Programm Qestion
 _yesno_shara_title="Delen van onderdelen installeren"
 _yesno_shara_body="\nPakketten installeren: samba, smb4k, smbclient, smbnetfs ?\n"
+_yesno_tnc_body="\nEen set van verschillende verbindingen instellen voor netwerkbeheer?\n"
 
 # Shara and type of network connection
 _yn_s_tnc_ttl="Netwerkbeheerverbindingen opzetten"

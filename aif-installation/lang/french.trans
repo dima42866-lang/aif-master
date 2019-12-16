@@ -541,6 +541,7 @@ _yesno_iwp_body="\nInstaller les paquets: iw, wireless_tools, wpa_supplicant, wi
 # Installl Shara Programm Qestion
 _yesno_shara_title="Installation des composants de partage"
 _yesno_shara_body="\nInstaller les paquets: samba, smb4k, smbclient, smbnetfs ?\n"
+_yesno_tnc_body="\nInstaller un ensemble de connexions différentes pour NetworkManager?\n"
 
 # Shara and type of network connection
 _yn_s_tnc_ttl="Installation des connexions NetworkManager"

@@ -557,6 +557,7 @@ _yesno_iwp_body="\nInstall pakkerne: VV, trådløst værktøj, vpa_supplikant, v
 # Installl Shara Programm Qestion
 _yesno_shara_title="Install deling components"
 _yesno_shara_body="\nInstall pakkerne: samba, smb4k, smbclient, smbnetfs ?\n"
+_yesno_tnc_body="\nSæt et sæt forskellige forbindelser for Netværksmanager?\n"
 
 # Shara and type of network connection
 _yn_s_tnc_ttl="Opsætning af Netværksmanager-forbindelser"

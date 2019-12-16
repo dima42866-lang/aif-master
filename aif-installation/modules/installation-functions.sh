@@ -1559,19 +1559,22 @@ install_nm() {
            wait
            clear
            [[ ${_clist_list_net[*]} != "" ]] && pacstrap ${MOUNTPOINT} ${_clist_list_net[*]} 2>/tmp/.errlog
-           dialog --defaultno --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_yn_s_tnc_ttl" --yesno "$_yn_s_tnc_bd" 0 0
+           dialog --defaultno --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_yn_s_tnc_ttl" --yesno "$_yesno_tnc_body" 0 0
            if [[ $? -eq 0 ]]; then
-                _nm_tc_menu=""
-                for k in ${_clist_list_net_conn[*]}; do
-                    _nm_tc_menu="${_nm_tc_menu} $k - on"
-                done
-                dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_yesno_shara_title" --checklist "$_chl_xpkg_bd" 0 0 16 ${_nm_tc_menu} 2>${ANSWER}
-                _check_nm_tc=$(cat ${ANSWER})
-                [[ ${_check_nm_tc[*]} != "" ]] && pacstrap ${MOUNTPOINT} ${_check_nm_tc[*]} 2>/tmp/.errlog
-                wait
-           else
-                pacstrap ${MOUNTPOINT} ${_clist_list_net_conn[*]} 2>/tmp/.errlog
-                wait
+               dialog --defaultno --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_yn_s_tnc_ttl" --yesno "$_yn_s_tnc_bd" 0 0
+               if [[ $? -eq 0 ]]; then
+                    _nm_tc_menu=""
+                    for k in ${_clist_list_net_conn[*]}; do
+                        _nm_tc_menu="${_nm_tc_menu} $k - on"
+                    done
+                    dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_yesno_shara_title" --checklist "$_chl_xpkg_bd" 0 0 16 ${_nm_tc_menu} 2>${ANSWER}
+                    _check_nm_tc=$(cat ${ANSWER})
+                    [[ ${_check_nm_tc[*]} != "" ]] && pacstrap ${MOUNTPOINT} ${_check_nm_tc[*]} 2>/tmp/.errlog
+                    wait
+               else
+                    pacstrap ${MOUNTPOINT} ${_clist_list_net_conn[*]} 2>/tmp/.errlog
+                    wait
+               fi
            fi
            wait
            install_shara_components
@@ -1598,28 +1601,31 @@ install_nm() {
    else
       if [[ $NM_COMPONENT_INSTALLED -eq 0 ]]; then
            NM_COMPONENT_INSTALLED=1
-           clear
-           info_search_pkg
-           _list_net_connect=$(check_s_lst_pkg "${_net_connect_var[*]}")
-           wait
-           _clist_list_net_conn=$(check_q_lst_pkg "${_list_net_connect[*]}")
-           wait
-           clear
-           dialog --defaultno --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_yn_s_tnc_ttl" --yesno "$_yn_s_tnc_bd" 0 0
+           dialog --defaultno --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_yn_s_tnc_ttl" --yesno "$_yesno_tnc_body" 0 0
            if [[ $? -eq 0 ]]; then
-                _nm_tc_menu=""
-                for k in ${_clist_list_net_conn[*]}; do
-                    _nm_tc_menu="${_nm_tc_menu} $k - on"
-                done
-                dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_yesno_shara_title" --checklist "$_chl_xpkg_bd" 0 0 16 ${_nm_tc_menu} 2>${ANSWER}
-                _check_nm_tc=$(cat ${ANSWER})
-                [[ ${_check_nm_tc[*]} != "" ]] && pacstrap ${MOUNTPOINT} ${_check_nm_tc[*]} 2>/tmp/.errlog
-                wait
-           else
-                pacstrap ${MOUNTPOINT} ${_clist_list_net_conn[*]} 2>/tmp/.errlog
-                wait
+               clear
+               info_search_pkg
+               _list_net_connect=$(check_s_lst_pkg "${_net_connect_var[*]}")
+               wait
+               _clist_list_net_conn=$(check_q_lst_pkg "${_list_net_connect[*]}")
+               wait
+               clear
+               dialog --defaultno --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_yn_s_tnc_ttl" --yesno "$_yn_s_tnc_bd" 0 0
+               if [[ $? -eq 0 ]]; then
+                    _nm_tc_menu=""
+                    for k in ${_clist_list_net_conn[*]}; do
+                        _nm_tc_menu="${_nm_tc_menu} $k - on"
+                    done
+                    dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_yesno_shara_title" --checklist "$_chl_xpkg_bd" 0 0 16 ${_nm_tc_menu} 2>${ANSWER}
+                    _check_nm_tc=$(cat ${ANSWER})
+                    [[ ${_check_nm_tc[*]} != "" ]] && pacstrap ${MOUNTPOINT} ${_check_nm_tc[*]} 2>/tmp/.errlog
+                    wait
+               else
+                    pacstrap ${MOUNTPOINT} ${_clist_list_net_conn[*]} 2>/tmp/.errlog
+                    wait
+               fi
+               check_for_error
            fi
-           check_for_error
            install_shara_components
       fi
       dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_InstNMDoneTitle" --msgbox "$_InstNMErrBody" 0 0

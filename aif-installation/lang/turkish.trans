@@ -576,6 +576,7 @@ _yesno_iwp_body="\nPaketleri yükle: ıw, wireless_tools, wpa_supplicant, wıcd?
 # Installl Shara Programm Qestion
 _yesno_shara_title="Paylaşım bileşenlerini yükleme"
 _yesno_shara_body="\nPaketleri yükle: samba, smb4k, smbclient, smbnetfs ?\n"
+_yesno_tnc_body="\nNetworkManager için bir dizi farklı bağlantı kurun?\n"
 
 # Shara and type of network connection
 _yn_s_tnc_ttl="Networkmanager bağlantılarını yükleme"

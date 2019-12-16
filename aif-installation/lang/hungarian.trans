@@ -568,6 +568,7 @@ _yesno_iwp_body="\nCsomagok telepítése: iw, wireless_tools, wpa_supplicant, wi
 # Installl Shara Programm Qestion
 _yesno_shara_title="Megosztási összetevők telepítése"
 _yesno_shara_body="\nCsomagok telepítése: samba, smb4k, smbclient, smbnetfs ?\n"
+_yesno_tnc_body="\nKülönböző kapcsolatok beállítása a NetworkManager-hez?\n"
 
 # Shara and type of network connection
 _yn_s_tnc_ttl="A NetworkManager kapcsolatok beállítása"
