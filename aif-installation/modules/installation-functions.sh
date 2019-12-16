@@ -573,14 +573,6 @@ install_wireless_firmware() {
     
     dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_WirelssFirmTitle" --menu "$_WirelssFirmBody" 0 0 6 ${_wifi_menu} 2>${ANSWER}
     
-    #dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_WirelssFirmTitle" --menu "$_WirelssFirmBody" 0 0 6 \
-    #"1" "$_SeeWirelessDev" \
-    #"2" $"Broadcom 802.11b/g/n" \
-    #"3" $"Intel PRO/Wireless 2100" \
-    #"4" $"Intel PRO/Wireless 2200" \
-    #"5" "$_All" \
-    #"6" "$_Back" 2>${ANSWER}
-
     case $(cat ${ANSWER}) in
     "${_menu_wifi[0]}") # Identify the Wireless Device 
         lspci -k | grep -i -A 2 "network controller" > /tmp/.wireless
@@ -664,31 +656,58 @@ bluetooth_question()
 # This will run only once.
 install_alsa_xorg_input() {
 
-     dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_AXITitle" --msgbox "$_AXIBody" 0 0
-     clear
-     info_search_pkg
-     _list_x_pkg=$(check_s_lst_pkg "${_x_pkg[*]}")
-     wait
-     _clist_x_pkg=$(check_q_lst_pkg "${_list_x_pkg[*]}")
-     wait
-     clear
-     [[ ${_clist_x_pkg[*]} != "" ]] && pacstrap ${MOUNTPOINT} ${_clist_x_pkg[*]} 2>/tmp/.errlog
-     wait
-      pacstrap ${MOUNTPOINT} xorg 2>/tmp/.errlog
-      wait
-      sleep 5
-      wait
-     arch-chroot $MOUNTPOINT /bin/bash -c "Xorg -configure" 2>>/tmp/.errlog
-     wait
-      sleep 3
-      wait
-      sudo find ${MOUNTPOINT}/root/ -maxdepth 1 -iname "xorg.*" -exec cp -f {} ${MOUNTPOINT}/etc/X11/xorg.conf \;
-      arch-chroot $MOUNTPOINT /bin/bash -c "sudo find /root/ -maxdepth 1 -iname \"xorg.*\" -exec cp -f {} /etc/X11/xorg.conf \;" 2>>/tmp/.errlog
-     sudo cp -f ${MOUNTPOINT}/root/xorg.conf.new ${MOUNTPOINT}/etc/X11/xorg.conf
-     arch_chroot "sudo cp -f /root/xorg.conf.new /etc/X11/xorg.conf" 2>>/tmp/.errlog
-     wait
-     sleep 3
-     check_for_error
+    dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_AXITitle" --msgbox "$_AXIBody" 0 0
+    clear
+    info_search_pkg
+    _list_x_pkg=$(check_s_lst_pkg "${_x_pkg[*]}")
+    wait
+    _clist_x_pkg=$(check_q_lst_pkg "${_list_x_pkg[*]}")
+    wait
+    clear
+    if [[ ${_clist_x_pkg[*]} != "" ]]; then 
+        _x_pkg_menu_cl=""
+        for i in ${_clist_x_pkg[*]}; do
+            _x_pkg_menu_cl="${_x_pkg_menu_cl} $i - on"
+        done
+        dialog --defaultno --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_yn_alsa_pkg_ttl" --yesno "$_yn_alsa_pkg_bd" 0 0
+        if [[ $? -eq 0 ]]; then
+            dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_chl_xpkg_ttl" --checklist "$_chl_xpkg_bd" 0 0 16 ${_x_pkg_menu_cl} 2>${ANSWER}
+            _chl_x_pkg=$(cat ${ANSWER})
+            [[ ${_chl_x_pkg[*]} != "" ]] && pacstrap ${MOUNTPOINT} ${_chl_x_pkg[*]} 2>/tmp/.errlog  
+        else
+            pacstrap ${MOUNTPOINT} ${_clist_x_pkg[*]} 2>/tmp/.errlog
+        fi
+    fi
+	check_for_error
+    wait
+    dialog --defaultno --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_yn_x_pkg_ttl" --yesno "$_yn_alsa_pkg_bd" 0 0
+    if [[ $? -eq 0 ]]; then
+        _xorg_list=$(pacman -Sg xorg | sed 's/xorg //')
+        _xorg_pkg_menu=""
+        for j in ${_xorg_list[*]}; do
+            _xorg_pkg_menu="${_xorg_pkg_menu} $j - on"
+        done
+        dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_chl_xp_ttl" --checklist "$_chl_xpkg_bd" 0 0 16 ${_xorg_pkg_menu} 2>${ANSWER}
+        _chl_xorg_pkg=$(cat ${ANSWER})
+        [[ ${_chl_xorg_pkg[*]} != "" ]] && pacstrap ${MOUNTPOINT} ${_chl_xorg_pkg[*]} 2>/tmp/.errlog
+    else
+        pacstrap ${MOUNTPOINT} xorg 2>/tmp/.errlog
+    fi
+	check_for_error
+    wait
+    sleep 5
+    wait
+    arch-chroot $MOUNTPOINT /bin/bash -c "Xorg -configure" 2>>/tmp/.errlog
+    wait
+    sleep 3
+    wait
+    sudo find ${MOUNTPOINT}/root/ -maxdepth 1 -iname "xorg.*" -exec cp -f {} ${MOUNTPOINT}/etc/X11/xorg.conf \;
+    arch-chroot $MOUNTPOINT /bin/bash -c "sudo find /root/ -maxdepth 1 -iname \"xorg.*\" -exec cp -f {} /etc/X11/xorg.conf \;" 2>>/tmp/.errlog
+    sudo cp -f ${MOUNTPOINT}/root/xorg.conf.new ${MOUNTPOINT}/etc/X11/xorg.conf
+    arch_chroot "sudo cp -f /root/xorg.conf.new /etc/X11/xorg.conf" 2>>/tmp/.errlog
+    wait
+    sleep 3
+    check_for_error
      
      # copy the keyboard configuration file, if generated
      if [[ -e /tmp/00-keyboard.conf ]]; then
@@ -955,7 +974,43 @@ nvidia_search()
  fi
 
 }
+fixed_deepin_desktop()
+{
+    # /etc/systemd/system/resume@.service
+    echo "# /etc/systemd/system/resume@.service" >> "${MOUNTPOINT}/etc/systemd/system/resume@.service"
+    echo "[Unit]" >> "${MOUNTPOINT}/etc/systemd/system/resume@.service"
+    echo "Description=User resume actions" >> "${MOUNTPOINT}/etc/systemd/system/resume@.service"
+    echo "After=suspend.target" >> "${MOUNTPOINT}/etc/systemd/system/resume@.service"
+    echo "" >> "${MOUNTPOINT}/etc/systemd/system/resume@.service"
+    echo "[Service]" >> "${MOUNTPOINT}/etc/systemd/system/resume@.service"
+    echo "User=%I" >> "${MOUNTPOINT}/etc/systemd/system/resume@.service"
+    echo "Type=simple" >> "${MOUNTPOINT}/etc/systemd/system/resume@.service"
+    echo "ExecStart=/usr/bin/deepin-wm-restart.sh" >> "${MOUNTPOINT}/etc/systemd/system/resume@.service"
+    echo "" >> "${MOUNTPOINT}/etc/systemd/system/resume@.service"
+    echo "[Install]" >> "${MOUNTPOINT}/etc/systemd/system/resume@.service"
+    echo "WantedBy=suspend.target" >> "${MOUNTPOINT}/etc/systemd/system/resume@.service"
+    
+    # /usr/bin/deepin-wm-restart.sh
+    echo "#!/bin/bash" >> "${MOUNTPOINT}/usr/bin/deepin-wm-restart.sh"
+    echo "#" >> "${MOUNTPOINT}/usr/bin/deepin-wm-restart.sh"
+    echo "# /usr/bin/deepin-wm-restart.sh" >> "${MOUNTPOINT}/usr/bin/deepin-wm-restart.sh"
+    echo "export DISPLAY=:0" >> "${MOUNTPOINT}/usr/bin/deepin-wm-restart.sh"
+    echo "deepin-wm --replace" >> "${MOUNTPOINT}/usr/bin/deepin-wm-restart.sh"
+    chmod +x "${MOUNTPOINT}/usr/bin/deepin-wm-restart.sh"
 
+    # systemctl enable resume@.service
+    _users_list=$(ls ${MOUNTPOINT}/home/ | sed "s/lost+found//")
+    for k in ${_users_list[*]}; do
+        arch-chroot $MOUNTPOINT /bin/bash -c "systemctl enable resume@$k" 2>>/tmp/.errlog
+        _c_f_u=$(find "${MOUNTPOINT}/home/$k/" -maxdepth 1 -not -path '*/\.*' -type d | sed '1d' | wc -l)
+        if [[ ${_c_f_u[*]} == "0" ]]; then
+            mkdir -p "${MOUNTPOINT}/home/$k/Desktop"
+            mkdir -p "${MOUNTPOINT}/home/$k/Downloads"
+        fi
+    done
+    check_for_error
+    unset _users_list
+}
 
 install_de_wm() {
 
@@ -974,45 +1029,49 @@ install_de_wm() {
         clear
         for i in ${_list_d_menu[*]}; do
             case $i in
-                "${_d_menu[0]}") _dm_desktop_menu="${_dm_desktop_menu} ${_desktop_menu[0]}" # cinnamon
+                "${_d_menu[0]}") _dm_desktop_menu="${_dm_desktop_menu} ${_desktop_menu[0]}" # deepin
                     ;;
-                "${_d_menu[1]}") _dm_desktop_menu="${_dm_desktop_menu} ${_desktop_menu[1]}" # enlightenment
+                "${_d_menu[1]}") _dm_desktop_menu="${_dm_desktop_menu} ${_desktop_menu[1]}" # deepin+depping-extra
                     ;;
-                "${_d_menu[2]}") _dm_desktop_menu="${_dm_desktop_menu} ${_desktop_menu[2]}" # gnome-shell
+                "${_d_menu[2]}") _dm_desktop_menu="${_dm_desktop_menu} ${_desktop_menu[2]}" # cinnamon
                     ;;
-                "${_d_menu[3]}") _dm_desktop_menu="${_dm_desktop_menu} ${_desktop_menu[3]}" # gnome
+                "${_d_menu[3]}") _dm_desktop_menu="${_dm_desktop_menu} ${_desktop_menu[3]}" # enlightenment
                     ;;
-                "${_d_menu[4]}") _dm_desktop_menu="${_dm_desktop_menu} ${_desktop_menu[4]}" # gnome-extra
+                "${_d_menu[4]}") _dm_desktop_menu="${_dm_desktop_menu} ${_desktop_menu[4]}" # gnome-shell
                     ;;
-                "${_d_menu[5]}") _dm_desktop_menu="${_dm_desktop_menu} ${_desktop_menu[5]}" # plasma-desktop
+                "${_d_menu[5]}") _dm_desktop_menu="${_dm_desktop_menu} ${_desktop_menu[5]}" # gnome
                     ;;
-                "${_d_menu[6]}") _dm_desktop_menu="${_dm_desktop_menu} ${_desktop_menu[6]}" # plasma
+                "${_d_menu[6]}") _dm_desktop_menu="${_dm_desktop_menu} ${_desktop_menu[6]}" # gnome-extra
                     ;;
-                "${_d_menu[7]}") _dm_desktop_menu="${_dm_desktop_menu} ${_desktop_menu[7]}" # lxde
+                "${_d_menu[7]}") _dm_desktop_menu="${_dm_desktop_menu} ${_desktop_menu[7]}" # plasma-desktop
                     ;;
-                "${_d_menu[8]}") _dm_desktop_menu="${_dm_desktop_menu} ${_desktop_menu[8]}" # lxqt
+                "${_d_menu[8]}") _dm_desktop_menu="${_dm_desktop_menu} ${_desktop_menu[8]}" # plasma
                     ;;
-                "${_d_menu[9]}") _dm_desktop_menu="${_dm_desktop_menu} ${_desktop_menu[9]}" # mate
+                "${_d_menu[9]}") _dm_desktop_menu="${_dm_desktop_menu} ${_desktop_menu[9]}" # lxde
                     ;;
-                "${_d_menu[10]}") _dm_desktop_menu="${_dm_desktop_menu} ${_desktop_menu[10]}" # mate-extra
+                "${_d_menu[10]}") _dm_desktop_menu="${_dm_desktop_menu} ${_desktop_menu[10]}" # lxqt
                     ;;
-                "${_d_menu[11]}") _dm_desktop_menu="${_dm_desktop_menu} ${_desktop_menu[11]}" # xfce4
+                "${_d_menu[11]}") _dm_desktop_menu="${_dm_desktop_menu} ${_desktop_menu[11]}" # mate
                     ;;
-                "${_d_menu[12]}") _dm_desktop_menu="${_dm_desktop_menu} ${_desktop_menu[12]}" # xfce4-goodies
+                "${_d_menu[12]}") _dm_desktop_menu="${_dm_desktop_menu} ${_desktop_menu[12]}" # mate-extra
                     ;;
-                "${_d_menu[13]}") _dm_desktop_menu="${_dm_desktop_menu} ${_desktop_menu[13]}" # awesome
+                "${_d_menu[13]}") _dm_desktop_menu="${_dm_desktop_menu} ${_desktop_menu[13]}" # xfce4
                     ;;
-                "${_d_menu[14]}") _dm_desktop_menu="${_dm_desktop_menu} ${_desktop_menu[14]}" # fluxbox
+                "${_d_menu[14]}") _dm_desktop_menu="${_dm_desktop_menu} ${_desktop_menu[14]}" # xfce4-goodies
                     ;;
-                "${_d_menu[15]}") _dm_desktop_menu="${_dm_desktop_menu} ${_desktop_menu[15]}" # i3-wm
+                "${_d_menu[15]}") _dm_desktop_menu="${_dm_desktop_menu} ${_desktop_menu[15]}" # awesome
                     ;;
-                "${_d_menu[16]}") _dm_desktop_menu="${_dm_desktop_menu} ${_desktop_menu[16]}" # icewm
+                "${_d_menu[16]}") _dm_desktop_menu="${_dm_desktop_menu} ${_desktop_menu[16]}" # fluxbox
                     ;;
-                "${_d_menu[17]}") _dm_desktop_menu="${_dm_desktop_menu} ${_desktop_menu[17]}" # openbox
+                "${_d_menu[17]}") _dm_desktop_menu="${_dm_desktop_menu} ${_desktop_menu[17]}" # i3-wm
                     ;;
-                "${_d_menu[18]}") _dm_desktop_menu="${_dm_desktop_menu} ${_desktop_menu[18]}" # pekwm
+                "${_d_menu[18]}") _dm_desktop_menu="${_dm_desktop_menu} ${_desktop_menu[18]}" # icewm
                     ;;
-                "${_d_menu[19]}") _dm_desktop_menu="${_dm_desktop_menu} ${_desktop_menu[19]}" # windowmaker
+                "${_d_menu[19]}") _dm_desktop_menu="${_dm_desktop_menu} ${_desktop_menu[19]}" # openbox
+                    ;;
+                "${_d_menu[20]}") _dm_desktop_menu="${_dm_desktop_menu} ${_desktop_menu[20]}" # pekwm
+                    ;;
+                "${_d_menu[21]}") _dm_desktop_menu="${_dm_desktop_menu} ${_desktop_menu[21]}" # windowmaker
                     ;;
             esac
         done
@@ -1023,32 +1082,45 @@ install_de_wm() {
     fi
    
    dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_InstDETitle" --menu "$_InstDEBody" 0 0 16 ${_list_dm_menu} 2>${ANSWER}
-   
-    #dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_InstDETitle" \
-    #--menu "$_InstDEBody" 0 0 11 \
-    #"1" $"Cinnamon" \
-    #"2" $"Enlightenment" \
-    #"3" $"Gnome-Shell (minimal)" \
-    #"4" $"Gnome" \
-    #"5" $"Gnome + Extras" \
-    #"6" $"KDE 5 Base (minimal)" \
-    #"7" $"KDE 5" \
-    #"8" $"LXDE" \
-    #"9" $"LXQT" \
-    #"10" $"MATE" \
-    #"11" $"MATE + Extras" \
-    #"12" $"Xfce" \
-    #"13" $"Xfce + Extras" \
-    #"14" $"Awesome WM" \
-    #"15" $"Fluxbox WM" \
-    #"16" $"i3 WM" \
-    #"17" $"Ice WM" \
-    #"18" $"Openbox WM" \
-    #"19" $"Pek WM" \
-    #"20" $"WindowMaker WM" 2>${ANSWER}
-
+       
    case $(cat ${ANSWER}) in
-        "${_desktop_menu[0]}") # Cinnamon
+        "${_desktop_menu[0]}") # Deepin
+             clear
+             info_search_pkg
+            _list_deepin_pkg=$(check_s_lst_pkg "${_deepin_pkg[*]}")
+            wait
+            clear
+            [[ ${_list_deepin_pkg[*]} != "" ]] && pacstrap ${MOUNTPOINT} ${_list_deepin_pkg[*]} 2>/tmp/.errlog
+            LIGHTDM_INSTALLED=1
+            DEEPIN_INSTALLED=1
+            arch_chroot "systemctl enable lightdm.service" >/dev/null 2>>/tmp/.errlog
+            DM="LightDM"
+            sed -i '/^\[Seat:\*\]/a \greeter-session=lightdm-deepin-greeter' "${MOUNTPOINT}/etc/lightdm/lightdm.conf"
+            if [[ $NM_INSTALLED -eq 0 ]]; then          
+                arch_chroot "systemctl enable NetworkManager.service && systemctl enable NetworkManager-dispatcher.service" 2>>/tmp/.errlog
+                NM_INSTALLED=1
+                NM_COMPONENT_INSTALLED=0
+            fi
+             ;;
+        "${_desktop_menu[1]}") # Deepin+Deepin-Extra
+             clear
+             info_search_pkg
+            _list_deepine_pkg=$(check_s_lst_pkg "${_deepine_pkg[*]}")
+            wait
+            clear
+            [[ ${_list_deepine_pkg[*]} != "" ]] && pacstrap ${MOUNTPOINT} ${_list_deepine_pkg[*]} 2>/tmp/.errlog
+            LIGHTDM_INSTALLED=1
+            DEEPIN_INSTALLED=1
+            arch_chroot "systemctl enable lightdm.service" >/dev/null 2>>/tmp/.errlog
+            DM="LightDM"
+            sed -i '/^\[Seat:\*\]/a \greeter-session=lightdm-deepin-greeter' "${MOUNTPOINT}/etc/lightdm/lightdm.conf"
+            if [[ $NM_INSTALLED -eq 0 ]]; then          
+                arch_chroot "systemctl enable NetworkManager.service && systemctl enable NetworkManager-dispatcher.service" 2>>/tmp/.errlog
+                NM_INSTALLED=1
+                NM_COMPONENT_INSTALLED=0
+            fi
+             ;;
+        "${_desktop_menu[2]}") # Cinnamon
              clear
              info_search_pkg
             _list_cinnamon_pkg=$(check_s_lst_pkg "${_cinnamon_pkg[*]}")
@@ -1056,7 +1128,7 @@ install_de_wm() {
             clear
             [[ ${_list_cinnamon_pkg[*]} != "" ]] && pacstrap ${MOUNTPOINT} ${_list_cinnamon_pkg[*]} 2>/tmp/.errlog
              ;;
-        "${_desktop_menu[1]}") # Enlightement
+        "${_desktop_menu[3]}") # Enlightement
              clear
              info_search_pkg
             _list_enlightenment_pkg=$(check_s_lst_pkg "${_enlightenment_pkg[*]}")
@@ -1064,7 +1136,7 @@ install_de_wm() {
             clear
             [[ ${_list_enlightenment_pkg[*]} != "" ]] && pacstrap ${MOUNTPOINT} ${_list_enlightenment_pkg[*]} 2>/tmp/.errlog
              ;;
-        "${_desktop_menu[2]}") # Gnome-Shell
+        "${_desktop_menu[4]}") # Gnome-Shell
              clear
              info_search_pkg
              _list_gnome_shell_pkg=$(check_s_lst_pkg "${_gnome_shell_pkg[*]}")
@@ -1073,7 +1145,7 @@ install_de_wm() {
              [[ ${_list_gnome_shell_pkg[*]} != "" ]] && pacstrap ${MOUNTPOINT} ${_list_gnome_shell_pkg[*]} 2>/tmp/.errlog
              GNOME_INSTALLED=1
              ;;
-        "${_desktop_menu[3]}") # Gnome
+        "${_desktop_menu[5]}") # Gnome
              clear
              info_search_pkg
             _list_gnome_pkg=$(check_s_lst_pkg "${_gnome_pkg[*]}")
@@ -1083,7 +1155,7 @@ install_de_wm() {
            
              GNOME_INSTALLED=1
              ;;            
-        "${_desktop_menu[4]}") # Gnome + Extras
+        "${_desktop_menu[6]}") # Gnome + Extras
              clear
              info_search_pkg
             _list_gnome_extras_pkg=$(check_s_lst_pkg "${_gnome_extras_pkg[*]}")
@@ -1093,7 +1165,7 @@ install_de_wm() {
            
              GNOME_INSTALLED=1
              ;;
-        "${_desktop_menu[5]}") # KDE5 BASE
+        "${_desktop_menu[7]}") # KDE5 BASE
              clear
             info_search_pkg
             _list_kde5base_pkg=$(check_s_lst_pkg "${_kde5base_pkg[*]}")
@@ -1101,7 +1173,7 @@ install_de_wm() {
             clear
             [[ ${_list_kde5base_pkg[*]} != "" ]] && pacstrap ${MOUNTPOINT} ${_list_kde5base_pkg[*]} 2>/tmp/.errlog
              ;;
-        "${_desktop_menu[6]}") # KDE5 
+        "${_desktop_menu[8]}") # KDE5 
              clear
              info_search_pkg
             _list_kde_pkg=$(check_s_lst_pkg "${_kde_pkg[*]}")
@@ -1112,11 +1184,12 @@ install_de_wm() {
              if [[ $NM_INSTALLED -eq 0 ]]; then          
                 arch_chroot "systemctl enable NetworkManager.service && systemctl enable NetworkManager-dispatcher.service" 2>>/tmp/.errlog
                 NM_INSTALLED=1
+                NM_COMPONENT_INSTALLED=0
              fi
                
              KDE_INSTALLED=1
              ;;
-         "${_desktop_menu[7]}") # LXDE
+         "${_desktop_menu[9]}") # LXDE
               clear
               info_search_pkg
               _list_lxde_pkg=$(check_s_lst_pkg "${_lxde_pkg[*]}")
@@ -1125,7 +1198,7 @@ install_de_wm() {
               [[ ${_list_lxde_pkg[*]} != "" ]] && pacstrap ${MOUNTPOINT} ${_list_lxde_pkg[*]} 2>/tmp/.errlog
               LXDE_INSTALLED=1
              ;;
-         "${_desktop_menu[8]}") # LXQT
+         "${_desktop_menu[10]}") # LXQT
               clear
               info_search_pkg
             _list_lxqt_pkg=$(check_s_lst_pkg "${_lxqt_pkg[*]}")
@@ -1134,7 +1207,7 @@ install_de_wm() {
             [[ ${_list_lxqt_pkg[*]} != "" ]] && pacstrap ${MOUNTPOINT} ${_list_lxqt_pkg[*]} 2>/tmp/.errlog
               LXQT_INSTALLED=1
               ;;
-         "${_desktop_menu[9]}") # MATE
+         "${_desktop_menu[11]}") # MATE
               clear
               info_search_pkg
             _list_mate_pkg=$(check_s_lst_pkg "${_mate_pkg[*]}")
@@ -1142,14 +1215,14 @@ install_de_wm() {
             clear
             [[ ${_list_mate_pkg[*]} != "" ]] && pacstrap ${MOUNTPOINT} ${_list_mate_pkg[*]} 2>/tmp/.errlog
              ;;
-        "${_desktop_menu[10]}") # MATE + Extras
+        "${_desktop_menu[12]}") # MATE + Extras
                clear
               info_search_pkg
             _list_mateextra_pkg=$(check_s_lst_pkg "${_mateextra_pkg[*]}")
             wait
             [[ ${_list_mateextra_pkg[*]} != "" ]] && pacstrap ${MOUNTPOINT} ${_list_mateextra_pkg[*]} 2>/tmp/.errlog
              ;;                 
-        "${_desktop_menu[11]}") # Xfce
+        "${_desktop_menu[13]}") # Xfce
               clear
               info_search_pkg
             _list_xfce4_pkg=$(check_s_lst_pkg "${_xfce4_pkg[*]}")
@@ -1157,7 +1230,7 @@ install_de_wm() {
             clear
             [[ ${_list_xfce4_pkg[*]} != "" ]] && pacstrap ${MOUNTPOINT} ${_list_xfce4_pkg[*]} 2>/tmp/.errlog
              ;;            
-        "${_desktop_menu[12]}") # Xfce + Extras
+        "${_desktop_menu[14]}") # Xfce + Extras
               clear
               info_search_pkg
             _list_xfce4_extra_pkg=$(check_s_lst_pkg "${_xfce4_extra_pkg[*]}")
@@ -1165,7 +1238,7 @@ install_de_wm() {
             clear
             [[ ${_list_xfce4_extra_pkg[*]} != "" ]] && pacstrap ${MOUNTPOINT} ${_list_xfce4_extra_pkg[*]} 2>/tmp/.errlog
              ;;
-        "${_desktop_menu[13]}") # Awesome
+        "${_desktop_menu[15]}") # Awesome
               clear
               info_search_pkg
             _list_awesome_pkg=$(check_s_lst_pkg "${_awesome_pkg[*]}")
@@ -1173,7 +1246,7 @@ install_de_wm() {
             clear
             [[ ${_list_awesome_pkg[*]} != "" ]] && pacstrap ${MOUNTPOINT} ${_list_awesome_pkg[*]} 2>/tmp/.errlog
              ;;
-        "${_desktop_menu[14]}") #Fluxbox
+        "${_desktop_menu[16]}") #Fluxbox
               clear
               info_search_pkg
             _list_fluxbox_pkg=$(check_s_lst_pkg "${_fluxbox_pkg[*]}")
@@ -1181,7 +1254,7 @@ install_de_wm() {
             clear
             [[ ${_list_fluxbox_pkg[*]} != "" ]] && pacstrap ${MOUNTPOINT} ${_list_fluxbox_pkg[*]} 2>/tmp/.errlog
              ;; 
-        "${_desktop_menu[15]}") #i3
+        "${_desktop_menu[17]}") #i3
               clear
               info_search_pkg
             _list_i3wm_pkg=$(check_s_lst_pkg "${_i3wm_pkg[*]}")
@@ -1189,7 +1262,7 @@ install_de_wm() {
             clear
             [[ ${_list_i3wm_pkg[*]} != "" ]] && pacstrap ${MOUNTPOINT} ${_list_i3wm_pkg[*]} 2>/tmp/.errlog
              ;; 
-        "${_desktop_menu[16]}") #IceWM
+        "${_desktop_menu[18]}") #IceWM
               clear
               info_search_pkg
             _list_icewm_pkg=$(check_s_lst_pkg "${_icewm_pkg[*]}")
@@ -1197,7 +1270,7 @@ install_de_wm() {
             clear
             [[ ${_list_icewm_pkg[*]} != "" ]] && pacstrap ${MOUNTPOINT} ${_list_icewm_pkg[*]} 2>/tmp/.errlog
              ;; 
-        "${_desktop_menu[17]}") #Openbox
+        "${_desktop_menu[19]}") #Openbox
               clear
               info_search_pkg
             _list_openbox_pkg=$(check_s_lst_pkg "${_openbox_pkg[*]}")
@@ -1205,7 +1278,7 @@ install_de_wm() {
             clear
             [[ ${_list_openbox_pkg[*]} != "" ]] && pacstrap ${MOUNTPOINT} ${_list_openbox_pkg[*]} 2>/tmp/.errlog
              ;; 
-        "${_desktop_menu[18]}") #PekWM
+        "${_desktop_menu[20]}") #PekWM
               clear
               info_search_pkg
             _list_pekwm_pkg=$(check_s_lst_pkg "${_pekwm_pkg[*]}")
@@ -1213,7 +1286,7 @@ install_de_wm() {
             clear
             [[ ${_list_pekwm_pkg[*]} != "" ]] && pacstrap ${MOUNTPOINT} ${_list_pekwm_pkg[*]} 2>/tmp/.errlog
              ;;
-        "${_desktop_menu[19]}") #WindowMaker
+        "${_desktop_menu[21]}") #WindowMaker
              clear
              info_search_pkg
             _list_windowmaker_pkg=$(check_s_lst_pkg "${_windowmaker_pkg[*]}")
@@ -1234,20 +1307,6 @@ install_dm() {
 # Function to save repetition
 dm_menu(){
 
-    #if [[ _dm_menu_once == 0 ]]; then
-    #   _dm_menu_once=1
-    #   clear
-    #   info_search_pkg
-    #   _list_dm_menu=$(check_s_lst_pkg "${_user_dm_menu[*]}")
-    #   wait
-    #   clear
-    #   _listdm_menu=""
-    #   for i in ${_list_dm_menu[*]}; do
-    #       _listdm_menu="${_listdm_menu} $i -"
-    #   done
-    #fi
-    
-#   dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_DmChTitle" --menu "$_DmChBody" 0 0 5 ${_listdm_menu} 2>${ANSWER}
   dialog --default-item 3 --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_DmChTitle" \
                --menu "$_DmChBody" 0 0 4 \
                "1" $"LXDM" \
@@ -1287,17 +1346,6 @@ dm_menu(){
                    arch_chroot "systemctl enable sddm.service" >/dev/null 2>>/tmp/.errlog
                    DM="SDDM"
                    ;;
-             # "4") # GDM
-            #       clear
-            #       info_search_pkg
-            #       _list_gdm_pkg=$(check_s_lst_pkg "${_gdm_pkg[*]}")
-            #       wait
-            #       clear
-             #      pacstrap ${MOUNTPOINT} ${_list_gdm_pkg[*]} 2>/tmp/.errlog
-             #      # arch_chroot "gdm --example-config > /etc/gdm.conf"
-             #      arch_chroot "systemctl enable gdm.service" >/dev/null 2>>/tmp/.errlog
-             #      DM="GDM"
-            #       ;;
               "4") # SLiM
                    clear
                    info_search_pkg
@@ -1309,13 +1357,13 @@ dm_menu(){
                    DM="SLiM"
 
                    # Amend the xinitrc file accordingly for all user accounts
-                   user_list=$(ls ${MOUNTPOINT}/home/ | sed "s/lost+found//")
+                   user_list=$(ls "${MOUNTPOINT}/home/" | sed "s/lost+found//")
                    for i in ${user_list[@]}; do
-                       if [[ -n ${MOUNTPOINT}/home/$i/.xinitrc ]]; then
-                          cp -f ${MOUNTPOINT}/etc/X11/xinit/xinitrc ${MOUNTPOINT}/home/$i/.xinitrc
+                       if [[ -n "${MOUNTPOINT}/home/$i/.xinitrc" ]]; then
+                          cp -f "${MOUNTPOINT}/etc/X11/xinit/xinitrc" "${MOUNTPOINT}/home/$i/.xinitrc"
                           arch_chroot "chown -R ${i}:users /home/${i}"
                        fi
-                       echo 'exec $1' >> ${MOUNTPOINT}/home/$i/.xinitrc
+                       echo 'exec $1' >> "${MOUNTPOINT}/home/$i/.xinitrc"
                    done    
                    ;;                
                 *) install_desktop_menu
@@ -1359,6 +1407,11 @@ dm_menu(){
             arch_chroot "systemctl enable lxdm.service" >/dev/null 2>/tmp/.errlog
             DM="LXDM"
 
+        # LightDM + Deepin
+        elif [[ $LIGHTDM_INSTALLED -eq 1 ]]; then
+            arch_chroot "systemctl enable lightdm.service" >/dev/null 2>>/tmp/.errlog
+            DM="LightDM"
+            sed -i '/^\[Seat:\*\]/a \greeter-session=lightdm-deepin-greeter' "${MOUNTPOINT}/etc/lightdm/lightdm.conf"
          # Otherwise, select a DM      
          else 
            dm_menu      
@@ -1442,7 +1495,19 @@ install_shara_components()
             _clist_list_network_pkg=$(check_q_lst_pkg "${_list_network_pkg[*]}")
             wait
             clear
-            pacstrap ${MOUNTPOINT} ${_clist_list_network_pkg[*]} 2>/tmp/.errlog
+            dialog --defaultno --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_yesno_shara_title" --yesno "$_yn_alsa_pkg_bd" 0 0
+             if [[ $? -eq 0 ]]; then
+                _shara_pkg_mn_list=""
+                for k in ${_clist_list_network_pkg[*]}; do	
+                    _shara_pkg_mn_list="${_shara_pkg_mn_list} $k - on"
+                done
+                dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_chl_shara_ttl" --checklist "$_chl_xpkg_bd" 0 0 16 ${_shara_pkg_mn_list} 2>${ANSWER}
+                _check_shara_pkg=$(cat ${ANSWER})
+                [[ ${_check_shara_pkg[*]} != "" ]] && pacstrap ${MOUNTPOINT} ${_check_shara_pkg[*]} 2>/tmp/.errlog
+             else
+                pacstrap ${MOUNTPOINT} ${_clist_list_network_pkg[*]} 2>/tmp/.errlog
+             fi
+             check_for_error
         fi
     fi
 }
@@ -1464,13 +1529,7 @@ install_nm() {
             _ln_menu="${_ln_menu} dhcpcd -"
         fi
     dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_InstNMTitle" --menu "$_InstNMBody" 0 0 4 ${_ln_menu} 2>${ANSWER}
-      #dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_InstNMTitle" \
-      #--menu "$_InstNMBody" 0 0 4 \
-      #"1" $"Connman (CLI)" \
-      #"2" $"dhcpcd  (CLI)" \
-      #"3" $"Network Manager (GUI)" \
-      #"4" $"WICD (GUI)" 2>${ANSWER}    
-    
+          
       case $(cat ${ANSWER}) in
       "connman") # connman
            clear
@@ -1490,26 +1549,40 @@ install_nm() {
       "networkmanager") # Network Manager
            clear
            info_search_pkg
-            _list_net=$(check_s_lst_pkg "${_networkmanager_pkg[*]}")
-            wait
-            _clist_list_net=$(check_q_lst_pkg "${_list_net[*]}")
-            wait
-            _list_net_connect=$(check_s_lst_pkg "${_net_connect_var[*]}")
-            wait
-            _clist_list_net_conn=$(check_q_lst_pkg "${_list_net_connect[*]}")
-            wait
-            clear
-            [[ ${_clist_list_net[*]} != "" ]] && pacstrap ${MOUNTPOINT} ${_clist_list_net[*]} 2>/tmp/.errlog
-            [[ ${_clist_list_net_conn[*]} != "" ]] && pacstrap ${MOUNTPOINT} ${_clist_list_net_conn[*]} 2>/tmp/.errlog
+           _list_net=$(check_s_lst_pkg "${_networkmanager_pkg[*]}")
+           wait
+           _clist_list_net=$(check_q_lst_pkg "${_list_net[*]}")
+           wait
+           _list_net_connect=$(check_s_lst_pkg "${_net_connect_var[*]}")
+           wait
+           _clist_list_net_conn=$(check_q_lst_pkg "${_list_net_connect[*]}")
+           wait
+           clear
+           [[ ${_clist_list_net[*]} != "" ]] && pacstrap ${MOUNTPOINT} ${_clist_list_net[*]} 2>/tmp/.errlog
+           dialog --defaultno --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_yn_s_tnc_ttl" --yesno "$_yn_s_tnc_bd" 0 0
+           if [[ $? -eq 0 ]]; then
+                _nm_tc_menu=""
+                for k in ${_clist_list_net_conn[*]}; do
+                    _nm_tc_menu="${_nm_tc_menu} $k - on"
+                done
+                dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_yesno_shara_title" --checklist "$_chl_xpkg_bd" 0 0 16 ${_nm_tc_menu} 2>${ANSWER}
+                _check_nm_tc=$(cat ${ANSWER})
+                [[ ${_check_nm_tc[*]} != "" ]] && pacstrap ${MOUNTPOINT} ${_check_nm_tc[*]} 2>/tmp/.errlog
+                wait
+           else
+                pacstrap ${MOUNTPOINT} ${_clist_list_net_conn[*]} 2>/tmp/.errlog
+                wait
+           fi
+           wait
            install_shara_components
            arch_chroot "systemctl enable NetworkManager.service && systemctl enable NetworkManager-dispatcher.service" 2>>/tmp/.errlog
            ;;
       "wicd-gtk") # WICD
            clear
-            info_search_pkg
-            _list_wicd_pkg=$(check_s_lst_pkg "${_wicd_pkg[*]}")
-            wait
-            clear
+           info_search_pkg
+           _list_wicd_pkg=$(check_s_lst_pkg "${_wicd_pkg[*]}")
+           wait
+           clear
            pacstrap ${MOUNTPOINT} ${_list_wicd_pkg[*]} 2>/tmp/.errlog
            install_shara_components
            arch_chroot "systemctl enable wicd.service" 2>>/tmp/.errlog
@@ -1521,8 +1594,34 @@ install_nm() {
       check_for_error
       dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_InstNMDoneTitle" --msgbox "$_InstNMDoneBody" 0 0
       NM_INSTALLED=1
-   
+      NM_COMPONENT_INSTALLED=1
    else
+      if [[ $NM_COMPONENT_INSTALLED -eq 0 ]]; then
+           NM_COMPONENT_INSTALLED=1
+           clear
+           info_search_pkg
+           _list_net_connect=$(check_s_lst_pkg "${_net_connect_var[*]}")
+           wait
+           _clist_list_net_conn=$(check_q_lst_pkg "${_list_net_connect[*]}")
+           wait
+           clear
+           dialog --defaultno --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_yn_s_tnc_ttl" --yesno "$_yn_s_tnc_bd" 0 0
+           if [[ $? -eq 0 ]]; then
+                _nm_tc_menu=""
+                for k in ${_clist_list_net_conn[*]}; do
+                    _nm_tc_menu="${_nm_tc_menu} $k - on"
+                done
+                dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_yesno_shara_title" --checklist "$_chl_xpkg_bd" 0 0 16 ${_nm_tc_menu} 2>${ANSWER}
+                _check_nm_tc=$(cat ${ANSWER})
+                [[ ${_check_nm_tc[*]} != "" ]] && pacstrap ${MOUNTPOINT} ${_check_nm_tc[*]} 2>/tmp/.errlog
+                wait
+           else
+                pacstrap ${MOUNTPOINT} ${_clist_list_net_conn[*]} 2>/tmp/.errlog
+                wait
+           fi
+           check_for_error
+           install_shara_components
+      fi
       dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_InstNMDoneTitle" --msgbox "$_InstNMErrBody" 0 0
    fi
 }

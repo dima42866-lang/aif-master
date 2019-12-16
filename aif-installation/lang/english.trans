@@ -420,6 +420,16 @@ _RefiErrBody="\nThe rEFInd installation script will not work unless the UEFI par
 _AXITitle=" ALSA, Xorg, and Input "
 _AXIBody="\nBefore installing graphics card driver(s) or desktop environments, other packages are needed first:\n\nalsa - Advanced Linux Sound Architecture\nxorg-* - open-source X window system for graphics\nxf86-input-* - open-source drivers for input devices\n\n"
 
+# Checklist Menu Alsa Xorg package
+_chl_xpkg_ttl="Installing ALSA, x86-input-* group packages"
+_chl_xpkg_bd="\nPlease select the required packages to install.\n"
+_chl_xp_ttl="Installing Xorg group packages"
+
+# YES-NO Alsa Xorg package question
+_yn_alsa_pkg_ttl="Installing ALSA packages"
+_yn_alsa_pkg_bd="\nWould you like to choose packages for installation?\n"
+_yn_x_pkg_ttl="Installing xorg"
+
 # Graphics Card Menu
 _GCtitle=" Graphics Card Menu "
 _GCBody="Pick Nouveau for older NVIDIA cards. If your card is not listed, pick 'Unknown / Generic'.\n"
@@ -537,6 +547,10 @@ _yesno_iwp_body="\nInstall packages: iw, wireless_tools, wpa_supplicant, wicd?\n
 # Installl Shara Programm Qestion
 _yesno_shara_title="Install sharing components"
 _yesno_shara_body="\nInstall packages: samba, smb4k, smbclient, smbnetfs ?\n"
+
+# Shara and type of network connection
+_yn_s_tnc_ttl="Setting up NetworkManager connections"
+_yn_s_tnc_bd="\nWould you like to select additional connection types for NetworkManager?\n"
 
 # Programs to TimeShoft and Github-Desktop
 _yesno_timeshift_title="Install Timeshift"

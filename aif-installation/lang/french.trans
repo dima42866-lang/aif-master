@@ -420,6 +420,16 @@ _RefiErrBody="\nLe script d'installation de rEFInd ne fonctionnera pas tant que 
 _AXITitle=" ALSA, Xorg, et Input "
 _AXIBody="\nAvant l'installation de(s) pilote(s) de carte graphique ou d'environnement(s) de bureau, d'autres paquets sont nécessaires : \n\nalsa - Advanced Linux Sound Architecture\nxorg-* - open-source X window system for graphics\nxf86-input-* - open-source drivers for input devices\n\n"
 
+# Checklist Menu Alsa Xorg package
+_chl_xpkg_ttl="Installation des packages du groupe ALSA, x86-input-*"
+_chl_xpkg_bd="\nVeuillez sélectionner les paquets requis pour l'installation.\n"
+_chl_xp_ttl="Installation des packages du groupe Xorg"
+
+# YES-NO Alsa Xorg package question
+_yn_alsa_pkg_ttl="Installation des packages ALSA"
+_yn_alsa_pkg_bd="\nVoulez-vous choisir les paquets à installer?\n"
+_yn_x_pkg_ttl="Installation de xorg"
+
 # Menu des cartes graphiques
 _GCtitle=" Menu des cartes graphiques "
 _GCUnknOpt="Inconnue / Générique"
@@ -531,6 +541,10 @@ _yesno_iwp_body="\nInstaller les paquets: iw, wireless_tools, wpa_supplicant, wi
 # Installl Shara Programm Qestion
 _yesno_shara_title="Installation des composants de partage"
 _yesno_shara_body="\nInstaller les paquets: samba, smb4k, smbclient, smbnetfs ?\n"
+
+# Shara and type of network connection
+_yn_s_tnc_ttl="Installation des connexions NetworkManager"
+_yn_s_tnc_bd="\nVoulez-vous choisir les types de connexions supplémentaires pour NetworkManager?\n"
 
 # Programs to TimeShoft and Github-Desktop
 _yesno_timeshift_title="Installation Timeshift"

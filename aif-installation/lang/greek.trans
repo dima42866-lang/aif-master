@@ -431,6 +431,16 @@ _RefiErrBody="\nΤο script εγκατάστασης του rEFInd δεν θα �
 _AXITitle=" ALSA, Xorg, και Input "
 _AXIBody="\nΠριν την εγκατάσταση οδηγού κάρτας γραφικών ή γραφικού περιβάλλοντος εργασίας, άλλα πακέτα χρειάζεται να εγκατασταθούν πρώτα:\n\nalsa - Advanced Linux Sound Architecture\nxorg-* - ανοιχτού-κώδικα X σύστημα παραθύρων για γραφικά\nxf86-input-* - ανοιχτού-κώδικα οδηγοί για συσκευές εισόδου\n\n"
 
+# Checklist Menu Alsa Xorg package
+_chl_xpkg_ttl="Εγκατάσταση πακέτων της ομάδας ALSA, x86-input-*"
+_chl_xpkg_bd="\nΠαρακαλώ, επιλέξτε τα απαραίτητα πακέτα για εγκατάσταση.\n"
+_chl_xp_ttl="Εγκατάσταση πακέτων της ομάδας nvidia"
+
+# YES-NO Alsa Xorg package question
+_yn_alsa_pkg_ttl="Εγκατάσταση πακέτων GNOME"
+_yn_alsa_pkg_bd="\nΘέλετε να επιλέξετε τα πακέτα για την εγκατάσταση;\n"
+_yn_x_pkg_ttl="Εγκατάσταση του xorg"
+
 # Μενού κάρτας γραφικών
 _GCtitle=" Μενού κάρτας γραφικών "
 _GCBody="Επιλέξτε Nouveau για παλαιότερου τύπου κάρτες γραφικών NVIDIA. Αν η κάρτα γραφικών σας δεν βρίσκεται στην λίστα, επιλέξτε 'Άγνωστη / Γενική'.\n"
@@ -548,6 +558,10 @@ _yesno_iwp_body="\nΝα εγκαταστήσετε τα πακέτα: iw, wirele
 # Installl Shara Programm Qestion
 _yesno_shara_title="Εγκατάσταση στοιχείων κοινής χρήσης"
 _yesno_shara_body="\nΝα εγκαταστήσετε τα πακέτα: samba, smb4k, smbclient, smbnetfs ;\n"
+
+# Shara and type of network connection
+_yn_s_tnc_ttl="Εγκατάσταση συνδέσεων Manager"
+_yn_s_tnc_bd="\nΘέλετε να επιλέξετε επιπλέον τύποι των ενώσεων για το Manager;\n"
 
 # Programs to TimeShoft and Github-Desktop
 _yesno_timeshift_title="Εγκατάσταση Timeshift"

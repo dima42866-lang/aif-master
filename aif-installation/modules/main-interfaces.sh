@@ -377,7 +377,10 @@ main_menu_online() {
           *) dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --yesno "$_CloseInstBody" 0 0
           
              if [[ $? -eq 0 ]]; then
+                [[ $DEEPIN_INSTALLED -eq 1 ]] && fixed_deepin_desktop
+                wait
                 umount_partitions
+                wait
                 clear
                 pkg_manager_unset
                 eml_zavershenie

@@ -420,6 +420,16 @@ _RefiErrBody="\n\nLo script d'installazione di rEFInd funzionerà solo se la par
 _AXITitle=" ALSA, Xorg e periferiche di Input "
 _AXIBody="\nPrima d'installare i driver della scheda video o gli ambienti desktop, sono necessari altri pacchetti:\n\nalsa - Architettura Avanzata per il Suono su Linux\nxorg-* - driver a sorgente aperto per il gestore grafico X Window System\nxf86-input-* - driver a sorgente aperto per le periferiche di input\n\n"
 
+# Checklist Menu Alsa Xorg package
+_chl_xpkg_ttl="Installazione dei pacchetti del gruppo ALSA, x86-input-*"
+_chl_xpkg_bd="\nSi prega di selezionare i pacchetti necessari per l'installazione.\n"
+_chl_xp_ttl="Installazione dei pacchetti del gruppo xorg"
+
+# YES-NO Alsa Xorg package question
+_yn_alsa_pkg_ttl="Installazione dei pacchetti ALSA"
+_yn_alsa_pkg_bd="\nVuoi scegliere i pacchetti da installare?\n"
+_yn_x_pkg_ttl="Installazione di xorg"
+
 # Graphics Card Menu
 _GCtitle=" Menu della Scheda Video "
 _GCUnknOpt="Sconosciuta / Generica"
@@ -531,6 +541,10 @@ _yesno_iwp_body="\nInstallare i pacchetti: iw, wireless_tools, wpa_supplicant, w
 # Installl Shara Programm Qestion
 _yesno_shara_title="Installazione dei componenti di condivisione"
 _yesno_shara_body="\nInstallare i pacchetti: samba, smb4k ,smbclient, smbnetfs?\n"
+
+# Shara and type of network connection
+_yn_s_tnc_ttl="Installazione delle connessioni NetworkManager"
+_yn_s_tnc_bd="\nVuoi scegliere i tipi di connessioni aggiuntive per NetworkManager?\n"
 
 # Programs to TimeShoft and Github-Desktop
 _yesno_timeshift_title="Installazione Di Timeshift"

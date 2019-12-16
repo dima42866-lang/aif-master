@@ -430,6 +430,16 @@ _RefiErrBody="\nInstallation script for rEFInd vil ikke fungere med mindre UEFI 
 _AXITitle=" ALSA, Xorg, og Input "
 _AXIBody="\nFør installation af grafik kort eller skrivebord(e), skal andre pakker installeres:\n\nalsa - Advanced Linux Sound Architecture\nxorg-* - open-source X window system til grafik\nxf86-input-* - open-source drivers til input enheder\n\n"
 
+# Checklist Menu Alsa Xorg package
+_chl_xpkg_ttl="Installerer Alsa, x86-input - gruppepakker"
+_chl_xpkg_bd="\nVælg de nødvendige pakker der skal installeres.\n"
+_chl_xp_ttl="Installerer Gruppepakker"
+
+# YES-NO Alsa Xorg package question
+_yn_alsa_pkg_ttl="Installerer Alsa-pakker"
+_yn_alsa_pkg_bd="\nVil du vælge pakker til installation?\n"
+_yn_x_pkg_ttl="Installerer"
+
 # Graphics Card Menu
 _GCtitle=" Grafik Kort Menu "
 _GCBody="Vælg 'Nouveau' til ældre NVIDIA kort. Hvis dit kort ikke er på listen, vælges 'Ukendt / Standard'.\n"
@@ -547,6 +557,10 @@ _yesno_iwp_body="\nInstall pakkerne: VV, trådløst værktøj, vpa_supplikant, v
 # Installl Shara Programm Qestion
 _yesno_shara_title="Install deling components"
 _yesno_shara_body="\nInstall pakkerne: samba, smb4k, smbclient, smbnetfs ?\n"
+
+# Shara and type of network connection
+_yn_s_tnc_ttl="Opsætning af Netværksmanager-forbindelser"
+_yn_s_tnc_bd="\nVil du vælge yderligere forbindelsestyper til Netværksmanager?\n"
 
 # Programs to TimeShoft and Github-Desktop
 _yesno_timeshift_title="Install Timeshift"

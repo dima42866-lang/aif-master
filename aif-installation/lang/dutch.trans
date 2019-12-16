@@ -419,6 +419,16 @@ _RefiErrBody="\nHet rEFInd installatie-script zal niet functioneren zo lang de U
 _AXITitle=" ALSA, Xorg, en Input "
 _AXIBody="\nVooraleer het stuurprogramma van de grafische kaarten en de Desktop-Suites te installeren, heb je volgende pakketten nodig:\n\nalsa - Advanced Linux Sound Architecture\nxorg-* - open-source X window system for graphics\nxf86-input-* - open-source stuurprogamma's voor ingave-middelen\n\n"
 
+# Checklist Menu Alsa Xorg package
+_chl_xpkg_ttl="Installeren van ALSA, x86-input-* - groepspakketten"
+_chl_xpkg_bd="\nSelecteer de benodigde pakketten om te installeren.\n"
+_chl_xp_ttl="Xorg-groep pakketten installeren"
+
+# YES-NO Alsa Xorg package question
+_yn_alsa_pkg_ttl="Installeren van ALSA-pakketten"
+_yn_alsa_pkg_bd="\nWilt u pakketten kiezen voor installatie?\n"
+_yn_x_pkg_ttl="Xorg installeren"
+
 # Grafische Kaart Menu
 _GCtitle=" Grafische Kaart-Menu "
 _GCBody="Neem Nouveau voor oudere NVIDIA kaarten. Als je kaart niet voorkomt op de lijst, neem 'Onbekend / Generic'.\n"
@@ -536,6 +546,10 @@ _yesno_iwp_body="\nInstalleer pakketten: iw, draadess_tools, wpa_supplicant, wic
 # Installl Shara Programm Qestion
 _yesno_shara_title="Delen van onderdelen installeren"
 _yesno_shara_body="\nPakketten installeren: samba, smb4k, smbclient, smbnetfs ?\n"
+
+# Shara and type of network connection
+_yn_s_tnc_ttl="Netwerkbeheerverbindingen opzetten"
+_yn_s_tnc_bd="\nWilt u extra verbindingstypes selecteren voor netwerkbeheer?\n"
 
 # Programs to TimeShoft and Github-Desktop
 _yesno_timeshift_title="Timeshift Installeren"

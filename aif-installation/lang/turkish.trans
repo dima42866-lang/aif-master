@@ -433,6 +433,16 @@ _RefiErrBody="\nrEFInd kurulumu UEFI bölümü /boot/efi'de olmadıkça başarı
 _AXITitle=" ALSA, Xorg, ve Input "
 _AXIBody="\nGrafik kartı veya masaüstü ortamı kurulumundan önce şu paketlere ihtiyaç vardır:\n\nalsa - Gelişmiş Linux Ses Mimarisi\nxorg-* - açık kaynaklı X pencere sistemi\nxf86-input-* - giriş aygıtları için açık kaynaklı sürücüler\n\n"
 
+# Checklist Menu Alsa Xorg package
+_chl_xpkg_ttl="Alsa, x86-input-* grup paketlerini yükleme"
+_chl_xpkg_bd="\nLütfen yüklemek için gerekli paketleri seçin.\n"
+_chl_xp_ttl="Xorg grup paketlerini yükleme"
+
+# YES-NO Alsa Xorg package question
+_yn_alsa_pkg_ttl="Alsa paketlerini yükleme"
+_yn_alsa_pkg_bd="\nYüklemek için paketleri seçmek ister misiniz?\n"
+_yn_x_pkg_ttl="Xorg kurulumu"
+
 # Graphics Card Menu
 _GCtitle=" Grafik Kart Menüsü "
 _GCBody="Eski NVIDIA kartları için Nouveau'yu seçin. Kartınız listede yoksa Bilinmeyen / Genel i seçin.\n"
@@ -566,6 +576,10 @@ _yesno_iwp_body="\nPaketleri yükle: ıw, wireless_tools, wpa_supplicant, wıcd?
 # Installl Shara Programm Qestion
 _yesno_shara_title="Paylaşım bileşenlerini yükleme"
 _yesno_shara_body="\nPaketleri yükle: samba, smb4k, smbclient, smbnetfs ?\n"
+
+# Shara and type of network connection
+_yn_s_tnc_ttl="Networkmanager bağlantılarını yükleme"
+_yn_s_tnc_bd="\nNetworkManager için ek bağlantı türleri seçmek ister misiniz?\n"
 
 # Programs to TimeShoft and Github-Desktop
 _yesno_timeshift_title="Yükleme Timeshift"

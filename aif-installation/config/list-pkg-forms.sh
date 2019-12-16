@@ -1,6 +1,5 @@
 #!/bin/bash
 ##
-##
 ## File for form in lists packages to master
 ##
 ## 23 July 2019 years
@@ -9,18 +8,18 @@
 #
 # Install base menu
 _rank_mirror=(pacman-contrib)
-_base_pkg=(bash btrfs-progs ntp sudo f2fs-tools dialog htop nano vi ntfs-3g linux-headers squashfs-tools upower mlocate testdisk)
+_base_pkg=(bash btrfs-progs ntp sudo f2fs-tools dialog htop nano vi ntfs-3g linux-headers squashfs-tools upower mlocate testdisk hwinfo)
 _base_devel_pkg=(bash bzip2 coreutils cryptsetup device-mapper dhcpcd diffutils e2fsprogs file filesystem findutils gawk gcc-libs gettext glibc grep gzip inetutils iproute2 iputils jfsutils less licenses logrotate lvm2 man-db man-pages mdadm nano netctl pacman pciutils perl procps-ng psmisc reiserfsprogs s-nail sed shadow sysfsutils systemd-sysvcompat tar texinfo usbutils util-linux vi which xfsprogs btrfs-progs ntp sudo f2fs-tools dialog htop mc ntfs-3g bash-completion gparted net-tools linux-headers squashfs-tools upower mlocate recordmydesktop testdisk)
-_lts_pkg=(linux-lts linux-lts-headers linux-lts-docs)
+_lts_pkg=(linux-lts linux-lts-headers linux-lts-docs hwinfo)
 #
 # Package Network tools
 _network_menu=(connman networkmanager wicd-gtk)
 _ln_menu=""
 _network_pkg=(samba libwbclient smb4k smbclient smbnetfs libgtop)
 _connman_pkg=(connman)
-_networkmanager_pkg=(networkmanager network-manager-applet rp-pppoe)
-_net_connect_var=(networkmanager-openconnect networkmanager-openvpn networkmanager-pptp networkmanager-vpnc)
-_wicd_pkg=(wicd-gtk)
+_networkmanager_pkg=(networkmanager network-manager-applet)
+_net_connect_var=(rp-pppoe networkmanager-openconnect networkmanager-openvpn networkmanager-pptp networkmanager-vpnc)
+_wicd_pkg=(wicd wicd-gtk)
 #
 # Packages for wireless tools
 _wifi_pkg=(iw wireless_tools wpa_actiond wpa_supplicant dialog wicd)
@@ -42,7 +41,7 @@ _reefind_pkg=(refind-efi efibootmgr dosfstools)
 _systemd_boot_pkg=(efibootmgr dosfstools)
 #
 # Alsa xorg packages
-_x_pkg=(alsa-utils alsa-plugins volumeicon pavucontrol pulseaudio pulseaudio-alsa pulseaudio-bluetooth pulseaudio-equalizer pulseaudio-jack pulseeffects pulsemixer pasystray pamixer pulseview rhythmbox audacious audacity xorg xf86-input-synaptics xf86-input-keyboard xf86-input-mouse)
+_x_pkg=(alsa-utils alsa-plugins volumeicon pavucontrol pulseaudio pulseaudio-alsa pulseaudio-bluetooth pulseaudio-equalizer pulseaudio-jack pulseeffects pulsemixer pasystray pamixer pulseview rhythmbox audacious audacity xf86-input-synaptics xf86-input-keyboard xf86-input-mouse)
 #
 # Graphic Card packages
 _intel_pkg=(xf86-video-intel libva-intel-driver intel-ucode)
@@ -58,8 +57,10 @@ _vmware_pkg=(xf86-video-vmware xf86-input-vmmouse)
 _generic_pkg=(xf86-video-fbdev)
 #
 # Desktop environment packages
-_desktop_menu=("Cinnamon" "Enlightenment" "Gnome-Shell_minimal" "Gnome" "Gnome_Gnome-Extras" "KDE-5-Base_minimal" "KDE-5" "LXDE" "LXQT" "MATE" "MATE_MATE-Extras" "Xfce" "Xfce_Xfce-Extras" "Awesome-WM" "Fluxbox-WM" "i3-WM" "Ice-WM" "Openbox-WM" "Pek-WM") # WindowMaker-WM
-_d_menu=(cinnamon enlightenment gnome-shell gnome gnome-extra plasma-desktop plasma lxde lxqt mate mate-extra xfce4 xfce4-goodies awesome fluxbox i3-wm icewm openbox pekwm) # windowmaker
+_desktop_menu=("Deepin" "Deepin_Deepin-Extra" "Cinnamon" "Enlightenment" "Gnome-Shell_minimal" "Gnome" "Gnome_Gnome-Extras" "KDE-5-Base_minimal" "KDE-5" "LXDE" "LXQT" "MATE" "MATE_MATE-Extras" "Xfce" "Xfce_Xfce-Extras" "Awesome-WM" "Fluxbox-WM" "i3-WM" "Ice-WM" "Openbox-WM" "Pek-WM") # WindowMaker-WM
+_d_menu=(deepin deepin-extra cinnamon enlightenment gnome-shell gnome gnome-extra plasma-desktop plasma lxde lxqt mate mate-extra xfce4 xfce4-goodies awesome fluxbox i3-wm icewm openbox pekwm) # windowmaker
+_deepin_pkg=(deepin lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings)
+_deepine_pkg=(deepin deepin-extra lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings)
 _cinnamon_pkg=(cinnamon)
 _enlightenment_pkg=(enlightenment terminology polkit-gnome)
 _gnome_shell_pkg=(gnome-shell gdm)
@@ -108,7 +109,7 @@ _gr_editor=(gimp)
 _office=(libreoffice-fresh)
 # libreoffice-fresh libreoffice-fresh-ru
 _minimal_pkg=(grub-customizer xterm gnome-terminal lxterminal cmake brasero acetoneiso2 fuseiso chromium opera transmission-gtk curl git wget gwget ksysguard doublecmd-gtk2 krusader blender vlc inkscape okular gedit geany leafpad parcellite)
-_other_pkg=(keepassxc veracrypt virtualbox kicad kicad-library kicad-library-3d smplayer wine wine-mono wine_gecko winetricks supertuxkart) # truecrypt
+_other_pkg=(keepassxc veracrypt virtualbox kicad kicad-library kicad-library-3d smplayer wine wine-mono wine_gecko winetricks supertuxkart gimp) # truecrypt
 # ABS_FILENAME=`readlink -e "$0"`
 # filedir=`dirname "$ABS_FILENAME"`
 emulator_packages=(desmume gens mednafen mupen64plus pcsx2 ppsspp)

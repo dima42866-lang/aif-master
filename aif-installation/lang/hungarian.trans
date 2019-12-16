@@ -425,6 +425,16 @@ _RefiErrBody="\nA rEFInd telepítő script nem működik csak ha az UEFI partíc
 _AXITitle=" ALSA, Xorg, és Input "
 _AXIBody="\nA grafikus kártya, vagy a munkakörnyezetek telepítése előtt, egyéb csomagok telepítése szükséges :\n\nalsa - Fejlett Linux hangrendszer\nxorg-* - nyílt forráskódú ablakozórendszer rendszer a grafikus megjelenítésért\nxf86-input-* - nyílt forráskódú meghajtó programok a beviteli eszközök számára\n\n"
  
+# Checklist Menu Alsa Xorg package
+_chl_xpkg_ttl="Az ALSA, x86-input-* csoportcsomagok telepítése"
+_chl_xpkg_bd="\nVálassza ki a telepítendő csomagokat.\n"
+_chl_xp_ttl="Xorg csoportcsomagok telepítése"
+
+# YES-NO Alsa Xorg package question
+_yn_alsa_pkg_ttl="ALSA csomagok telepítése"
+_yn_alsa_pkg_bd="\nSzeretné kiválasztani a csomagokat a telepítéshez?\n"
+_yn_x_pkg_ttl="Xorg telepítése"
+ 
 # Graphics Card Menu
 _GCtitle=" Grafikus kártya menü "
 _GCBody="Használd a  Nouveau drivert a régi NVIDIA kártyákhoz. Ha a kártyád nincs a listában, használd az  'ismeretlen / általános' lehetőséget.\n"
@@ -558,6 +568,10 @@ _yesno_iwp_body="\nCsomagok telepítése: iw, wireless_tools, wpa_supplicant, wi
 # Installl Shara Programm Qestion
 _yesno_shara_title="Megosztási összetevők telepítése"
 _yesno_shara_body="\nCsomagok telepítése: samba, smb4k, smbclient, smbnetfs ?\n"
+
+# Shara and type of network connection
+_yn_s_tnc_ttl="A NetworkManager kapcsolatok beállítása"
+_yn_s_tnc_bd="\nSzeretne további kapcsolattípusokat választani a NetworkManager-hez?\n"
 
 # Programs to TimeShoft and Github-Desktop
 _yesno_timeshift_title="Timeshift Telepítése"
