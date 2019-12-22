@@ -710,9 +710,9 @@ install_alsa_xorg_input() {
     check_for_error
      
      # copy the keyboard configuration file, if generated
-     if [[ -e /tmp/00-keyboard.conf ]]; then
-        cp -f /tmp/00-keyboard.conf ${MOUNTPOINT}/etc/X11/xorg.conf.d/00-keyboard.conf
-        sed -i 's/^HOOKS=(base/HOOKS=(base consolefont keymap /' ${MOUNTPOINT}/etc/mkinitcpio.conf
+     if [ -e "/tmp/00-keyboard.conf" ]; then
+        cp -f "/tmp/00-keyboard.conf" "${MOUNTPOINT}/etc/X11/xorg.conf.d/00-keyboard.conf"
+        sed -i 's/^HOOKS=(base/HOOKS=(base consolefont keymap /' "${MOUNTPOINT}/etc/mkinitcpio.conf"
      fi
      # now copy across .xinitrc for all user accounts
      user_list=$(ls ${MOUNTPOINT}/home/ | sed "s/lost+found//")

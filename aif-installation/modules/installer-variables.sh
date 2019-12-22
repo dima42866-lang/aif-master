@@ -189,3 +189,14 @@ _pm_n=""
 _pm_menu=""
 _required_packages=""
 _pm_once=0
+
+# Color dialog configurated
+_dlgrc_hm_sts=0
+_dlgrc_rs_sts=0
+_dlgrc_rr_sts=0
+_dlgrc_hm_st="$HOME/.dialogrc"
+_dlgrc_rt_st="/etc/dialogrc"
+_dlgrc_rt_rt="/root/.dialogrc"
+_dlgrc_hm_bp="$filesdir/dlg-home.bp"
+_dlgrc_rt_st_bp="$filesdir/dlg-rt-st.bp"
+_dlg_rt_rt_bp="$filesdir/dlg-rt-rt.bp"

@@ -20,8 +20,9 @@ ANSWER="/tmp/.aif"
 ABSOLUT_FILENAME=$(readlink -e "$0")
 filesdir=$(dirname "$ABSOLUT_FILENAME")
 # Save retyping
-VERSION="MAXIMALISIMUS Installation Framework 2.4"
+VERSION="MAXIMALISIMUS Installation Framework 2.5"
 
+source "$filesdir"/config/dialogrc-conf.sh     		              # Color dialog interface configured
 source "$filesdir"/modules/installer-variables.sh                 # list of variables
 source "$filesdir"/config/list-pkg-forms.sh                       # list of packages for uses the script
 source "$filesdir"/config/setup_function.sh                       # Function to setup on local package, p.c. build package in aur
@@ -48,13 +49,13 @@ source "$filesdir"/modules/main-interfaces.sh                     # main menu in
 ##                                                                  ##
 ######################################################################
 
-# sudo cp -f $filesdir/pacman.conf /etc/pacman.conf
 setcolor
 dialog 1>/dev/null 2>/dev/null
 if [[ $? != "0" ]]; then
 	script_dependences_question
 	dependences_result
 fi
+us_dlgrc_conf
 id_system
 select_language
 clear

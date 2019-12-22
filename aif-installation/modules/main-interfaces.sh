@@ -377,14 +377,18 @@ main_menu_online() {
           *) dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --yesno "$_CloseInstBody" 0 0
           
              if [[ $? -eq 0 ]]; then
+                echo -n  -e "\e[1;31mPlease wait ...\e[0m"\\r
                 [[ $DEEPIN_INSTALLED -eq 1 ]] && fixed_deepin_desktop
                 wait
+                echo -n  -e "\e[1;32mPlease wait ...\e[0m"\\r
                 umount_partitions
                 wait
+                echo -n  -e "\e[1;31mPlease wait ...\e[0m"\\r
                 clear
                 pkg_manager_unset
                 eml_zavershenie
                 aur_pkg_finish
+                echo -n  -e "\e[1;32mPlease wait ...\e[0m"\\r
 		        if [[ -f "$filesdir/remove_pkg.log" ]]; then
 	                dialog --defaultno --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_yesno_rmrf_ttl" --yesno "$_yesno_rmrf_bd" 0 0
 	                if [[ $? -eq 0 ]]; then
@@ -400,6 +404,7 @@ main_menu_online() {
 	                    echo ""
                 	fi
 		        fi
+                un_us_dlgrc_conf
                 exit 0
              else
                 main_menu_online
