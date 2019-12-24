@@ -22,7 +22,7 @@ pc_conf_prcss()
                 echo "$line" >> "$2"
             fi
         fi
-    done < "./$1"
+    done < "$1"
     cp -f "$2" "$1"
 }
 
