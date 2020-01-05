@@ -14,11 +14,6 @@ _base_pkg=(bash btrfs-progs ntp sudo f2fs-tools dialog htop nano vi ntfs-3g linu
 _base_devel_pkg=(bash bzip2 coreutils cryptsetup device-mapper dhcpcd diffutils e2fsprogs file filesystem findutils gawk gcc-libs gettext glibc grep gzip inetutils iproute2 iputils jfsutils less licenses logrotate lvm2 man-db man-pages mdadm nano netctl pacman pciutils perl procps-ng psmisc reiserfsprogs s-nail sed shadow sysfsutils systemd-sysvcompat tar texinfo usbutils util-linux vi which xfsprogs btrfs-progs ntp sudo f2fs-tools dialog htop mc ntfs-3g bash-completion gparted net-tools linux-headers squashfs-tools upower mlocate recordmydesktop testdisk hwinfo)
 _lts_pkg=(linux-lts linux-lts-headers linux-lts-docs)
 #
-# User and Groups
-_us_gr_users=(adm ftp games http log rfkill sys systemd-journal users uucp wheel)
-_us_gr_system=(dbus kmem locate lp mail nobody proc smmsp tty utmp)
-_us_gr_presystemd=(audio disk floppy input kvm optical scanner storage video)
-#
 # Package Network tools
 _network_menu=(connman networkmanager wicd-gtk)
 _ln_menu=""

@@ -450,43 +450,6 @@ set_root_password() {
 
 }
 
-# Users and groups
-usgr_to_sel() {
-	
-   dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_ug_select_ttl" \
-    --checklist "$ug_select_bd" 0 0 16 \
- 	"${_us_gr_users[0]}" "$_ugd_adm" "OFF" \
-	"${_us_gr_users[1]}" "$_ugd_ftp" "ON" \
-	"${_us_gr_users[2]}" "$_ugd_games" "OFF" \
-	"${_us_gr_users[3]}" "$_ugd_http" "ON" \
-	"${_us_gr_users[4]}" "$_ugd_log" "ON" \
-	"${_us_gr_users[5]}" "$_ugd_rfkill" "ON" \
-	"${_us_gr_users[6]}" "$_ugd_sys" "ON" \
-	"${_us_gr_users[7]}" "$_ugd_systemd_journal" "OFF" \
-	"${_us_gr_users[8]}" "$_ugd_users" "ON" \
-	"${_us_gr_users[9]}" "$_ugd_uucp" "OFF" \
-	"${_us_gr_users[10]}" "$_ugd_wheel" "ON" \
-	"${_us_gr_system[0]}" "$_ugd_dbus" "OFF" \
-	"${_us_gr_system[1]}" "$_ugd_kmem" "OFF" \
-	"${_us_gr_system[2]}" "$_ugd_locate" "OFF" \
-	"${_us_gr_system[3]}" "$_ugd_lp" "ON" \
-	"${_us_gr_system[4]}" "$_ugd_mail" "OFF" \
-	"${_us_gr_system[5]}" "$_ugd_nobody" "OFF" \
-	"${_us_gr_system[6]}" "$_ugd_proc" "OFF" \
-	"${_us_gr_system[7]}" "$_ugd_smmsp" "OFF" \
-	"${_us_gr_system[8]}" "$_ugd_tty" "OFF" \
-	"${_us_gr_system[9]}" "$_ugd_utmp" "OFF" \
-	"${_us_gr_presystemd[0]}" "$_ugd_audio" "ON" \
-	"${_us_gr_presystemd[1]}" "$_ugd_disk" "ON" \
-	"${_us_gr_presystemd[2]}" "$_ugd_floppy" "ON" \
-	"${_us_gr_presystemd[3]}" "$_ugd_input" "ON" \
-	"${_us_gr_presystemd[4]}" "$_ugd_kvm" "OFF" \
-	"${_us_gr_presystemd[5]}" "$_ugd_optical" "ON" \
-	"${_us_gr_presystemd[6]}" "$_ugd_scanner" "ON" \
-	"${_us_gr_presystemd[7]}" "$_ugd_storage" "ON" \
-	"${_us_gr_presystemd[8]}" "$_ugd_video" "ON" 2>${ANSWER}	
-}
-
 # Originally adapted from the Antergos 2.0 installer
 create_new_user() {
 
@@ -494,11 +457,11 @@ create_new_user() {
         USER=$(cat ${ANSWER})
         
         # Loop while user name is blank, has spaces, or has capital letters in it.
-        while [[ ${#USER} -eq 0 ]] || [[ $USER =~ \ |\' ]] || [[ $USER =~ [^a-z0-9\ ] ]]; do
+         while [[ ${#USER} -eq 0 ]] || [[ $USER =~ \ |\' ]] || [[ $USER =~ [^a-z0-9\ ] ]]; do
               dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_NUsrTitle" --inputbox "$_NUsrErrBody" 0 0 "" 2>${ANSWER} || config_user_menu
               USER=$(cat ${ANSWER})
         done
-        usgr_to_sel
+        
         # Enter password. This step will only be reached where the loop has been skipped or broken.
         dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_PassNUsrTitle" --clear --insecure --passwordbox "$_PassNUsrBody $USER\n\n" 0 0 2> ${ANSWER} || config_user_menu
         PASSWD=$(cat ${ANSWER}) 
@@ -521,12 +484,7 @@ create_new_user() {
         dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_NUsrSetTitle" --infobox "$_NUsrSetBody" 0 0
         sleep 2
         # Create the user, set password, then remove temporary password file
-        # arch_chroot "useradd ${USER} -m -g users -G disk,wheel,storage,power,network,video,audio,lp,games,optical,scanner,floppy,log,rfkill,ftp,http,sys,input -s /bin/bash" 2>/tmp/.errlog
-        _ugch=$(cat ${ANSWER})
-        _user_group_ch=$(echo "${_ugch[*]}" | sed 's/ /,/g')
-        unset _ugch
-        arch_chroot "useradd ${USER} -m -g users -G wheel,power,users -s /bin/bash" 2>>/tmp/.errlog
-        arch_chroot "usermod -aG ${_user_group_ch[*]} ${USER}" 2>>/tmp/.errlog
+        arch_chroot "useradd ${USER} -m -g users -G disk,wheel,storage,power,network,video,audio,lp,games,optical,scanner,floppy,log,rfkill,ftp,http,sys,input -s /bin/bash" 2>/tmp/.errlog
         check_for_error
         echo -e "${PASSWD}\n${PASSWD}" > /tmp/.passwd
         arch_chroot "passwd ${USER}" < /tmp/.passwd >/dev/null 2>/tmp/.errlog
