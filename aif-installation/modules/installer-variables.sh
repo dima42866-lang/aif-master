@@ -21,6 +21,7 @@ NM_COMPONENT_INSTALLED=1      # Has component NetworkManager installed?
 AXI_INSTALLED=0             # Have the ALSA, Xorg, and xf86-input packages been installed?
 _x_pkg_menu_cl=""
 _xorg_pkg_menu=""
+_ugch=""
 BOOTLOADER="n/a"            # Which bootloader has been installed?
 EVOBOXFM=""                 # Which file manager has been selected for EvoBox?
 EVOBOXIB=""                 # Which Internet Browser has been selected for EvoBox?
@@ -70,7 +71,6 @@ _real_swappiness="${MOUNTPOINT}/etc/sysctl.d/00-sysctl.conf"   # File of full pa
 _mem_head=""
 _memory=""
 _mem_2=""
-_next=0
 
 declare -a _devices                                            # Array scan mnt mount devices variables declare
 declare -a _device_menu                                        # Array menu form on scan mnt mount devices variables declare

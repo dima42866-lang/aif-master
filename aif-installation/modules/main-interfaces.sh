@@ -388,6 +388,7 @@ main_menu_online() {
                 pkg_manager_unset
                 eml_zavershenie
                 aur_pkg_finish
+                rm -rf "$_pcm_tempf"
                 echo -n  -e "\e[1;32mPlease wait ...\e[0m"\\r
 		        if [[ -f "$filesdir/remove_pkg.log" ]]; then
 	                dialog --defaultno --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_yesno_rmrf_ttl" --yesno "$_yesno_rmrf_bd" 0 0

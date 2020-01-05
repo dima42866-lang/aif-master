@@ -257,9 +257,14 @@ install_base() {
             info_search_pkg
             _list_base_pkg=$(check_s_lst_pkg "${_base_pkg[*]}")
             wait
+            _list_krnl_pkg=$(check_s_lst_pkg "${_krnl_pkg[*]}")
+            wait
             clear
             [[ ${_list_base_pkg[*]} != "" ]] && pacstrap ${MOUNTPOINT} base ${_list_base_pkg[*]} 2>/tmp/.errlog \
             || pacstrap ${MOUNTPOINT} base 2>/tmp/.errlog
+            wait
+            [[ ${_list_krnl_pkg[*]} != "" ]] && pacstrap ${MOUNTPOINT} ${_list_krnl_pkg[*]} 2>/tmp/.errlog
+            wait
              ipv6_disable
             _orders=1
              ;;
@@ -269,9 +274,14 @@ install_base() {
             # _list_base_pkg=$(check_s_lst_pkg "${_base_pkg[*]}")
             _list_base_devel=$(check_s_lst_pkg "${_base_devel_pkg[*]}")
             wait
+            _list_krnl_pkg=$(check_s_lst_pkg "${_krnl_pkg[*]}")
+            wait
             clear
             [[ ${_list_base_devel[*]} != "" ]] && pacstrap ${MOUNTPOINT} base base-devel ${_list_base_devel[*]} 2>/tmp/.errlog \
             || pacstrap ${MOUNTPOINT} base base-devel 2>/tmp/.errlog
+            wait
+            [[ ${_list_krnl_pkg[*]} != "" ]] && pacstrap ${MOUNTPOINT} ${_list_krnl_pkg[*]} 2>/tmp/.errlog
+            wait
              ipv6_disable
             _orders=1
              ;;

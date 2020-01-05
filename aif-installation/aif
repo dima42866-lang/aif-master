@@ -50,7 +50,7 @@ source "$filesdir"/modules/main-interfaces.sh                     # main menu in
 ######################################################################
 
 setcolor
-dialog 1>/dev/null 2>/dev/null
+/bin/bash -c "dialog --version" 1>/dev/null 2>/dev/null
 if [[ $? != "0" ]]; then
 	script_dependences_question
 	dependences_result
@@ -58,8 +58,9 @@ fi
 us_dlgrc_conf
 id_system
 select_language
+multilib_question
 clear
-git --version 1>/dev/null 2>/dev/null
+/bin/bash -c "git --version" 1>/dev/null 2>/dev/null
 if [[ $? != "0" ]]; then
     sudo pacman -S git --noconfirm
 fi
@@ -68,7 +69,6 @@ wait
 clear
 echo ""
 find_and_remode "$_aur_pkg_folder"
-multilib_question
 check_requirements
 greeting
     while true; do
