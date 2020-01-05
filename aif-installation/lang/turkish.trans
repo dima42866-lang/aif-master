@@ -687,3 +687,49 @@ _yesno_rmrf_bd="\nPaketlerin uzak eski sürümleri için bir günlük dosyası o
 # Remote repository
 _rmt_rpstr_ttl="Uzak depodan paketleri güncelleme"
 
+#
+# User groups
+_ug_select_ttl="Kullanıcı gruplarını seçme"
+ug_select_bd="\nLütfen yeni kullanıcı eklemek istediğiniz grupları seçin\n"
+#
+# User Groups for user
+#
+_ugd_adm="Yönetim"
+_ugd_ftp="FTP dosyalarına erişim"
+_ugd_games="Oyun programlarına erişim"
+_ugd_http="HTTP dosyalarına erişim"
+_ugd_log="Günlük dosyalarına erişim, syslog-ng"
+_ugd_rfkill="Kablosuz cihazların güç yönetimi"
+_ugd_sys="CUPS Yazıcı Yönetimi"
+_ugd_systemd_journal="Systemd günlüklerine erişim"
+_ugd_users="Standart kullanıcı grubu"
+_ugd_uucp="RS-232 cihazlarına erişim"
+_ugd_wheel="Sudo ve su ile yönetim"
+#
+# User Groups for system
+#
+_ugd_dbus="Dbus içinde kullanılır"
+_ugd_kmem="-"
+_ugd_locate="-"
+_ugd_lp="Paralel port cihazlarına erişim"
+_ugd_mail="-"
+_ugd_nobody="Ayrıcalıklı olmayan grup"
+_ugd_proc="Süreç bilgilerine erişim"
+_ugd_smmsp="sendmail grubu"
+_ugd_tty="-"
+_ugd_utmp="-"
+#
+# User Groups for Pre-Systemd
+#
+_ugd_audio="Ses ekipmanlarına doğrudan erişim"
+_ugd_disk="Blok cihazlara erişim"
+_ugd_floppy="Disket sürücülere erişim"
+_ugd_input="Giriş cihazlarına erişim"
+_ugd_kvm="KVM sanal makinelerine erişim"
+_ugd_optical="Erişim CD, DVD, ISO"
+_ugd_scanner="Tarayıcılara erişim"
+_ugd_storage="Çıkarılabilir sürücülere erişim"
+_ugd_video="Video yakalama cihazlarına erişim"
+#
+#
+

@@ -668,3 +668,49 @@ _yesno_rmrf_bd="\nEn logfil med slettede gamle versioner af pakker blev oprettet
 # Remote repository
 _rmt_rpstr_ttl="Opdaterer pakker fra et fjernlager"
 
+#
+# User groups
+_ug_select_ttl="Valg af brugergrupper"
+ug_select_bd="\nVælg grupperne at tilføje en ny bruger til\n"
+#
+# User Groups for user
+#
+_ugd_adm="Administration"
+_ugd_ftp="Adgang til FTP-filer"
+_ugd_games="Adgang til spilprogrammer"
+_ugd_http="Adgang til HTTP-filer"
+_ugd_log="Adgang til logfiler, syslog-ng"
+_ugd_rfkill="Strømstyring for trådløse enheder"
+_ugd_sys="Administration af CUPS printere"
+_ugd_systemd_journal="Adgang til systemd-log"
+_ugd_users="Standardbrugergruppe"
+_ugd_uucp="Adgang til RS-232 anordninger"
+_ugd_wheel="Administration via sudo og su"
+#
+# User Groups for system
+#
+_ugd_dbus="Bruges inde i dbus"
+_ugd_kmem="-"
+_ugd_locate="-"
+_ugd_lp="Adgang til parallelle portanordninger"
+_ugd_mail="-"
+_ugd_nobody="Ikke en privilegeret gruppe"
+_ugd_proc="Adgang til oplysninger om processerne"
+_ugd_smmsp="sendmail-gruppen"
+_ugd_tty="-"
+_ugd_utmp="-"
+#
+# User Groups for Pre-Systemd
+#
+_ugd_audio="Direkte adgang til audio-udstyr"
+_ugd_disk="Adgang til blokindretninger"
+_ugd_floppy="Adgang til disketter"
+_ugd_input="Adgang til input-enheder"
+_ugd_kvm="Adgang til KVM-virtuelle maskiner"
+_ugd_optical="Adgang til CD, DVD, ISO"
+_ugd_scanner="Adgang til scannere"
+_ugd_storage="Adgang til flytbare disketter"
+_ugd_video="Adgang til videooptagningsenheder"
+#
+#
+

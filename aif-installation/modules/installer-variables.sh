@@ -70,7 +70,6 @@ _real_swappiness="${MOUNTPOINT}/etc/sysctl.d/00-sysctl.conf"   # File of full pa
 _mem_head=""
 _memory=""
 _mem_2=""
-_next=0
 
 declare -a _devices                                            # Array scan mnt mount devices variables declare
 declare -a _device_menu                                        # Array menu form on scan mnt mount devices variables declare
