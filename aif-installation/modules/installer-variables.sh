@@ -116,7 +116,8 @@ _zsh_stp_once=0                     # Once setup zsh
 _fsh_stp_once=0                     # Once setup fish
 
 # Architecture
-ARCHI=`uname -m`            # Display whether 32 or 64 bit system
+ARCHI=$(uname -m)            # Display whether 32 or 64 bit system
+_archi=$(uname -m)
 SYSTEM="Unknown"            # Display whether system is BIOS or UEFI. Default is "unknown"
 ROOT_PART=""                # ROOT partition
 UEFI_PART=""                # UEFI partition

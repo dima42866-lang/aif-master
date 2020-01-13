@@ -31,6 +31,13 @@ vrf_cnt_fls()
         find "$_aif_temp_aur_dir" -maxdepth 1 -type f -exec cp -f {} "$_aur_pkg_folder"/ \;
         wait
     }
+    gt_cln_wf()
+    {
+        [[ -e "$_aif_temp_folder" ]] || gt_cln_all
+        wait
+        find "$_aif_temp_aur_dir" -maxdepth 1 -type f -iname "windowsfonts" -exec cp -f {} "$_aur_pkg_winfnts"/ \;
+        wait
+    }
     echo -e -n "\n\e[1;37mПроверка наличия обязательных директорий и файлов.\e[0m\n"
     echo -e -n "\e[1;37mCheck the availability of the required file and directories.\e[0m\n"
     if [[ -e "$_aur_pkg_folder" ]]; then
@@ -119,9 +126,9 @@ vrf_cnt_fls()
             echo -e -n "\n\e[1;37mНедостающие пакеты будут загружены из удаленного репозитория.\e[0m"
             echo -e -n "\n\e[1;37mThe missing packages will be downloaded from the remote repository.\e[0m\n"
             echo ""
-            [[ -e "$_aif_temp_folder" ]] || gt_cln_all
+            [[ -e "$_aif_temp_folder" ]] || gt_cln_wf
             wait
-            cp -f "$_aif_temp_winfnts" "$_aur_pkg_folder"
+            cp -f "$_aif_temp_winfnts" "$filesdir/config"
             wait
         fi
     else

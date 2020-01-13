@@ -116,20 +116,31 @@ _ttf_theme_pkg=(gnome-icon-theme ttf-liberation ttf-dejavu opendesktop-fonts ttf
 _gr_editor=(gimp)
 _office=(libreoffice-fresh)
 # libreoffice-fresh libreoffice-fresh-ru
-_minimal_pkg=(grub-customizer xterm gnome-terminal lxterminal cmake brasero acetoneiso2 fuseiso chromium opera transmission-gtk curl git wget gwget ksysguard doublecmd-gtk2 krusader blender vlc inkscape okular gedit geany leafpad parcellite)
-_other_pkg=(keepassxc veracrypt virtualbox kicad kicad-library kicad-library-3d smplayer wine wine-mono wine_gecko winetricks supertuxkart gimp) # truecrypt
-# ABS_FILENAME=`readlink -e "$0"`
-# filedir=`dirname "$ABS_FILENAME"`
+_minimal_pkg=(grub-customizer xterm gnome-terminal lxterminal cmake brasero acetoneiso2 fuseiso chromium opera transmission-gtk curl git wget gwget ksysguard doublecmd-gtk2 krusader blender vlc inkscape okular gedit geany leafpad parcellite gimp)
+_other_pkg=(keepassxc veracrypt virtualbox kicad kicad-library kicad-library-3d smplayer wine wine-mono wine_gecko winetricks supertuxkart) # truecrypt
 emulator_packages=(desmume gens mednafen mupen64plus pcsx2 ppsspp)
-_eml_folder="$filesdir/packages/emulators"
-_aur_pkg_folder="$filesdir/packages"
-_pkg_manager_folder="$filesdir/packages/package-manager"
-_rmt_rpstr_info="$filesdir/rmt.nfo"
-_aur_pkg_winfnts="$_aur_pkg_folder/windowsfonts.tar.gz"
-_aif_temp_folder="$filesdir/aif-temp"
-_aif_temp_aur_dir="$_aif_temp_folder/aif-installation/packages"
-_aif_temp_eml_dir="$_aif_temp_aur_dir/emulators"
-_aif_temp_pm_dir="$_aif_temp_aur_dir/package-manager"
-_aif_temp_winfnts="$_aif_temp_aur_dir/windowsfonts.tar.gz"
+if [[ ${_archi[*]} == "x86_64" ]]; then
+    _eml_folder="$filesdir/packages/emulators"
+    _aur_pkg_folder="$filesdir/packages"
+    _pkg_manager_folder="$filesdir/packages/package-manager"
+    _rmt_rpstr_info="$filesdir/rmt.nfo"
+    _aur_pkg_winfnts="$filesdir/config/windowsfonts.tar.gz"
+    _aif_temp_folder="$filesdir/aif-temp"
+    _aif_temp_aur_dir="$_aif_temp_folder/aif-installation/packages"
+    _aif_temp_eml_dir="$_aif_temp_aur_dir/emulators"
+    _aif_temp_pm_dir="$_aif_temp_aur_dir/package-manager"
+    _aif_temp_winfnts="$_aif_temp_aur_dir/windowsfonts.tar.gz"
+else
+    _eml_folder="$filesdir/packages_x86/emulators"
+    _aur_pkg_folder="$filesdir/packages_x86"
+    _pkg_manager_folder="$filesdir/packages_x86/package-manager"
+    _rmt_rpstr_info="$filesdir/rmt.nfo"
+    _aur_pkg_winfnts="$filesdir/config/windowsfonts.tar.gz"
+    _aif_temp_folder="$filesdir/aif-temp"
+    _aif_temp_aur_dir="$_aif_temp_folder/aif-installation/packages_x86"
+    _aif_temp_eml_dir="$_aif_temp_aur_dir/emulators"
+    _aif_temp_pm_dir="$_aif_temp_aur_dir/package-manager"
+    _aif_temp_winfnts="$_aif_temp_aur_dir/windowsfonts.tar.gz"
+fi
 aif_master_git="https://github.com/maximalisimus/aif-master.git"
 

@@ -22,7 +22,7 @@ filesdir=$(dirname "$ABSOLUT_FILENAME")
 # Save retyping
 VERSION="MAXIMALISIMUS Installation Framework 2.5"
 
-source "$filesdir"/config/dialogrc-conf.sh     		              # Color dialog interface configured
+source "$filesdir"/config/dialogrc-conf.sh                        # Color dialog interface configured
 source "$filesdir"/modules/installer-variables.sh                 # list of variables
 source "$filesdir"/config/list-pkg-forms.sh                       # list of packages for uses the script
 source "$filesdir"/config/setup_function.sh                       # Function to setup on local package, p.c. build package in aur
@@ -30,7 +30,7 @@ source "$filesdir"/config/package-manager_function.sh             # Setup functi
 source "$filesdir"/config/package_function.sh                     # Setup local package on build in aur
 source "$filesdir"/config/emulators_function.sh                   # Setup packages on emulators
 source "$filesdir"/config/remove_old_v_pkg_function.sh            # Remove duble package on old version
-source "$filesdir"/config/dependences_function.sh				  # Dependences for script
+source "$filesdir"/config/dependences_function.sh                 # Dependences for script
 source "$filesdir"/config/verify_package_folder.sh                # Check required folder and required files
 source "$filesdir"/modules/core-functions.sh                      # language, checks
 source "$filesdir"/modules/configuration-functions.sh             # Keyboard, locale, time zone, FSTAB, mkinitcpio, user controls
@@ -52,23 +52,25 @@ source "$filesdir"/modules/main-interfaces.sh                     # main menu in
 setcolor
 /bin/bash -c "dialog --version" 1>/dev/null 2>/dev/null
 if [[ $? != "0" ]]; then
-	script_dependences_question
-	dependences_result
+    script_dependences_question
+    dependences_result
 fi
 us_dlgrc_conf
 id_system
 select_language
-multilib_question
-clear
-/bin/bash -c "git --version" 1>/dev/null 2>/dev/null
-if [[ $? != "0" ]]; then
-    sudo pacman -S git --noconfirm
-fi
-vrf_cnt_fls
-wait
-clear
-echo ""
-find_and_remode "$_aur_pkg_folder"
+if [[ ${_archi[*]} == "x86_64" ]]; then
+    multilib_question
+    clear
+    /bin/bash -c "git --version" 1>/dev/null 2>/dev/null
+    if [[ $? != "0" ]]; then
+        sudo pacman -S git --noconfirm
+    fi
+    vrf_cnt_fls
+    wait
+    clear
+    echo ""
+    find_and_remode "$_aur_pkg_folder"
+fi    
 check_requirements
 greeting
     while true; do

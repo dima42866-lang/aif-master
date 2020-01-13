@@ -222,7 +222,11 @@ install_desktop_menu() {
              ;;
         "5") install_dm
              ;;
-        "6") install_gep
+        "6") if [[ ${_archi[*]} == "x86_64" ]]; then
+                install_gep
+            else
+                install_gep_old
+            fi
              ;;
           *) main_menu_online
              ;;
@@ -390,21 +394,21 @@ main_menu_online() {
                 aur_pkg_finish
                 rm -rf "$_pcm_tempf"
                 echo -n  -e "\e[1;32mPlease wait ...\e[0m"\\r
-		        if [[ -f "$filesdir/remove_pkg.log" ]]; then
-	                dialog --defaultno --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_yesno_rmrf_ttl" --yesno "$_yesno_rmrf_bd" 0 0
-	                if [[ $? -eq 0 ]]; then
-	                    clear
-	                    echo ""
-	                    cat "$filesdir/remove_pkg.log"
-	                    echo ""
-	                    rm -rf "$filesdir/remove_pkg.log"
-	                else
-	                    clear
-	                    echo ""
-	                    cat "$filesdir/remove_pkg.log"
-	                    echo ""
-                	fi
-		        fi
+                if [[ -f "$filesdir/remove_pkg.log" ]]; then
+                    dialog --defaultno --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_yesno_rmrf_ttl" --yesno "$_yesno_rmrf_bd" 0 0
+                    if [[ $? -eq 0 ]]; then
+                        clear
+                        echo ""
+                        cat "$filesdir/remove_pkg.log"
+                        echo ""
+                        rm -rf "$filesdir/remove_pkg.log"
+                    else
+                        clear
+                        echo ""
+                        cat "$filesdir/remove_pkg.log"
+                        echo ""
+                    fi
+                fi
                 un_us_dlgrc_conf
                 exit 0
              else

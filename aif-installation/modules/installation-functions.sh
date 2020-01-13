@@ -149,7 +149,7 @@ win_fonts_setup()
 {
     dialog --defaultno --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_yn_win_fnts_ttl" --yesno "$_yn_win_fnts_bd" 0 0
     if [[ $? -eq 0 ]]; then
-       tar -C "${MOUNTPOINT}/usr/share/fonts" -xvzf $_win_fonts_pkg
+       tar -C "${MOUNTPOINT}/usr/share/fonts" -xvzf $_aur_pkg_winfnts
         arch-chroot $MOUNTPOINT /bin/bash -c "fc-cache" 2>/tmp/.errlog
         check_for_error
     fi
@@ -322,20 +322,16 @@ install_base() {
           *) install_base_menu
              ;;
     esac    
-     
-    if [[ $_multilib == "1" ]]; then
-        # echo "[multilib]" >>  ${MOUNTPOINT}/etc/pacman.conf
-        # echo "Include = /etc/pacman.d/mirrorlist" >>  ${MOUNTPOINT}/etc/pacman.conf
-        # sed -i 's/^\#\[multilib\]$/[multilib]/' ${MOUNTPOINT}/etc/pacman.conf
-        # sed -i '/^\[multilib\]$/a\Include = /etc/pacman.d/mirrorlist' ${MOUNTPOINT}/etc/pacman.conf
-        sed -i '93s/\#\[multilib\]/[multilib]/' ${MOUNTPOINT}/etc/pacman.conf
-        sed -i '94s/\#Include/Include/' ${MOUNTPOINT}/etc/pacman.conf
-    fi
     
+    if [[ ${_archi[*]} == "x86_64" ]]; then
+        if [[ $_multilib == "1" ]]; then
+            pc_conf_prcss "${MOUNTPOINT}/etc/pacman.conf" "$_pcm_tempf"
+        fi
+    fi
     mirrorlist_question 
     
     sed -i 's/\# include \"\/usr\/share\/nano\/\*.nanorc\"/include \"\/usr\/share\/nano\/\*.nanorc\"/' ${MOUNTPOINT}/etc/nanorc 2>>/tmp/.errlog
-    	
+        
     # If the virtual console has been set, then copy config file to installation
    # [[ -e /tmp/vconsole.conf ]] && cp /tmp/vconsole.conf ${MOUNTPOINT}/etc/vconsole.conf 2>>/tmp/.errlog
     check_for_error
@@ -703,7 +699,7 @@ install_alsa_xorg_input() {
             pacstrap ${MOUNTPOINT} ${_clist_x_pkg[*]} 2>/tmp/.errlog
         fi
     fi
-	check_for_error
+    check_for_error
     wait
     dialog --defaultno --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_yn_x_pkg_ttl" --yesno "$_yn_alsa_pkg_bd" 0 0
     if [[ $? -eq 0 ]]; then
@@ -718,7 +714,7 @@ install_alsa_xorg_input() {
     else
         pacstrap ${MOUNTPOINT} xorg 2>/tmp/.errlog
     fi
-	check_for_error
+    check_for_error
     wait
     sleep 5
     wait
@@ -1507,6 +1503,48 @@ install_gep()
     install_gep
 }
 
+# back - install_desktop_menu
+install_gep_old()
+{
+    if [[ $SUB_MENU != "general_package" ]]; then
+       SUB_MENU="general_package"
+       HIGHLIGHT_SUB=1
+    else
+       if [[ $HIGHLIGHT_SUB != 6 ]]; then
+          HIGHLIGHT_SUB=$(( HIGHLIGHT_SUB + 1 ))
+       fi
+    fi
+    
+    dialog --default-item ${HIGHLIGHT_SUB} --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_menu_gen_title" --menu "$_menu_gen_body" 0 0 6 \
+    "1" "$_menu_gengen" \
+    "2" "$_menu_archivers" \
+    "3" "$_menu_ttf_theme" \
+    "4" "$_menu_add_pkg" \
+    "5" "$_menu_extra_pkg" \
+    "6" "$_Back" 2>${ANSWER}
+    
+    HIGHLIGHT_SUB=$(cat ${ANSWER})
+    case $(cat ${ANSWER}) in
+    "1") install_gengen
+         ;;
+    "2") install_archivers
+         ;;
+    "3") install_ttftheme
+         ;;
+    "4") install_standartpkg
+         ;;
+    "5") install_otherpkg
+         ;;
+      *) # Back to NAME Menu
+        install_desktop_menu
+         ;;
+    esac
+    
+    check_for_error
+    
+    install_gep_old
+}
+
 install_shara_components()
 {
     if [[ $_shara_p == "0" ]]; then
@@ -1523,7 +1561,7 @@ install_shara_components()
             dialog --defaultno --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_yesno_shara_title" --yesno "$_yn_alsa_pkg_bd" 0 0
              if [[ $? -eq 0 ]]; then
                 _shara_pkg_mn_list=""
-                for k in ${_clist_list_network_pkg[*]}; do	
+                for k in ${_clist_list_network_pkg[*]}; do  
                     _shara_pkg_mn_list="${_shara_pkg_mn_list} $k - on"
                 done
                 dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_chl_shara_ttl" --checklist "$_chl_xpkg_bd" 0 0 16 ${_shara_pkg_mn_list} 2>${ANSWER}

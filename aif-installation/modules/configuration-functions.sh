@@ -14,16 +14,33 @@ configure_mirrorlist() {
 mirror_by_country() {
 
  COUNTRY_LIST=""
- countries_list=("AU_Australia AT_Austria BY_Belarus BE_Belgium BR_Brazil BG_Bulgaria CA_Canada CL_Chile CN_China CO_Colombia CZ_Czech_Republic DK_Denmark EE_Estonia FI_Finland FR_France DE_Germany GB_United_Kingdom GR_Greece HU_Hungary IN_India IE_Ireland IL_Israel IT_Italy JP_Japan KZ_Kazakhstan KR_Korea LV_Latvia LU_Luxembourg MK_Macedonia NL_Netherlands NC_New_Caledonia NZ_New_Zealand NO_Norway PL_Poland PT_Portugal RO_Romania RU_Russia RS_Serbia SG_Singapore SK_Slovakia ZA_South_Africa ES_Spain LK_Sri_Lanka SE_Sweden CH_Switzerland TW_Taiwan TR_Turkey UA_Ukraine US_United_States UZ_Uzbekistan VN_Vietnam")
-
- for i in ${countries_list}; do
-     COUNTRY_LIST="${COUNTRY_LIST} ${i} -"
- done
-    
- dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_MirrorCntryTitle" --menu "$_MirrorCntryBody" 0 0 16 ${COUNTRY_LIST} 2>${ANSWER} || prep_menu
- COUNTRY_CODE=$(cat ${ANSWER} |sed 's/_.*//')
-
- URL="https://www.archlinux.org/mirrorlist/?country=${COUNTRY_CODE}&use_mirror_status=on"
+     
+ if [[ ${_archi[*]} == "x86_64" ]]; then
+    countries_list=("AU_Australia AT_Austria BY_Belarus BE_Belgium BR_Brazil BG_Bulgaria CA_Canada CL_Chile CN_China CO_Colombia CZ_Czech_Republic DK_Denmark EE_Estonia FI_Finland FR_France DE_Germany GB_United_Kingdom GR_Greece HU_Hungary IN_India IE_Ireland IL_Israel IT_Italy JP_Japan KZ_Kazakhstan KR_Korea LV_Latvia LU_Luxembourg MK_Macedonia NL_Netherlands NC_New_Caledonia NZ_New_Zealand NO_Norway PL_Poland PT_Portugal RO_Romania RU_Russia RS_Serbia SG_Singapore SK_Slovakia ZA_South_Africa ES_Spain LK_Sri_Lanka SE_Sweden CH_Switzerland TW_Taiwan TR_Turkey UA_Ukraine US_United_States UZ_Uzbekistan VN_Vietnam")
+    wait
+    for i in ${countries_list}; do
+        COUNTRY_LIST="${COUNTRY_LIST} ${i} -"
+    done
+    wait
+    dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_MirrorCntryTitle" --menu "$_MirrorCntryBody" 0 0 16 ${COUNTRY_LIST} 2>${ANSWER} || prep_menu
+    wait
+    COUNTRY_CODE=$(cat ${ANSWER} | sed 's/_.*//')
+    wait
+    URL="https://www.archlinux.org/mirrorlist/?country=${COUNTRY_CODE}&protocol=http&protocol=https&ip_version=4&ip_version=6&use_mirror_status=on"
+ else
+    countries_list=("BY_Belarus FR_France DE_Germany IN_India JP_Japan RU_Russia SG_Singapore CH_Switzerland US_United_States")
+    wait
+    for i in ${countries_list}; do
+        COUNTRY_LIST="${COUNTRY_LIST} ${i} -"
+    done
+    wait
+    dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_MirrorCntryTitle" --menu "$_MirrorCntryBody" 0 0 16 ${COUNTRY_LIST} 2>${ANSWER} || prep_menu
+    wait
+    COUNTRY_CODE=$(cat ${ANSWER} | sed 's/_.*//' | tr '[:upper:]' '[:lower:]')
+    wait
+    URL="https://archlinux32.org/mirrorlist/?country=${COUNTRY_CODE}&protocol=http&protocol=https&ip_version=4&ip_version=6&use_mirror_status=on" 
+ fi
+ wait
  MIRROR_TEMP=$(mktemp --suffix=-mirrorlist)
 
  # Get latest mirror list and save to tmpfile
@@ -452,39 +469,39 @@ set_root_password() {
 
 # Users and groups
 usgr_to_sel() {
-	
+    
    dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_ug_select_ttl" \
     --checklist "$ug_select_bd" 0 0 16 \
- 	"${_us_gr_users[0]}" "$_ugd_adm" "OFF" \
-	"${_us_gr_users[1]}" "$_ugd_ftp" "ON" \
-	"${_us_gr_users[2]}" "$_ugd_games" "OFF" \
-	"${_us_gr_users[3]}" "$_ugd_http" "ON" \
-	"${_us_gr_users[4]}" "$_ugd_log" "ON" \
-	"${_us_gr_users[5]}" "$_ugd_rfkill" "ON" \
-	"${_us_gr_users[6]}" "$_ugd_sys" "ON" \
-	"${_us_gr_users[7]}" "$_ugd_systemd_journal" "OFF" \
-	"${_us_gr_users[8]}" "$_ugd_users" "ON" \
-	"${_us_gr_users[9]}" "$_ugd_uucp" "OFF" \
-	"${_us_gr_users[10]}" "$_ugd_wheel" "ON" \
-	"${_us_gr_system[0]}" "$_ugd_dbus" "OFF" \
-	"${_us_gr_system[1]}" "$_ugd_kmem" "OFF" \
-	"${_us_gr_system[2]}" "$_ugd_locate" "OFF" \
-	"${_us_gr_system[3]}" "$_ugd_lp" "ON" \
-	"${_us_gr_system[4]}" "$_ugd_mail" "OFF" \
-	"${_us_gr_system[5]}" "$_ugd_nobody" "OFF" \
-	"${_us_gr_system[6]}" "$_ugd_proc" "OFF" \
-	"${_us_gr_system[7]}" "$_ugd_smmsp" "OFF" \
-	"${_us_gr_system[8]}" "$_ugd_tty" "OFF" \
-	"${_us_gr_system[9]}" "$_ugd_utmp" "OFF" \
-	"${_us_gr_presystemd[0]}" "$_ugd_audio" "ON" \
-	"${_us_gr_presystemd[1]}" "$_ugd_disk" "ON" \
-	"${_us_gr_presystemd[2]}" "$_ugd_floppy" "ON" \
-	"${_us_gr_presystemd[3]}" "$_ugd_input" "ON" \
-	"${_us_gr_presystemd[4]}" "$_ugd_kvm" "OFF" \
-	"${_us_gr_presystemd[5]}" "$_ugd_optical" "ON" \
-	"${_us_gr_presystemd[6]}" "$_ugd_scanner" "ON" \
-	"${_us_gr_presystemd[7]}" "$_ugd_storage" "ON" \
-	"${_us_gr_presystemd[8]}" "$_ugd_video" "ON" 2>${ANSWER}
+    "${_us_gr_users[0]}" "$_ugd_adm" "OFF" \
+    "${_us_gr_users[1]}" "$_ugd_ftp" "ON" \
+    "${_us_gr_users[2]}" "$_ugd_games" "OFF" \
+    "${_us_gr_users[3]}" "$_ugd_http" "ON" \
+    "${_us_gr_users[4]}" "$_ugd_log" "ON" \
+    "${_us_gr_users[5]}" "$_ugd_rfkill" "ON" \
+    "${_us_gr_users[6]}" "$_ugd_sys" "ON" \
+    "${_us_gr_users[7]}" "$_ugd_systemd_journal" "OFF" \
+    "${_us_gr_users[8]}" "$_ugd_users" "ON" \
+    "${_us_gr_users[9]}" "$_ugd_uucp" "OFF" \
+    "${_us_gr_users[10]}" "$_ugd_wheel" "ON" \
+    "${_us_gr_system[0]}" "$_ugd_dbus" "OFF" \
+    "${_us_gr_system[1]}" "$_ugd_kmem" "OFF" \
+    "${_us_gr_system[2]}" "$_ugd_locate" "OFF" \
+    "${_us_gr_system[3]}" "$_ugd_lp" "ON" \
+    "${_us_gr_system[4]}" "$_ugd_mail" "OFF" \
+    "${_us_gr_system[5]}" "$_ugd_nobody" "OFF" \
+    "${_us_gr_system[6]}" "$_ugd_proc" "OFF" \
+    "${_us_gr_system[7]}" "$_ugd_smmsp" "OFF" \
+    "${_us_gr_system[8]}" "$_ugd_tty" "OFF" \
+    "${_us_gr_system[9]}" "$_ugd_utmp" "OFF" \
+    "${_us_gr_presystemd[0]}" "$_ugd_audio" "ON" \
+    "${_us_gr_presystemd[1]}" "$_ugd_disk" "ON" \
+    "${_us_gr_presystemd[2]}" "$_ugd_floppy" "ON" \
+    "${_us_gr_presystemd[3]}" "$_ugd_input" "ON" \
+    "${_us_gr_presystemd[4]}" "$_ugd_kvm" "OFF" \
+    "${_us_gr_presystemd[5]}" "$_ugd_optical" "ON" \
+    "${_us_gr_presystemd[6]}" "$_ugd_scanner" "ON" \
+    "${_us_gr_presystemd[7]}" "$_ugd_storage" "ON" \
+    "${_us_gr_presystemd[8]}" "$_ugd_video" "ON" 2>${ANSWER}
     _ugch=$(cat ${ANSWER})
 }
 
