@@ -1,14 +1,14 @@
 #!/bin/bash
 pkgemlstart()
 {
-   #for i in ${emulator_packages[*]}; do
-   #    else_eml_package_lst="${else_eml_package_lst} $i*"
-   #done
-   #else_eml_package_list=$(echo "${else_eml_package_lst[*]}" | xargs | sed 's/ /|/g')
-   else_eml_package_list=$(echo "${emulator_packages[*]}" | xargs | sed 's/ /|/g')
+   clear
+   info_search_pkg
+   _list_emulator_packages=$(check_s_lst_pkg "${emulator_packages[*]}")
+   wait
+   else_eml_package_list=$(echo "${_list_emulator_packages[*]}" | xargs | sed 's/ /|/g')
    wait
    #unset else_eml_package_lst
-    eml_check_dbl_list=$(find "$_eml_folder" -maxdepth 1 -type f | grep -v "windowsfonts" | rev | cut -d '/' -f1 | rev | cut -d '-' -f1 | sort | uniq -d | wc -l)
+   eml_check_dbl_list=$(find "$_eml_folder" -maxdepth 1 -type f | grep -v "windowsfonts" | rev | cut -d '/' -f1 | rev | cut -d '-' -f1 | sort | uniq -d | wc -l)
    wait
     if [[ ${eml_check_dbl_list[*]} != "0" ]]; then
         eml_dbl_name=$(find "$_eml_folder" -maxdepth 1 -type f | grep -v "windowsfonts" | rev | cut -d '/' -f1 | rev | cut -d '-' -f1 | sort | uniq -d)
@@ -25,7 +25,7 @@ pkgemlstart()
             eml_full_name="${eml_full_name} $i"
         done
         wait
-      for i in ${emulator_packages[*]}; do
+      for i in ${_list_emulator_packages[*]}; do
             eml_full_name="${eml_full_name} $i"
         done
         wait
@@ -36,7 +36,7 @@ pkgemlstart()
             eml_full_name="${eml_full_name} $i"
         done
         wait
-        for i in ${emulator_packages[*]}; do
+        for i in ${_list_emulator_packages[*]}; do
             eml_full_name="${eml_full_name} $i"
         done
         wait
@@ -131,6 +131,7 @@ eml_zavershenie()
     [[ ${eml_all_name[*]} ]] && unset eml_all_name
     [[ ${eml_full_name[*]} ]] && unset eml_full_name
     [[ ${full_eml_menu[*]} ]] && unset full_eml_menu
+    [[ ${_list_emulator_packages[*]} ]] && unset _list_emulator_packages
     ### UNSET ###
 }
 
