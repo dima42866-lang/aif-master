@@ -50,7 +50,8 @@ source "$filesdir"/modules/main-interfaces.sh                     # main menu in
 ######################################################################
 
 setcolor
-/bin/bash -c "dialog --version" 1>/dev/null 2>/dev/null
+# /bin/bash -c "dialog --version" 1>/dev/null 2>/dev/null
+pacman -Qs dialog 1>/dev/null 2>/dev/null
 if [[ $? != "0" ]]; then
     script_dependences_question
     dependences_result
@@ -61,7 +62,8 @@ select_language
 if [[ ${_archi[*]} == "x86_64" ]]; then
     multilib_question
     clear
-    /bin/bash -c "git --version" 1>/dev/null 2>/dev/null
+#    /bin/bash -c "git --version" 1>/dev/null 2>/dev/null
+    pacman -Qs git 1>/dev/null 2>/dev/null
     if [[ $? != "0" ]]; then
         sudo pacman -S git --noconfirm
     fi

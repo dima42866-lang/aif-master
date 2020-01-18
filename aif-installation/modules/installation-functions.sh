@@ -203,6 +203,7 @@ install_standartpkg()
         for i in ${_clist_minimal_pkg[*]}; do
             _standart_pkg_menu="${_standart_pkg_menu} ${i} - on"
         done
+        _standart_pkg_menu="${_standart_pkg_menu} ${_gr_editor[*]} - on"
         wait
         clear
     fi

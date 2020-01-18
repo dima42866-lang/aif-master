@@ -32,8 +32,8 @@ show_memory()
 {
     echo -e -n "\n" > "$_mem_file"
     _mem_head=$(free -h | awk 'NR==1{printf "\t%s\t%s\t%s\t%s\t\n", $1,$3,$2,$2}')
-    _memory=$(free -h | awk 'NR==2{printf "%s\t%s\t%s\t%s\t%.2f%%\n", $1,$2,$4,$3,$3*100/$2}')
-    _mem_2=$(free -h | awk 'NR==3{printf "%s\t%s\t%s\t%s\t%.2f%%\n", $1,$2,$4,$3,$3*100/$2}')
+    _memory=$(free --mega | awk 'NR==2{printf "%s\t%s\t%s\t%s\t%.2f%%\n", $1,$2,$4,$3,$3*100/$2}')
+    _mem_2=$(free --mega | awk 'NR==3{printf "%s\t%s\t%s\t%s\t%.2f%%\n", $1,$2,$4,$3,$3*100/$2}')
     echo "$_mem_head" >> "$_mem_file"
     echo "$_memory" >> "$_mem_file"
     echo "$_mem_2" >> "$_mem_file"

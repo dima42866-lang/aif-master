@@ -117,9 +117,10 @@ _gr_editor=(gimp)
 _office=(libreoffice-fresh)
 # libreoffice-fresh libreoffice-fresh-ru
 _minimal_pkg=(grub-customizer xterm gnome-terminal lxterminal cmake brasero acetoneiso2 fuseiso chromium opera transmission-gtk curl git wget gwget ksysguard doublecmd-gtk2 krusader blender vlc inkscape okular gedit geany leafpad parcellite gimp)
-_other_pkg=(keepassxc veracrypt virtualbox kicad kicad-library kicad-library-3d smplayer wine wine-mono wine_gecko winetricks supertuxkart) # truecrypt
 emulator_packages=(desmume gens mednafen mupen64plus pcsx2 ppsspp)
 if [[ ${_archi[*]} == "x86_64" ]]; then
+    _other_pkg=(keepassxc veracrypt virtualbox kicad kicad-library kicad-library-3d smplayer wine wine-mono wine_gecko winetricks supertuxkart) # truecrypt
+    emulator_packages=(desmume gens mednafen mupen64plus pcsx2 ppsspp)
     _eml_folder="$filesdir/packages/emulators"
     _aur_pkg_folder="$filesdir/packages"
     _pkg_manager_folder="$filesdir/packages/package-manager"
@@ -131,6 +132,8 @@ if [[ ${_archi[*]} == "x86_64" ]]; then
     _aif_temp_pm_dir="$_aif_temp_aur_dir/package-manager"
     _aif_temp_winfnts="$_aif_temp_aur_dir/windowsfonts.tar.gz"
 else
+    _other_pkg=(keepassxc veracrypt virtualbox kicad kicad-library kicad-library-3d smplayer wine-mono winetricks supertuxkart) # truecrypt
+    emulator_packages=(desmume mednafen mupen64plus ppsspp)
     _eml_folder="$filesdir/packages_x86/emulators"
     _aur_pkg_folder="$filesdir/packages_x86"
     _pkg_manager_folder="$filesdir/packages_x86/package-manager"
