@@ -35,6 +35,7 @@ dependences_result()
             echo -e -n "\e[1;32mThe «dialog» package is installed...\e[0m"
             outin_success
             echo ""
+            sudo pacman -Syy --noconfirm
             sudo pacman -S dialog --noconfirm
             ;;
         n|N) echo -e -n "\e[1;31mРабота скрипта будет прекращена!\e[0m"
@@ -49,7 +50,40 @@ dependences_result()
           echo -e -n "\e[1;32mThe default action is executed...\e[0m" 
           outin_success
           echo ""
+          sudo pacman -Syy --noconfirm
           sudo pacman -S dialog --noconfirm
             ;;
     esac
+}
+question_dialog_run()
+{
+    if [[ "${_how_shell[*]}" != "fish" ]]; then
+        sudo pacman -Qs dialog 1>/dev/null 2>/dev/null
+        if [[ $? != "0" ]]; then
+            script_dependences_question
+            dependences_result
+        fi
+    else
+        pacman -Qs dialog 1>/dev/null 2>/dev/null
+        if [[ "$STATUS" != "0" ]]; then
+            script_dependences_question
+            dependences_result
+        fi
+    fi
+}
+git_question_run()
+{
+    if [[ "${_how_shell[*]}" != "fish" ]]; then
+        pacman -Qs git 1>/dev/null 2>/dev/null
+        if [[ $? != "0" ]]; then
+            sudo pacman -Syy --noconfirm
+            sudo pacman -S git --noconfirm
+        fi
+    else
+        pacman -Qs git 1>/dev/null 2>/dev/null
+        if [[ "$STATUS" != "0" ]]; then
+            sudo pacman -Syy --noconfirm
+            sudo pacman -S git --noconfirm
+        fi
+    fi
 }

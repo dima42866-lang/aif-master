@@ -22,26 +22,19 @@ filesdir=$(dirname "$ABSOLUT_FILENAME")
 # Save retyping
 VERSION="MAXIMALISIMUS Installation Framework 2.5"
 
-source "$filesdir"/config/dialogrc-conf.sh                        # Color dialog interface configured
-source "$filesdir"/modules/installer-variables.sh                 # list of variables
-source "$filesdir"/config/list-pkg-forms.sh                       # list of packages for uses the script
-source "$filesdir"/config/setup_function.sh                       # Function to setup on local package, p.c. build package in aur
-source "$filesdir"/config/package-manager_function.sh             # Setup function to package manager - pamac
-source "$filesdir"/config/package_function.sh                     # Setup local package on build in aur
-source "$filesdir"/config/emulators_function.sh                   # Setup packages on emulators
-source "$filesdir"/config/remove_old_v_pkg_function.sh            # Remove duble package on old version
-source "$filesdir"/config/dependences_function.sh                 # Dependences for script
-source "$filesdir"/config/verify_package_folder.sh                # Check required folder and required files
-source "$filesdir"/modules/core-functions.sh                      # language, checks
-source "$filesdir"/modules/configuration-functions.sh             # Keyboard, locale, time zone, FSTAB, mkinitcpio, user controls
-source "$filesdir"/modules/system-partitioning.sh                 # managing partitions, installing the boot
-source "$filesdir"/modules/encryption-functions.sh                # Encryption
-source "$filesdir"/modules/logical-volume.sh                      # LVM control
-source "$filesdir"/modules/installation-functions.sh              # system installation functions
-source "$filesdir"/modules/swappiness-config.sh                   # SWAPPINESS
-source "$filesdir"/modules/devices-config.sh                      # tune2fs
-source "$filesdir"/modules/shell_installer.sh                     # SHELL installer functions
-source "$filesdir"/modules/main-interfaces.sh                     # main menu interface
+_src_fls=$(find "$filesdir/config" -maxdepth 1 -type f -iname "*.sh")
+wait
+for i in ${_src_fls[*]}; do
+    source "$i"
+    wait
+done
+_src_fls=$(find "$filesdir/modules" -maxdepth 1 -type f -iname "*.sh")
+wait
+for i in ${_src_fls[*]}; do
+    source "$i"
+    wait
+done
+unset _src_fls
 
 ######################################################################
 ##                                                                  ##
@@ -50,23 +43,14 @@ source "$filesdir"/modules/main-interfaces.sh                     # main menu in
 ######################################################################
 
 setcolor
-# /bin/bash -c "dialog --version" 1>/dev/null 2>/dev/null
-pacman -Qs dialog 1>/dev/null 2>/dev/null
-if [[ $? != "0" ]]; then
-    script_dependences_question
-    dependences_result
-fi
+question_dialog_run
 us_dlgrc_conf
 id_system
 select_language
-if [[ ${_archi[*]} == "x86_64" ]]; then
+if [[ "${_archi[*]}" = "x86_64" ]]; then
     multilib_question
     clear
-#    /bin/bash -c "git --version" 1>/dev/null 2>/dev/null
-    pacman -Qs git 1>/dev/null 2>/dev/null
-    if [[ $? != "0" ]]; then
-        sudo pacman -S git --noconfirm
-    fi
+    git_question_run
     vrf_cnt_fls
     wait
     clear

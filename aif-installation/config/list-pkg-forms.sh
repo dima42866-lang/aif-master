@@ -118,7 +118,8 @@ _office=(libreoffice-fresh)
 # libreoffice-fresh libreoffice-fresh-ru
 _minimal_pkg=(grub-customizer xterm gnome-terminal lxterminal cmake brasero acetoneiso2 fuseiso chromium opera transmission-gtk curl git wget gwget ksysguard doublecmd-gtk2 krusader blender vlc inkscape okular gedit geany leafpad parcellite gimp)
 emulator_packages=(desmume gens mednafen mupen64plus pcsx2 ppsspp)
-if [[ ${_archi[*]} == "x86_64" ]]; then
+_archi=$(uname -m)
+if [[ "${_archi[*]}" = "x86_64" ]]; then
     _other_pkg=(keepassxc veracrypt virtualbox kicad kicad-library kicad-library-3d smplayer wine wine-mono wine_gecko winetricks supertuxkart) # truecrypt
     emulator_packages=(desmume gens mednafen mupen64plus pcsx2 ppsspp)
     _eml_folder="$filesdir/packages/emulators"
