@@ -115,6 +115,11 @@ _bool_fish=0                        # fish once screenfetch config
 _bsh_stp_once=0                     # Once setup bash
 _zsh_stp_once=0                     # Once setup zsh
 _fsh_stp_once=0                     # Once setup fish
+_once_slin_shll=0
+_list_shells_sh=""
+_list_bash_sh=""
+_list_zsh_sh=""
+_mn_shll_sh=""
 
 # Architecture
 ARCHI=$(uname -m)            # Display whether 32 or 64 bit system
@@ -204,23 +209,23 @@ _dlgrc_hm_bp="$filesdir/dlg-home.bp"
 _dlgrc_rt_st_bp="$filesdir/dlg-rt-st.bp"
 _dlg_rt_rt_bp="$filesdir/dlg-rt-rt.bp"
 
-# /config/dialogrc-conf.sh                      # Color dialog interface configured
-# /modules/installer-variables.sh               # list of variables
-# /config/list-pkg-forms.sh                     # list of packages for uses the script
-# /config/setup_function.sh                     # Function to setup on local package, p.c. build package in aur
-# /config/package-manager_function.sh           # Setup function to package manager - pamac
-# /config/package_function.sh                   # Setup local package on build in aur
-# /config/emulators_function.sh                 # Setup packages on emulators
-# /config/remove_old_v_pkg_function.sh          # Remove duble package on old version
-# /config/dependences_function.sh               # Dependences for script
-# /config/verify_package_folder.sh              # Check required folder and required files
-# /modules/core-functions.sh                    # language, checks
-# /modules/configuration-functions.sh           # Keyboard, locale, time zone, FSTAB, mkinitcpio, user controls
-# /modules/system-partitioning.sh               # managing partitions, installing the boot
-# /modules/encryption-functions.sh              # Encryption
-# /modules/logical-volume.sh                    # LVM control
-# /modules/installation-functions.sh            # system installation functions
-# /modules/swappiness-config.sh                 # SWAPPINESS
-# /modules/devices-config.sh                    # tune2fs
-# /modules/shell_installer.sh                   # SHELL installer functions
-# /modules/main-interfaces.sh                   # main menu interface
+# /config/dialogrc-conf.sh						# Color dialog interface configured
+# /modules/installer-variables.sh				# list of variables
+# /config/list-pkg-forms.sh						# list of packages for uses the script
+# /config/setup_function.sh						# Function to setup on local package, p.c. build package in aur
+# /config/package-manager_function.sh			# Setup function to package manager - pamac
+# /config/package_function.sh					# Setup local package on build in aur
+# /config/emulators_function.sh					# Setup packages on emulators
+# /config/remove_old_v_pkg_function.sh			# Remove duble package on old version
+# /config/dependences_function.sh				# Dependences for script
+# /config/verify_package_folder.sh				# Check required folder and required files
+# /modules/core-functions.sh					# language, checks
+# /modules/configuration-functions.sh			# Keyboard, locale, time zone, FSTAB, mkinitcpio, user controls
+# /modules/system-partitioning.sh				# managing partitions, installing the boot
+# /modules/encryption-functions.sh				# Encryption
+# /modules/logical-volume.sh					# LVM control
+# /modules/installation-functions.sh			# system installation functions
+# /modules/swappiness-config.sh					# SWAPPINESS
+# /modules/devices-config.sh					# tune2fs
+# /modules/shell_installer.sh					# SHELL installer functions
+# /modules/main-interfaces.sh					# main menu interface

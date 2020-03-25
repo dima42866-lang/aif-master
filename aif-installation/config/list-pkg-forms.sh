@@ -104,10 +104,9 @@ _slim_pkg=(slim)
 #
 # List of packages SHELL
 _screen_startup=(screenfetch)
-_shells_sh=(bash zsh fish)
-_bash_sh=(bash bash-completion)
-_zsh_sh=(zsh zsh-completions)
-_fish_sh=(fish)
+_shells_sh=(bash fish zsh dash ksh tcsh)
+_bash_sh=(bash-completion)
+_zsh_sh=(zsh-completions)
 #
 # User Package
 _archivers_pkg=(ark xarchiver unzip zip unrar p7zip file-roller)
