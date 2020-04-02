@@ -21,7 +21,7 @@ _us_gr_system=(dbus kmem locate lp mail nobody proc smmsp tty utmp)
 _us_gr_presystemd=(audio disk floppy input kvm optical scanner storage video)
 #
 # Package Network tools
-_network_menu=(connman networkmanager wicd-gtk)
+_network_menu=(netctl connman networkmanager wicd-gtk)
 _ln_menu=""
 _network_pkg=(samba libwbclient smb4k smbclient smbnetfs libgtop)
 _connman_pkg=(connman)
@@ -29,8 +29,14 @@ _networkmanager_pkg=(networkmanager network-manager-applet)
 _net_connect_var=(rp-pppoe networkmanager-openconnect networkmanager-openvpn networkmanager-pptp networkmanager-vpnc)
 _wicd_pkg=(wicd wicd-gtk)
 #
+# Server list of packages
+_ssh_pkg=(openssh)
+_mail_srv_pkg=(postfix)
+_namp_srv_pkg=(nginx apache mysql php phpmyadmin php-fpm php-apache php-mcrypt)
+_ftp_srv_pkg=(atftp bftpd curlftpfs filezilla gftp lftp tnftp vsftpd)
+#
 # Packages for wireless tools
-_wifi_pkg=(iw wireless_tools wpa_actiond wpa_supplicant dialog wicd)
+_wifi_pkg=(iw wireless_tools wpa_actiond wpa_supplicant wicd)
 _wifi_menu=""
 _broadcom=(b43-fwcutter)
 _list_broadcom=""
@@ -115,7 +121,7 @@ _ttf_theme_pkg=(gnome-icon-theme ttf-liberation ttf-dejavu opendesktop-fonts ttf
 _gr_editor=(gimp)
 _office=(libreoffice-fresh)
 # libreoffice-fresh libreoffice-fresh-ru
-_minimal_pkg=(grub-customizer xterm gnome-terminal lxterminal cmake brasero acetoneiso2 fuseiso chromium opera transmission-gtk curl git wget gwget ksysguard doublecmd-gtk2 krusader blender vlc inkscape okular gedit geany leafpad parcellite gimp)
+_minimal_pkg=(grub-customizer xterm gnome-terminal lxterminal cmake brasero acetoneiso2 fuseiso chromium opera transmission-gtk curl git wget gwget ksysguard doublecmd-gtk2 krusader blender vlc inkscape okular gedit geany leafpad parcellite gimp galculator)
 emulator_packages=(desmume gens mednafen mupen64plus pcsx2 ppsspp)
 _archi=$(uname -m)
 if [[ "${_archi[*]}" = "x86_64" ]]; then

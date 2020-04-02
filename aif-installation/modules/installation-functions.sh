@@ -261,7 +261,7 @@ install_base() {
             _list_krnl_pkg=$(check_s_lst_pkg "${_krnl_pkg[*]}")
             wait
             clear
-            [[ ${_list_base_pkg[*]} != "" ]] && pacstrap ${MOUNTPOINT} base ${_list_base_pkg[*]} 2>/tmp/.errlog \
+            [[ ${_list_base_pkg[*]} != "" ]] && ps_in_pkg "base" "${_list_base_pkg[*]}" \
             || pacstrap ${MOUNTPOINT} base 2>/tmp/.errlog
             wait
             [[ ${_list_krnl_pkg[*]} != "" ]] && pacstrap ${MOUNTPOINT} ${_list_krnl_pkg[*]} 2>/tmp/.errlog
@@ -272,18 +272,17 @@ install_base() {
         "2") # Latest Kernel and base-devel
              clear
              info_search_pkg
-            # _list_base_pkg=$(check_s_lst_pkg "${_base_pkg[*]}")
             _list_base_devel=$(check_s_lst_pkg "${_base_devel_pkg[*]}")
             wait
             _list_krnl_pkg=$(check_s_lst_pkg "${_krnl_pkg[*]}")
             wait
             clear
-            [[ ${_list_base_devel[*]} != "" ]] && pacstrap ${MOUNTPOINT} base base-devel ${_list_base_devel[*]} 2>/tmp/.errlog \
+            [[ ${_list_base_devel[*]} != "" ]] && ps_in_pkg "base" "base-devel" "${_list_base_devel[*]}" \
             || pacstrap ${MOUNTPOINT} base base-devel 2>/tmp/.errlog
             wait
             [[ ${_list_krnl_pkg[*]} != "" ]] && pacstrap ${MOUNTPOINT} ${_list_krnl_pkg[*]} 2>/tmp/.errlog
             wait
-             ipv6_disable
+            ipv6_disable
             _orders=1
              ;;
         "3") # LTS Kernel
@@ -297,9 +296,7 @@ install_base() {
              [[ ${_list_lts_pkg[*]} != "" ]] && LTS=1
              [[ ${_list_lts_pkg[*]} != "" ]] && pacstrap ${MOUNTPOINT} base ${_list_lts_pkg[*]} 2>/tmp/.errlog \
              || pacstrap ${MOUNTPOINT} base 2>/tmp/.errlog
-             [[ ${_list_base_pkg[*]} != "" ]] && pacstrap ${MOUNTPOINT} ${_list_base_pkg[*]} 2>/tmp/.errlog
-             #pacstrap ${MOUNTPOINT} base ${_list_lts_pkg[*]} 2>/tmp/.errlog
-             # [[ $? -eq 0 ]] && LTS=1
+             [[ ${_list_base_pkg[*]} != "" ]] && ps_in_pkg "${_list_base_pkg[*]}"
              ipv6_disable
             _orders=1
              ;;
@@ -314,9 +311,7 @@ install_base() {
              [[ ${_list_lts_pkg[*]} != "" ]] && LTS=1
               [[ ${_list_lts_pkg[*]} != "" ]] && pacstrap ${MOUNTPOINT} base base-devel ${_list_lts_pkg[*]} 2>/tmp/.errlog \
               || pacstrap ${MOUNTPOINT} base base-devel 2>/tmp/.errlog
-              [[ ${_list_base_devel[*]} != "" ]] && pacstrap ${MOUNTPOINT} ${_list_base_devel[*]} 2>/tmp/.errlog
-             #pacstrap ${MOUNTPOINT} base base-devel ${_list_lts_pkg[*]} 2>/tmp/.errlog
-             #[[ $? -eq 0 ]] && LTS=1
+              [[ ${_list_base_devel[*]} != "" ]] && ps_in_pkg "${_list_base_devel[*]}"
              ipv6_disable
             _orders=1
              ;;
@@ -330,6 +325,14 @@ install_base() {
         fi
     fi
     mirrorlist_question 
+    
+    if [[ $_sstmd_rslvd_once -eq 0 ]]; then
+		arch_chroot "systemctl stop systemd-resolved.service" 2>/tmp/.errlog
+		arch_chroot "systemctl disable systemd-resolved.service" 2>/tmp/.errlog
+		_sstmd_rslvd_once=1
+	fi
+    
+    outline_dhcpcd
     
     sed -i 's/\# include \"\/usr\/share\/nano\/\*.nanorc\"/include \"\/usr\/share\/nano\/\*.nanorc\"/' ${MOUNTPOINT}/etc/nanorc 2>>/tmp/.errlog
         
@@ -369,8 +372,7 @@ bios_bootloader() {
             _list_grub_pkg=$(check_s_lst_pkg "${_grub_pkg[*]}")
             wait
             clear
-            [[ ${_list_grub_pkg[*]} != "" ]] && pacstrap ${MOUNTPOINT} ${_list_grub_pkg[*]} 2>/tmp/.errlog
-            check_for_error
+            [[ ${_list_grub_pkg[*]} != "" ]] && ps_in_pkg "${_list_grub_pkg[*]}"
              
              # An LVM VG/LV can consist of multiple devices. Where LVM used, user must select the device manually.
              if [[ $LVM_ROOT -eq 1 ]]; then
@@ -448,8 +450,7 @@ uefi_bootloader() {
           _list_grub_uefi_pkg=$(check_s_lst_pkg "${_grub_uefi_pkg[*]}")
          wait
          clear
-         [[ ${_list_grub_uefi_pkg[*]} != "" ]] && pacstrap ${MOUNTPOINT} ${_list_grub_uefi_pkg[*]} 2>/tmp/.errlog
-         check_for_error
+         [[ ${_list_grub_uefi_pkg[*]} != "" ]] && ps_in_pkg "${_list_grub_uefi_pkg[*]}"
           
           dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title " Grub-install " --infobox "$_PlsWaitBody" 0 0
           sleep 1
@@ -480,8 +481,8 @@ uefi_bootloader() {
               _list_reefind_pkg=$(check_s_lst_pkg "${_reefind_pkg[*]}")
               wait
               clear
-              [[ ${_list_reefind_pkg[*]} != "" ]] && pacstrap ${MOUNTPOINT} ${_list_reefind_pkg[*]} 2>/tmp/.errlog
-              check_for_error   
+              [[ ${_list_reefind_pkg[*]} != "" ]] && ps_in_pkg "${_list_reefind_pkg[*]}"
+
               dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_SetRefiDefTitle" --yesno "$_SetRefiDefBody ${UEFI_MOUNT}/EFI/boot $_SetRefiDefBody2" 0 0
               
               if [[ $? -eq 0 ]]; then
@@ -514,7 +515,8 @@ uefi_bootloader() {
           _list_systemd_boot_pkg=$(check_s_lst_pkg "${_systemd_boot_pkg[*]}")
           wait
           clear
-          [[ ${_list_systemd_boot_pkg[*]} != "" ]] && pacstrap ${MOUNTPOINT} ${_list_systemd_boot_pkg[*]} 2>/tmp/.errlog
+          [[ ${_list_systemd_boot_pkg[*]} != "" ]] && ps_in_pkg "${_list_systemd_boot_pkg[*]}"
+          
           arch_chroot "bootctl --path=${UEFI_MOUNT} install" 2>>/tmp/.errlog
           check_for_error
           
@@ -641,8 +643,8 @@ bluetooth_install()
     wait
     clear
     if [[ ${_list_bluetooth[*]} != "" ]]; then
-        pacstrap ${MOUNTPOINT} ${_list_bluetooth[*]} 2>/tmp/.errlog
-        check_for_error
+        ps_in_pkg "${_list_bluetooth[*]}"
+        
         sed -i 's/\#AutoEnable=false/AutoEnable=true/' ${MOUNTPOINT}/etc/bluetooth/main.conf
         if [ -e ${MOUNTPOINT}/etc/modprobe.d ]; then
                 if [ -e ${MOUNTPOINT}/etc/modprobe.d/disable_bluetooth_ertm.conf ]; then
@@ -756,7 +758,8 @@ install_intel(){
     _list_intel_pkg=$(check_s_lst_pkg "${_intel_pkg[*]}")
     wait
     clear
-    [[ ${_list_intel_pkg[*]} != "" ]] && pacstrap ${MOUNTPOINT} ${_list_intel_pkg[*]} 2>/tmp/.errlog
+    [[ ${_list_intel_pkg[*]} != "" ]] && ps_in_pkg "${_list_intel_pkg[*]}"
+    
     sed -i 's/MODULES=""/MODULES="i915"/' ${MOUNTPOINT}/etc/mkinitcpio.conf
            
     # Intel microcode (Grub, Syslinux and systemd-boot). rEFInd is yet to be added.
@@ -878,8 +881,8 @@ nvidia_search()
             wait
             clear
             # Now deal with kernel installed
-            [[ $LTS == 0 ]] && pacstrap ${MOUNTPOINT} ${_list_nvidia_pkg[*]} 2>/tmp/.errlog \
-            || pacstrap ${MOUNTPOINT} ${_list_nvidia_lts_pkg[*]} 2>/tmp/.errlog
+            [[ $LTS == 0 ]] && ps_in_pkg "${_list_nvidia_pkg[*]}" \
+            || ps_in_pkg "${_list_nvidia_lts_pkg[*]}"
             NVIDIA_INST=1
              ;;
         "7") # NVIDIA-GF
@@ -891,8 +894,8 @@ nvidia_search()
             wait
             clear
             # Now deal with kernel installed
-            [[ $LTS == 0 ]] && pacstrap ${MOUNTPOINT} ${_list_nvidia_pkg[*]} 2>/tmp/.errlog \
-            || pacstrap ${MOUNTPOINT} ${_list_nvidia_lts_pkg[*]} 2>/tmp/.errlog
+            [[ $LTS == 0 ]] && ps_in_pkg "${_list_nvidia_pkg[*]}" \
+            || ps_in_pkg "${_list_nvidia_lts_pkg[*]}"
             NVIDIA_INST=1
              ;;
         "8") # NVIDIA-xxx
@@ -907,8 +910,8 @@ nvidia_search()
             [[ $LTS == 0 ]] && _list_nvidia_xxx=$(check_s_lst_pkg "${_nvidia_xxx[*]}") || _list_nvidia_lts_xxx=$(check_s_lst_pkg "${_nvidia_lts_xxx[*]}")
             wait
             clear
-            [[ $LTS == 0 ]] && pacstrap ${MOUNTPOINT} ${_list_nvidia_xxx[*]} 2>/tmp/.errlog \
-            || pacstrap ${MOUNTPOINT} ${_list_nvidia_lts_xxx[*]} 2>/tmp/.errlog
+            [[ $LTS == 0 ]] && ps_in_pkg "${_list_nvidia_xxx[*]}" \
+            || ps_in_pkg "${_list_nvidia_lts_xxx[*]}"
             NVIDIA_INST=1
              ;;          
         "9") # NVIDIA-xxx
@@ -924,8 +927,8 @@ nvidia_search()
             [[ $LTS == 0 ]] && _list_nvidia_xxx=$(check_s_lst_pkg "${_nvidia_xxx[*]}") || _list_nvidia_lts_xxx=$(check_s_lst_pkg "${_nvidia_lts_xxx[*]}")
             wait
             clear
-            [[ $LTS == 0 ]] && pacstrap ${MOUNTPOINT} ${_list_nvidia_xxx[*]} 2>/tmp/.errlog \
-            || pacstrap ${MOUNTPOINT} ${_list_nvidia_lts_xxx[*]} 2>/tmp/.errlog
+            [[ $LTS == 0 ]] && ps_in_pkg "${_list_nvidia_xxx[*]}" \
+            || ps_in_pkg "${_list_nvidia_lts_xxx[*]}"
             NVIDIA_INST=1
              ;;            
         "10") # Via
@@ -943,7 +946,7 @@ nvidia_search()
             [[ $LTS == 0 ]] && _list_vbox_pkg=$(check_s_lst_pkg "${_vbox_pkg[*]}") || _list_vbox_lts_pkg=$(check_s_lst_pkg "${_vbox_lts_pkg[*]}")
             wait
             clear
-            [[ $LTS == 0 ]] && pacstrap ${MOUNTPOINT} ${_list_vbox_pkg[*]} 2>/tmp/.errlog \
+            [[ $LTS == 0 ]] && ps_in_pkg "${_list_vbox_pkg[*]}" \
             || pacstrap ${MOUNTPOINT} ${_list_vbox_lts_pkg[*]} 2>/tmp/.errlog
       
             # Load modules and enable vboxservice whatever the kernel
@@ -959,7 +962,7 @@ nvidia_search()
             _clist_vmware_pkg=$(check_q_lst_pkg "${_list_vmware_pkg[*]}")
             wait
             clear
-            [[ ${_clist_vmware_pkg[*]} != "" ]] && pacstrap ${MOUNTPOINT} ${_clist_vmware_pkg[*]} 2>/tmp/.errlog
+            [[ ${_clist_vmware_pkg[*]} != "" ]] && ps_in_pkg "${_clist_vmware_pkg[*]}"
              ;;
         "13") # Generic / Unknown
             clear
@@ -1595,13 +1598,11 @@ install_nm() {
     dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_InstNMTitle" --menu "$_InstNMBody" 0 0 4 ${_ln_menu} 2>${ANSWER}
           
       case $(cat ${ANSWER}) in
-      "connman") # connman
-           clear
-            info_search_pkg
-            _list_connman_pkg=$(check_s_lst_pkg "${_connman_pkg[*]}")
-            wait
-            clear
-           pacstrap ${MOUNTPOINT} ${_list_connman_pkg[*]} 2>/tmp/.errlog
+      "${_network_menu[0]}") # netctl
+			netctl_instalation
+            ;;
+      "${_network_menu[1]}") # connman
+           pacstrap ${MOUNTPOINT} ${_network_menu[1]} 2>/tmp/.errlog
            install_shara_components
            arch_chroot "systemctl enable connman.service" 2>>/tmp/.errlog
            ;;
@@ -1610,7 +1611,7 @@ install_nm() {
            install_shara_components
            arch_chroot "systemctl enable dhcpcd.service" 2>/tmp/.errlog
            ;;
-      "networkmanager") # Network Manager
+      "${_network_menu[2]}") # Network Manager
            clear
            info_search_pkg
            _list_net=$(check_s_lst_pkg "${_networkmanager_pkg[*]}")
@@ -1644,7 +1645,7 @@ install_nm() {
            install_shara_components
            arch_chroot "systemctl enable NetworkManager.service && systemctl enable NetworkManager-dispatcher.service" 2>>/tmp/.errlog
            ;;
-      "wicd-gtk") # WICD
+      "${_network_menu[3]}") # WICD
            clear
            info_search_pkg
            _list_wicd_pkg=$(check_s_lst_pkg "${_wicd_pkg[*]}")

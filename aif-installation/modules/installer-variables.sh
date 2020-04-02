@@ -17,7 +17,7 @@ LIGHTDM_INSTALLED=0         # Has LIGHTDM deen installed? Used for display manag
 COMMON_INSTALLED=0          # Has the common-packages option been taken?
 DEEPIN_INSTALLED=0          # Has Deepin been installed?
 NM_INSTALLED=0              # Has a network connection manager been installed and enabled?
-NM_COMPONENT_INSTALLED=1      # Has component NetworkManager installed?
+NM_COMPONENT_INSTALLED=1    # Has component NetworkManager installed?
 AXI_INSTALLED=0             # Have the ALSA, Xorg, and xf86-input packages been installed?
 _x_pkg_menu_cl=""
 _xorg_pkg_menu=""
@@ -163,6 +163,7 @@ MOUNT_OPTS="/tmp/.mnt_opts"    # Filesystem Mount options
 FS_OPTS=""                     # FS mount options available
 CHK_NUM=16                     # Used for FS mount options checklist length
 _orders=0                      # Skip, resume installation
+_sstmd_rslvd_once=0			   # Disable systemd-resolved
 
 # Language Support
 CURR_LOCALE="en_US.UTF-8"      # Default Locale
@@ -171,6 +172,28 @@ FONT=""                        # Set new font if necessary
 # Edit Files
 FILE=""                        # Which file is to be opened?
 FILE2=""                       # Which second file is to be opened?
+
+# Mirror string configuration variables
+_mirror_conf_str=""
+
+# Network variables
+_dhcpcd_out_once=0
+_ntctl_tmp="${MOUNTPOINT}/etc/netctl/examples"
+_ntctl_fl="${MOUNTPOINT}/etc/netctl"
+_netctl_menu=""
+_netctl_mn_once=0
+_netctl_edit=""
+
+# Server variables
+_ssh_setup_once=0
+_ssh_run_once=0
+_prmtrtlg_once=0
+_prmtrtlg_clck=0
+_mail_srv_once=0
+_lmp_srv_once=0
+_lmenu_nmpsrv=""
+_ftp_srv_once=0
+_menu_list_ftp=""
 
 # Emulator packages Init
 _eml_pkg_once=0
@@ -229,3 +252,5 @@ _dlg_rt_rt_bp="$filesdir/dlg-rt-rt.bp"
 # /modules/devices-config.sh					# tune2fs
 # /modules/shell_installer.sh					# SHELL installer functions
 # /modules/main-interfaces.sh					# main menu interface
+# /modules/server.sh							# Server menu, Server utilites installation
+# /modules/network.sh							# Network Function

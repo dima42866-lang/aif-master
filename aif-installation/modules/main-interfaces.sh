@@ -248,12 +248,12 @@ edit_configs() {
        SUB_MENU="edit configs"
        HIGHLIGHT_SUB=1
     else
-       if [[ $HIGHLIGHT_SUB != 12 ]]; then
+       if [[ $HIGHLIGHT_SUB != 14 ]]; then
           HIGHLIGHT_SUB=$(( HIGHLIGHT_SUB + 1 ))
        fi
     fi
 
-   dialog --default-item ${HIGHLIGHT_SUB} --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_SeeConfOptTitle" --menu "$_SeeConfOptBody" 0 0 12 \
+   dialog --default-item ${HIGHLIGHT_SUB} --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_SeeConfOptTitle" --menu "$_SeeConfOptBody" 0 0 14 \
    "1" "/etc/vconsole.conf" \
    "2" "/etc/locale.conf" \
    "3" "/etc/hostname" \
@@ -263,9 +263,11 @@ edit_configs() {
    "7" "/etc/fstab" \
    "8" "/etc/resolv.conf" \
    "9" "/etc/sysctl.d/00-sysctl.conf" \
-   "10" "$BOOTLOADER" \
-   "11" "$DM" \
-   "12" "$_Back" 2>${ANSWER}
+   "10" "/etc/dhcpcd.conf" \
+   "11" "$_ncl_nname" \
+   "12" "$BOOTLOADER" \
+   "13" "$DM" \
+   "14" "$_Back" 2>${ANSWER}
     
     HIGHLIGHT_SUB=$(cat ${ANSWER})
     case $(cat ${ANSWER}) in
@@ -287,7 +289,11 @@ edit_configs() {
              ;;
         "9") FILE="${MOUNTPOINT}/etc/sysctl.d/00-sysctl.conf"
             ;;
-        "10") case $BOOTLOADER in
+        "10") FILE="${MOUNTPOINT}/etc/dhcpcd.conf"
+            ;;
+        "11") [ -e $_netctl_edit ] && FILE="$_netctl_edit"
+            ;;
+        "12") case $BOOTLOADER in
                    "Grub") FILE="${MOUNTPOINT}/etc/default/grub"
                            ;;
                "Syslinux") FILE="${MOUNTPOINT}/boot/syslinux/syslinux.cfg"
@@ -301,7 +307,7 @@ edit_configs() {
                            ;;
               esac
             ;;
-        "11") case $DM in
+        "13") case $DM in
                    "LXDM") FILE="${MOUNTPOINT}/etc/lxdm/lxdm.conf" 
                            ;;
                 "LightDM") FILE="${MOUNTPOINT}/etc/lightdm/lightdm.conf" 
@@ -330,22 +336,23 @@ edit_configs() {
 
 main_menu_online() {
     
-    if [[ $HIGHLIGHT != 10 ]]; then
+    if [[ $HIGHLIGHT != 11 ]]; then
        HIGHLIGHT=$(( HIGHLIGHT + 1 ))
     fi
     
     dialog --default-item ${HIGHLIGHT} --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_MMTitle" \
-    --menu "$_MMBody" 0 0 10 \
+    --menu "$_MMBody" 0 0 11 \
     "1" "$_MMPrep" \
     "2" "$_MMInstBse" \
     "3" "$_MMConfBse" \
     "4" "$_MMConfUsr" \
     "5" "$_MMInstDE" \
-    "6" "$_swap_menu_title" \
-    "7" "$_rsrvd_menu_title" \
-    "8" "$_MMRunMkinit" \
-    "9" "$_SeeConfOpt" \
-    "10" "$_Done" 2>${ANSWER}
+    "6" "$_MMInstServer" \
+    "7" "$_swap_menu_title" \
+    "8" "$_rsrvd_menu_title" \
+    "9" "$_MMRunMkinit" \
+    "10" "$_SeeConfOpt" \
+    "11" "$_Done" 2>${ANSWER}
 
     HIGHLIGHT=$(cat ${ANSWER})
     
@@ -370,13 +377,15 @@ main_menu_online() {
              ;;            
         "5") install_desktop_menu
              ;;
-        "6") swap_menu
+        "6") server_menu
             ;;
-        "7") rsrvd_menu
+        "7") swap_menu
             ;;
-        "8") run_mkinitcpio
+        "8") rsrvd_menu
+            ;;
+        "9") run_mkinitcpio
              ;;
-        "9") edit_configs
+        "10") edit_configs
              ;;            
           *) dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --yesno "$_CloseInstBody" 0 0
           

@@ -14,7 +14,7 @@ configure_mirrorlist() {
 mirror_by_country() {
 
  COUNTRY_LIST=""
-     
+ mirror_config    
  if [[ ${_archi[*]} == "x86_64" ]]; then
     countries_list=("AU_Australia AT_Austria BY_Belarus BE_Belgium BR_Brazil BG_Bulgaria CA_Canada CL_Chile CN_China CO_Colombia CZ_Czech_Republic DK_Denmark EE_Estonia FI_Finland FR_France DE_Germany GB_United_Kingdom GR_Greece HU_Hungary IN_India IE_Ireland IL_Israel IT_Italy JP_Japan KZ_Kazakhstan KR_Korea LV_Latvia LU_Luxembourg MK_Macedonia NL_Netherlands NC_New_Caledonia NZ_New_Zealand NO_Norway PL_Poland PT_Portugal RO_Romania RU_Russia RS_Serbia SG_Singapore SK_Slovakia ZA_South_Africa ES_Spain LK_Sri_Lanka SE_Sweden CH_Switzerland TW_Taiwan TR_Turkey UA_Ukraine US_United_States UZ_Uzbekistan VN_Vietnam")
     wait
@@ -26,7 +26,7 @@ mirror_by_country() {
     wait
     COUNTRY_CODE=$(cat ${ANSWER} | sed 's/_.*//')
     wait
-    URL="https://www.archlinux.org/mirrorlist/?country=${COUNTRY_CODE}&protocol=http&protocol=https&ip_version=4&ip_version=6&use_mirror_status=on"
+    URL="https://www.archlinux.org/mirrorlist/?country=${COUNTRY_CODE}${_mirror_conf_str}"
  else
     countries_list=("BY_Belarus FR_France DE_Germany IN_India JP_Japan RU_Russia SG_Singapore CH_Switzerland US_United_States")
     wait
@@ -38,7 +38,7 @@ mirror_by_country() {
     wait
     COUNTRY_CODE=$(cat ${ANSWER} | sed 's/_.*//' | tr '[:upper:]' '[:lower:]')
     wait
-    URL="https://archlinux32.org/mirrorlist/?country=${COUNTRY_CODE}&protocol=http&protocol=https&ip_version=4&ip_version=6&use_mirror_status=on" 
+    URL="https://archlinux32.org/mirrorlist/?country=${COUNTRY_CODE}${_mirror_conf_str}" 
  fi
  wait
  MIRROR_TEMP=$(mktemp --suffix=-mirrorlist)
