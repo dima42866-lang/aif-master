@@ -10,10 +10,6 @@ E-Mail: maximalis171091@yandex.ru
  
 Date: 20.08.2019
 
-Editor: Notepad++
-    end line: unix
-    encoding: UTF-8
-    
 The starting point of the project: Architect Linux installer
 
 This script is a full-featured installation of the ArchLinux system in pseudographic mode, using the dialog package.
