@@ -33,13 +33,6 @@ $ sudo sh aif-installation/aif
 
 Then just follow the instructions of the master installation.
 
-This script is temporarily absent 2 menu:
-
-1) Final configuration of network connections
-2) server Installation (ssh, apache, php, mysql)
-
-2 of these menus will soon be included in the master installation. Please accept our apologies.
-
 You can use the setup wizard for the different modes of use of the system ArchLinux.
 For example, do not install the graphics component (xorg, display Manager, graphics card driver and others) and use the system completely in console mode.
 Or install all the necessary packages to use as a Desktop PC - whether office or home computer.
