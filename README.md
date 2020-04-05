@@ -1,9 +1,5 @@
-###########################################
-#                                         #
-#   aif-master script instalation         #
-#   online to Dialog mode on ArchLinux    #
-#                                         #
-###########################################
+# Aif-master script instalation
+# Online to Dialog mode on ArchLinux
 
 Имя автора: maximalisimus
 E-Mail: maximalis171091@yandex.ru
