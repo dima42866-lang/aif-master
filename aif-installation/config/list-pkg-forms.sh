@@ -35,6 +35,9 @@ _mail_srv_pkg=(postfix)
 _namp_srv_pkg=(nginx apache mysql php phpmyadmin php-fpm php-apache php-mcrypt)
 _ftp_srv_pkg=(atftp bftpd curlftpfs filezilla gftp lftp tnftp vsftpd)
 #
+# Network time protocol server packages
+_ntp_pkg=(ntp networkmanager-dispatcher-ntpd)
+#
 # Packages for wireless tools
 _wifi_pkg=(iw wireless_tools wpa_actiond wpa_supplicant wicd)
 _wifi_menu=""
@@ -136,7 +139,6 @@ if [[ "${_archi[*]}" = "x86_64" ]]; then
     _aif_temp_aur_dir="$_aif_temp_folder/aif-installation/packages"
     _aif_temp_eml_dir="$_aif_temp_aur_dir/emulators"
     _aif_temp_pm_dir="$_aif_temp_aur_dir/package-manager"
-    _aif_temp_winfnts="$_aif_temp_aur_dir/windowsfonts.tar.gz"
 else
     _other_pkg=(keepassxc veracrypt virtualbox kicad kicad-library kicad-library-3d smplayer wine-mono winetricks supertuxkart) # truecrypt
     emulator_packages=(desmume mednafen mupen64plus ppsspp)
@@ -149,7 +151,6 @@ else
     _aif_temp_aur_dir="$_aif_temp_folder/aif-installation/packages_x86"
     _aif_temp_eml_dir="$_aif_temp_aur_dir/emulators"
     _aif_temp_pm_dir="$_aif_temp_aur_dir/package-manager"
-    _aif_temp_winfnts="$_aif_temp_aur_dir/windowsfonts.tar.gz"
 fi
 aif_master_git="https://github.com/maximalisimus/aif-master.git"
 

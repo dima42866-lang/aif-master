@@ -60,7 +60,6 @@ aur_pkginstall()
             if [[ ${dbl_check[*]} != "0" ]]; then
                 dubleaursetup "$i"
             else
-              # echo "Local package: $i"
               ustanovka_pocketov "$_aur_pkg_folder" "$i"
               wait
               ### UNSET ###
@@ -73,7 +72,6 @@ aur_pkginstall()
     hardaursetup()
     {
         for i in ${check_name[*]}; do
-            # echo "Local package: $i"
             ustanovka_pocketov "$_aur_pkg_folder" "$i"
             wait
         done

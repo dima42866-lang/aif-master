@@ -156,7 +156,7 @@ LUKS_OPT=""                 # Default or user-defined?
 MOUNTPOINT="/mnt"              # Installation
 MOUNT_TYPE=""                  # "/dev/" for standard partitions, "/dev/mapper" for LVM
 BTRFS=0                        # BTRFS used? "1" = btrfs alone, "2" = btrfs + subvolume(s)
-BTRFS_OPTS="/tmp/.btrfs_opts"  #BTRFS Mount options
+BTRFS_OPTS="/tmp/.btrfs_opts"  # BTRFS Mount options
 BTRFS_MNT=""                   # used for syslinux where /mnt is a btrfs subvolume
 BYPASS="$MOUNTPOINT/bypass/"   # Root image mountpoint
 MOUNT_OPTS="/tmp/.mnt_opts"    # Filesystem Mount options
@@ -194,6 +194,30 @@ _lmp_srv_once=0
 _lmenu_nmpsrv=""
 _ftp_srv_once=0
 _menu_list_ftp=""
+
+# Network time protocol server variables
+_tmsnc_init_once=0
+_tmsnc_stp_once=0
+_tmsnc_slsrv_once=0
+_sntp_async=0
+_sntp_sttmzn_once=0
+_sntp_wrconf_once=0
+_base_zonesubzone=""
+_all_srv_zones=(africa antarctica asia europe north-america oceania south-america)
+_srv_zone=""
+_srv_subzone=""
+_srv_mn_zone=""
+_srv_mn_subzone=""
+_ntp_conf_file="${MOUNTPOINT}/etc/ntp.conf"
+_sntp_conf_file="${MOUNTPOINT}/etc/systemd/timesyncd.conf"
+_ntpconf_once=0
+_ntp_driftfile_once=0
+_ntp_logfile_once=0
+_ntp_restrict_once=0
+_ntp_cl_str_1="restrict"
+_ntp_cl_str_2="mask"
+_ntp_cl_str_3="nomodify notrap"
+_ntp_client_str=""
 
 # Emulator packages Init
 _eml_pkg_once=0
@@ -254,3 +278,4 @@ _dlg_rt_rt_bp="$filesdir/dlg-rt-rt.bp"
 # /modules/main-interfaces.sh					# main menu interface
 # /modules/server.sh							# Server menu, Server utilites installation
 # /modules/network.sh							# Network Function
+# /modules/ntp_configuration.sh					# Network Time Synchronized protocol configuration

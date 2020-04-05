@@ -145,15 +145,7 @@ install_archivers()
     clear
     [[ ${_ch_archivers[*]} != "" ]] && pacstrap ${MOUNTPOINT} ${_ch_archivers[*]} 2>/tmp/.errlog
 }
-win_fonts_setup()
-{
-    dialog --defaultno --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_yn_win_fnts_ttl" --yesno "$_yn_win_fnts_bd" 0 0
-    if [[ $? -eq 0 ]]; then
-       tar -C "${MOUNTPOINT}/usr/share/fonts" -xvzf $_aur_pkg_winfnts
-        arch-chroot $MOUNTPOINT /bin/bash -c "fc-cache" 2>/tmp/.errlog
-        check_for_error
-    fi
-}
+
 install_ttftheme()
 {
     if [[ $_ttf_once == "0" ]]; then
@@ -175,7 +167,6 @@ install_ttftheme()
     clear
     [[ ${_ch_ttf[*]} != "" ]] && pacstrap ${MOUNTPOINT} ${_ch_ttf[*]} 2>/tmp/.errlog
     check_for_error
-    win_fonts_setup
 }
 install_standartpkg()
 {
@@ -326,11 +317,11 @@ install_base() {
     fi
     mirrorlist_question 
     
-    if [[ $_sstmd_rslvd_once -eq 0 ]]; then
-		arch_chroot "systemctl stop systemd-resolved.service" 2>/tmp/.errlog
-		arch_chroot "systemctl disable systemd-resolved.service" 2>/tmp/.errlog
-		_sstmd_rslvd_once=1
-	fi
+# if [[ $_sstmd_rslvd_once -eq 0 ]]; then
+#		arch_chroot "systemctl stop systemd-resolved.service" 2>/tmp/.errlog
+#		arch_chroot "systemctl disable systemd-resolved.service" 2>/tmp/.errlog
+#		_sstmd_rslvd_once=1
+# fi
     
     outline_dhcpcd
     

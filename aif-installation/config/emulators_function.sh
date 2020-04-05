@@ -54,10 +54,6 @@ eml_ustanovka()
         if [[ ${ch_eml_package[*]} != "0" ]]; then
             pacstrap ${MOUNTPOINT} $1 2>/tmp/.errlog
             check_for_error
-            # DEBUG
-            # echo "Setup packages: $1"
-            # echo "Setup packages: $1" >> "$filesdir"/setup-pkgs.txt
-            # DEBUG
         else
             ustanovka_pocketov "$_eml_folder" "$1"
         fi

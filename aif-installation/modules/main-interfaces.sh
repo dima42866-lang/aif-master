@@ -119,19 +119,20 @@ config_base_menu() {
        SUB_MENU="config_base_menu"
        HIGHLIGHT_SUB=1
     else
-       if [[ $HIGHLIGHT_SUB != 7 ]]; then
+       if [[ $HIGHLIGHT_SUB != 8 ]]; then
           HIGHLIGHT_SUB=$(( HIGHLIGHT_SUB + 1 ))
        fi
     fi
 
-    dialog --default-item ${HIGHLIGHT_SUB} --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_ConfBseTitle" --menu "$_ConfBseBody" 0 0 7 \
+    dialog --default-item ${HIGHLIGHT_SUB} --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_ConfBseTitle" --menu "$_ConfBseBody" 0 0 8 \
     "1" "$_ConfBseFstab" \
     "2" "$_ConfBseHost" \
     "3" "$_ConfBseTime" \
     "4" "$_ConfBseHWC" \
-    "5" "$_ConfBseSysLoc" \
-    "6" "$_PrepKBLayout" \
-    "7" "$_Back" 2>${ANSWER}    
+    "5" "$_mn_tmsnc_ttl" \
+    "6" "$_ConfBseSysLoc" \
+    "7" "$_PrepKBLayout" \
+    "8" "$_Back" 2>${ANSWER}    
     
     HIGHLIGHT_SUB=$(cat ${ANSWER})
     case $(cat ${ANSWER}) in
@@ -142,17 +143,17 @@ config_base_menu() {
         "3") set_timezone
              ;;
         "4") set_hw_clock
-             ;;            
-        "5") set_locale
              ;;
-        "6") set_xkbmap
+		"5") time_sync_menu
+			;;
+        "6") set_locale
+             ;;
+        "7") set_xkbmap
              ;;           
           *) main_menu_online
              ;;
     esac
-    
     config_base_menu
-
 }
 
 # Root and User Configuration
@@ -265,9 +266,11 @@ edit_configs() {
    "9" "/etc/sysctl.d/00-sysctl.conf" \
    "10" "/etc/dhcpcd.conf" \
    "11" "$_ncl_nname" \
-   "12" "$BOOTLOADER" \
-   "13" "$DM" \
-   "14" "$_Back" 2>${ANSWER}
+   "12" "/etc/ntp.conf" \
+   "13" "/etc/systemd/timesyncd.conf" \
+   "14" "$BOOTLOADER" \
+   "15" "$DM" \
+   "16" "$_Back" 2>${ANSWER}
     
     HIGHLIGHT_SUB=$(cat ${ANSWER})
     case $(cat ${ANSWER}) in
@@ -290,10 +293,14 @@ edit_configs() {
         "9") FILE="${MOUNTPOINT}/etc/sysctl.d/00-sysctl.conf"
             ;;
         "10") FILE="${MOUNTPOINT}/etc/dhcpcd.conf"
-            ;;
-        "11") [ -e $_netctl_edit ] && FILE="$_netctl_edit"
-            ;;
-        "12") case $BOOTLOADER in
+			;;
+		"11") [ -e $_netctl_edit ] && FILE="$_netctl_edit"
+			;;
+		"12") FILE="${MOUNTPOINT}/etc/ntp.conf"
+			;;
+		"13") FILE="${MOUNTPOINT}/etc/systemd/timesyncd.conf"
+			;;
+        "14") case $BOOTLOADER in
                    "Grub") FILE="${MOUNTPOINT}/etc/default/grub"
                            ;;
                "Syslinux") FILE="${MOUNTPOINT}/boot/syslinux/syslinux.cfg"
@@ -307,7 +314,7 @@ edit_configs() {
                            ;;
               esac
             ;;
-        "13") case $DM in
+        "15") case $DM in
                    "LXDM") FILE="${MOUNTPOINT}/etc/lxdm/lxdm.conf" 
                            ;;
                 "LightDM") FILE="${MOUNTPOINT}/etc/lightdm/lightdm.conf" 
@@ -332,6 +339,43 @@ edit_configs() {
         fi
      
      edit_configs
+}
+
+function mainmenu_finishexit()
+{
+	echo -n  -e "\e[1;31mPlease wait ...\e[0m"\\r
+	[[ $DEEPIN_INSTALLED -eq 1 ]] && fixed_deepin_desktop
+	wait
+	echo -n  -e "\e[1;32mPlease wait ...\e[0m"\\r
+	dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_yn_umprt_mn_ttl" --yesno "$_yn_umprt_mn_bd" 0 0
+	if [[ $? -eq 0 ]]; then
+		umount_partitions
+	fi
+	wait
+	echo -n  -e "\e[1;31mPlease wait ...\e[0m"\\r
+	clear
+	pkg_manager_unset
+	eml_zavershenie
+	aur_pkg_finish
+	rm -rf "$_pcm_tempf"
+	echo -n  -e "\e[1;32mPlease wait ...\e[0m"\\r
+	if [[ -f "$filesdir/remove_pkg.log" ]]; then
+		dialog --defaultno --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_yesno_rmrf_ttl" --yesno "$_yesno_rmrf_bd" 0 0
+		if [[ $? -eq 0 ]]; then
+			clear
+			echo ""
+			cat "$filesdir/remove_pkg.log"
+			echo ""
+			rm -rf "$filesdir/remove_pkg.log"
+		else
+			clear
+			echo ""
+			cat "$filesdir/remove_pkg.log"
+			echo ""
+		fi
+	fi
+	un_us_dlgrc_conf
+	exit 0
 }
 
 main_menu_online() {
@@ -378,7 +422,7 @@ main_menu_online() {
         "5") install_desktop_menu
              ;;
         "6") server_menu
-            ;;
+			;;
         "7") swap_menu
             ;;
         "8") rsrvd_menu
@@ -390,36 +434,7 @@ main_menu_online() {
           *) dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --yesno "$_CloseInstBody" 0 0
           
              if [[ $? -eq 0 ]]; then
-                echo -n  -e "\e[1;31mPlease wait ...\e[0m"\\r
-                [[ $DEEPIN_INSTALLED -eq 1 ]] && fixed_deepin_desktop
-                wait
-                echo -n  -e "\e[1;32mPlease wait ...\e[0m"\\r
-                umount_partitions
-                wait
-                echo -n  -e "\e[1;31mPlease wait ...\e[0m"\\r
-                clear
-                pkg_manager_unset
-                eml_zavershenie
-                aur_pkg_finish
-                rm -rf "$_pcm_tempf"
-                echo -n  -e "\e[1;32mPlease wait ...\e[0m"\\r
-                if [[ -f "$filesdir/remove_pkg.log" ]]; then
-                    dialog --defaultno --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_yesno_rmrf_ttl" --yesno "$_yesno_rmrf_bd" 0 0
-                    if [[ $? -eq 0 ]]; then
-                        clear
-                        echo ""
-                        cat "$filesdir/remove_pkg.log"
-                        echo ""
-                        rm -rf "$filesdir/remove_pkg.log"
-                    else
-                        clear
-                        echo ""
-                        cat "$filesdir/remove_pkg.log"
-                        echo ""
-                    fi
-                fi
-                un_us_dlgrc_conf
-                exit 0
+                mainmenu_finishexit
              else
                 main_menu_online
              fi
