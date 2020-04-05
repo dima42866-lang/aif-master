@@ -9,10 +9,6 @@
 E-Mail: maximalis171091@yandex.ru
  
 Дата создания: 20.08.2019
-
-Используемый редактор: Notepad++
-    конец строки: unix
-    кодировка: UTF-8
     
 Начальная точка проекта: Architect Linux installer
 
