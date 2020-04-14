@@ -51,7 +51,6 @@ if [[ "${_archi[*]}" = "x86_64" ]]; then
     multilib_question
     clear
     git_question_run
-    vrf_cnt_fls
     wait
     clear
     echo ""

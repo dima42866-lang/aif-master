@@ -226,7 +226,7 @@ install_desktop_menu() {
         "6") if [[ ${_archi[*]} == "x86_64" ]]; then
                 install_gep
             else
-                install_gep_old
+                install_gep_i686
             fi
              ;;
           *) main_menu_online
@@ -354,10 +354,6 @@ function mainmenu_finishexit()
 	wait
 	echo -n  -e "\e[1;31mPlease wait ...\e[0m"\\r
 	clear
-	pkg_manager_unset
-	eml_zavershenie
-	aur_pkg_finish
-	rm -rf "$_pcm_tempf"
 	echo -n  -e "\e[1;32mPlease wait ...\e[0m"\\r
 	if [[ -f "$filesdir/remove_pkg.log" ]]; then
 		dialog --defaultno --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_yesno_rmrf_ttl" --yesno "$_yesno_rmrf_bd" 0 0
@@ -374,6 +370,13 @@ function mainmenu_finishexit()
 			echo ""
 		fi
 	fi
+	wait
+	eml_zavershenie
+	wait
+	pkg_manager_unset
+	wait
+	aur_pkg_finish
+	wait
 	un_us_dlgrc_conf
 	exit 0
 }

@@ -13,13 +13,40 @@ manager_pkg_start()
    done
    _pm_menu="${_pm_menu} $_Back -"
 }
+function pkgmanager_forms()
+{
+	if [ -e $_eml_folder ]; then
+		dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_msg_pkgs_ttl" --msgbox "$_msg_pkgs_bd" 0 0
+		wait
+		info_search_pkg
+		wait
+		manager_pkg_start
+		wait
+	else
+		dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_ynq_pmngr_ttl" --yesno "$_ynq_pmngr_bd" 0 0
+		if [[ $? -eq 0 ]]; then
+			git clone "$git_pkg_mngr"
+			wait
+			mkdir -p "$_aur_pkg_folder"
+			wait
+			mv -f "$_pkg_mngr_dir" "$_aur_pkg_folder"
+			rm -rf "$_pkg_mngr_name"
+			wait
+			info_search_pkg
+			wait
+			manager_pkg_start
+			wait
+		else
+			_pm_once=0
+			install_gep_old
+		fi
+	fi
+}
 pkg_manager_install()
 {
    if [[ $_pm_once == "0" ]]; then
-      _pm_once=1
-      info_search_pkg
-      manager_pkg_start
-      wait
+		_pm_once=1
+		pkgmanager_forms
    fi
    dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_menu_pkg_meneger" --menu "$_pm_menu_body" 0 0 2 ${_pm_menu} 2>"${ANSWER}"
    _pm_check=$(cat "${ANSWER}")

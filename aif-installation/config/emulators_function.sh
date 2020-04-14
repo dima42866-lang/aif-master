@@ -8,14 +8,14 @@ pkgemlstart()
    else_eml_package_list=$(echo "${_list_emulator_packages[*]}" | xargs | sed 's/ /|/g')
    wait
    #unset else_eml_package_lst
-   eml_check_dbl_list=$(find "$_eml_folder" -maxdepth 1 -type f | grep -v "windowsfonts" | rev | cut -d '/' -f1 | rev | cut -d '-' -f1 | sort | uniq -d | wc -l)
+   eml_check_dbl_list=$(find "$_eml_folder" -maxdepth 1 -type f | rev | cut -d '/' -f1 | rev | cut -d '-' -f1 | sort | uniq -d | wc -l)
    wait
     if [[ ${eml_check_dbl_list[*]} != "0" ]]; then
-        eml_dbl_name=$(find "$_eml_folder" -maxdepth 1 -type f | grep -v "windowsfonts" | rev | cut -d '/' -f1 | rev | cut -d '-' -f1 | sort | uniq -d)
+        eml_dbl_name=$(find "$_eml_folder" -maxdepth 1 -type f | rev | cut -d '/' -f1 | rev | cut -d '-' -f1 | sort | uniq -d)
         wait
-        eml_dbl_list=$(find "$_eml_folder" -maxdepth 1 -type f | grep -v "windowsfonts" | rev | cut -d '/' -f1 | rev | grep -v "windowsfonts" | cut -d '-' -f1 | sort | uniq -d | sed 's/$/\*/' | xargs | sed 's/ /|/g')
+        eml_dbl_list=$(find "$_eml_folder" -maxdepth 1 -type f | rev | cut -d '/' -f1 | rev | cut -d '-' -f1 | sort | uniq -d | sed 's/$/\*/' | xargs | sed 's/ /|/g')
         wait
-        eml_all_name=$(find "$_eml_folder" -maxdepth 1 -type f | grep -v "windowsfonts" | rev | cut -d '/' -f1 | cut -d '-' -f4-11 | rev | grep -Ev "${eml_dbl_list[*]}" | grep -Ev "${else_eml_package_list[*]}")
+        eml_all_name=$(find "$_eml_folder" -maxdepth 1 -type f | rev | cut -d '/' -f1 | cut -d '-' -f4-11 | rev | grep -Ev "${eml_dbl_list[*]}" | grep -Ev "${else_eml_package_list[*]}")
         wait
         for i in ${eml_all_name[*]}; do
             eml_full_name="${eml_full_name} $i"
@@ -30,7 +30,7 @@ pkgemlstart()
         done
         wait
      else
-        eml_all_name=$(find "$_eml_folder" -maxdepth 1 -type f | grep -v "windowsfonts" | rev | cut -d '/' -f1 | cut -d '-' -f4-11 | rev | grep -Ev "${else_eml_package_list[*]}")
+        eml_all_name=$(find "$_eml_folder" -maxdepth 1 -type f | rev | cut -d '/' -f1 | cut -d '-' -f4-11 | rev | grep -Ev "${else_eml_package_list[*]}")
         wait
         for i in ${eml_all_name[*]}; do
             eml_full_name="${eml_full_name} $i"
@@ -44,6 +44,35 @@ pkgemlstart()
     for i in ${eml_full_name[*]}; do
         full_eml_menu="${full_eml_menu} $i - off"
     done
+}
+function emulator_forms()
+{
+	if [ -e $_eml_folder ]; then
+		dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_msg_pkgs_ttl" --msgbox "$_msg_pkgs_bd" 0 0
+		wait
+		info_search_pkg
+		wait
+		pkg_aur_start
+		wait
+	else
+		dialog --defaultno --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_ynq_emls_ttl" --yesno "$_ynq_emls_bd" 0 0
+		if [[ $? -eq 0 ]]; then
+			git clone "$git_eml_pkg"
+			wait
+			mkdir -p "$_aur_pkg_folder"
+			mv -f "$_eml_pkg_dir" "$_aur_pkg_folder"
+			wait
+			rm -rf "$_eml_pkg_name"
+			wait
+			info_search_pkg
+			wait
+			pkgemlstart
+			wait
+		else
+			_eml_pkg_once=0
+			install_gep_old
+		fi
+	fi
 }
 eml_ustanovka()
 {
@@ -98,9 +127,8 @@ eml_ustanovka()
     }
    clear
    if [[ $_eml_pkg_once == "0" ]]; then
-     _eml_pkg_once=1
-     info_search_pkg
-     pkgemlstart
+		_eml_pkg_once=1
+		emulator_forms
    fi
    dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_eml_pkg_ttl" --checklist "$_eml_pkg_bd" 0 0 16 ${full_eml_menu} 2>"${ANSWER}"
    clear

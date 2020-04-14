@@ -784,14 +784,6 @@ install_ati(){
     sed -i 's/MODULES=""/MODULES="radeon"/' ${MOUNTPOINT}/etc/mkinitcpio.conf
 }
 
-# Search Vedo Driver to nvidia-390xx in template 'nvidia-[0-9]{3}'
-_nvidia_name=""
-nvidia_search()
-{
-    nvsearch=$(pacman -Ss | grep -Ei "core|extra|community|multilib" | sed 's/extra\///' | sed 's/core\///' | sed 's/community\///' | sed 's/multilib\///' | grep -E "nvidia-[0-9]{3}xx" | awk '{print $1}' | awk '/^nvidia-[0-9]{3}xx$/')
-    _nvidia_name=${nvsearch[*]}
-}
-
 # Main menu. Correct option for graphics card should be automatically highlighted.
 
     GRAPHIC_CARD=""
@@ -1499,7 +1491,7 @@ install_gep()
 }
 
 # back - install_desktop_menu
-install_gep_old()
+install_gep_i686()
 {
     if [[ $SUB_MENU != "general_package" ]]; then
        SUB_MENU="general_package"

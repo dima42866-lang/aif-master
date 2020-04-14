@@ -31,6 +31,33 @@ pkg_aur_start()
         full_menu="${full_menu} $i - off"
     done
 }
+function packages_forms()
+{
+	if [ -e $_aur_pkg_folder ]; then
+		dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_msg_pkgs_ttl" --msgbox "$_msg_pkgs_bd" 0 0
+		wait
+		info_search_pkg
+		wait
+		pkg_aur_start
+		wait
+	else
+		dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_ynq_pkgs_ttl" --yesno "$_ynq_pkgs_bd" 0 0
+		if [[ $? -eq 0 ]]; then
+			git clone "$git_else_pkg"
+			wait
+			mv -f "$_else_pkg_dir" "$filesdir/"
+			rm -rf "$_else_pkg_name"
+			wait
+			info_search_pkg
+			wait
+			pkg_aur_start
+			wait
+		else
+			aur_pkg_once=0
+			install_gep_old
+		fi
+	fi
+}
 aur_pkginstall()
 {
     dubleaursetup()
@@ -77,10 +104,8 @@ aur_pkginstall()
         done
     }
     if [[ $aur_pkg_once == "0" ]]; then
-      aur_pkg_once=1
-      info_search_pkg
-      pkg_aur_start
-      wait
+		aur_pkg_once=1
+		packages_forms
     fi
     dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_aur_pkg_ttl" --checklist "$_aur_pkg_bd" 0 0 16 ${full_menu} 2>"${ANSWER}"
     clear
