@@ -1,0 +1,80 @@
+
+# lspci | grep -E "3D|VGA"
+
+nvidia-dkms
+nvidia
+nvidia-lts
+nvidia-settings
+nvidia-utils
+lib32-nvidia-utils
+cuda
+bumblebee
+mesa
+mesa-demos
+libva-utils
+libvdpau
+lib32-libvdpau
+lib32-virtualgl
+
+sudo systemctl enable bumblebeed.service
+sudo systemctl start bumblebeed.service
+
+
+xrandr | grep -Ei "connected" | grep -Evi "disconnected" | awk '{print $1}'
+# LVDS-1
+# cat /etc/X11/xorg.conf | grep -i "screen" | grep -Evi "section|identifier" | sed 's/[ \t]//g' | 
+# sed -E 's/Screen[0-9]//g' | tr -d '"' | tr -d '[0-9]' | awk '!/^$/{print $0}' | tr '[:upper:]' '[:lower:]' | 
+# sed 's/of/-of/' | sed "s/^/--/"
+
+
+cat ~/.xinitrc
+xrandr --output LVDS1 --auto --primary --right-of LVDS1
+xrandr --output LVDS1 --pos 1366x0 --mode 1366x768 --rate 75.0
+xrandr --setprovideroutputsource modesetting NVIDIA-0
+xrandr --auto
+# xrandr --dpi 96
+
+
+# BusID nvidia
+lspci | grep -E "3D" | awk '{print $1}' | sed 's/^0//' | sed "s/:0/:/" | tr '.' ':' | sed "s/^/PCI:/"
+
+
+# /etc/X11/xorg.conf.d/20-nvidia.conf
+Section "Device"
+	Identifier  "Card1"
+	Driver      "nvidia"
+	BusID       "PCI:1:0:0"
+	VendorName "NVIDIA Corporation"
+	Option "NoLogo" "true"
+	#Option "UseEDID" "false"
+	#Option "ConnectedMonitor" "DFP"
+	# ...
+EndSection
+
+
+
+# /etc/X11/xorg.conf
+Section "Module"
+	Load "extmod"
+	Load "dbe"
+	Load "type1"
+	Load "freetype"
+	Load  "glx"
+	Load "modesetting"
+EndSection
+
+
+
+sudo nvidia-smi -pm 0
+sudo nvidia-persistenced --user mikl
+xrandr --setprovideroutputsource modesetting NVIDIA-0
+xrandr --output LVDS1 --auto --primary --right-of LVDS1
+
+
+
+sudo optirun nvidia-settings -c :8
+
+
+
+
+
