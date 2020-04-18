@@ -22,6 +22,11 @@ sudo systemctl start bumblebeed.service
 
 xrandr | grep -Ei "connected" | grep -Evi "disconnected" | awk '{print $1}'
 # LVDS-1
+xrandr | sed 's/^[ \t]*//' | grep -Ei "connected" | grep -Evi "disconnected" | sed 's/+.*//' | rev | cut -d ' ' -f1 | rev
+
+xrandr | sed 's/^[ \t]*//' | grep -Ei "connected" | grep -Evi "disconnected" | sed 's/+.*//' | rev | cut -d ' ' -f1 | rev | cut -d 'x' -f1
+
+
 # cat /etc/X11/xorg.conf | grep -i "screen" | grep -Evi "section|identifier" | sed 's/[ \t]//g' | 
 # sed -E 's/Screen[0-9]//g' | tr -d '"' | tr -d '[0-9]' | awk '!/^$/{print $0}' | tr '[:upper:]' '[:lower:]' | 
 # sed 's/of/-of/' | sed "s/^/--/"
@@ -53,14 +58,22 @@ EndSection
 
 
 
+sed -Ei '/Section \"Module\"/a\ \tLoad \"modesetting\"' /etc/X11/xorg.conf
+sed -Ei '/Section \"Module\"/a\ \tLoad \"freetype\"' /etc/X11/xorg.conf
+sed -Ei '/Section \"Module\"/a\ \tLoad \"type1\"' /etc/X11/xorg.conf
+sed -Ei '/Section \"Module\"/a\ \tLoad \"dbe\"' /etc/X11/xorg.conf
+sed -Ei '/Section \"Module\"/a\ \tLoad \"extmod\"' /etc/X11/xorg.conf
+
+sed -Ei '/Driver/s/intel/modesetting/' /etc/X11/xorg.conf
+
 # /etc/X11/xorg.conf
 Section "Module"
 	Load "extmod"
 	Load "dbe"
 	Load "type1"
 	Load "freetype"
-	Load  "glx"
 	Load "modesetting"
+	Load  "glx"
 EndSection
 
 
