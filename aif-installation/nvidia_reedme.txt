@@ -20,43 +20,6 @@ sudo systemctl enable bumblebeed.service
 sudo systemctl start bumblebeed.service
 
 
-xrandr | grep -Ei "connected" | grep -Evi "disconnected" | awk '{print $1}'
-# LVDS-1
-xrandr | sed 's/^[ \t]*//' | grep -Ei "connected" | grep -Evi "disconnected" | sed 's/+.*//' | rev | cut -d ' ' -f1 | rev
-
-xrandr | sed 's/^[ \t]*//' | grep -Ei "connected" | grep -Evi "disconnected" | sed 's/+.*//' | rev | cut -d ' ' -f1 | rev | cut -d 'x' -f1
-
-
-# cat /etc/X11/xorg.conf | grep -i "screen" | grep -Evi "section|identifier" | sed 's/[ \t]//g' | 
-# sed -E 's/Screen[0-9]//g' | tr -d '"' | tr -d '[0-9]' | awk '!/^$/{print $0}' | tr '[:upper:]' '[:lower:]' | 
-# sed 's/of/-of/' | sed "s/^/--/"
-
-
-cat ~/.xinitrc
-xrandr --output LVDS1 --auto --primary --right-of LVDS1
-xrandr --output LVDS1 --pos 1366x0 --mode 1366x768 --rate 75.0
-xrandr --setprovideroutputsource modesetting NVIDIA-0
-xrandr --auto
-# xrandr --dpi 96
-
-
-# BusID nvidia
-lspci | grep -E "3D" | awk '{print $1}' | sed 's/^0//' | sed "s/:0/:/" | tr '.' ':' | sed "s/^/PCI:/"
-
-
-# /etc/X11/xorg.conf.d/20-nvidia.conf
-Section "Device"
-	Identifier  "Card1"
-	Driver      "nvidia"
-	BusID       "PCI:1:0:0"
-	VendorName "NVIDIA Corporation"
-	Option "NoLogo" "true"
-	#Option "UseEDID" "false"
-	#Option "ConnectedMonitor" "DFP"
-	# ...
-EndSection
-
-
 
 sed -Ei '/Section \"Module\"/a\ \tLoad \"modesetting\"' /etc/X11/xorg.conf
 sed -Ei '/Section \"Module\"/a\ \tLoad \"freetype\"' /etc/X11/xorg.conf
@@ -78,16 +41,50 @@ EndSection
 
 
 
-sudo nvidia-smi -pm 0
-sudo nvidia-persistenced --user mikl
-xrandr --setprovideroutputsource modesetting NVIDIA-0
-xrandr --output LVDS1 --auto --primary --right-of LVDS1
-
-
 
 sudo optirun nvidia-settings -c :8
 
 
+
+_laptop=0
+
+nvidia (lts)
+nvidia-dkms (lts)
+nvidia-340xx (lts)
+nvidia-340xx-dkms (lts)
+nvidia-390xx (lts)
+nvidia-390xx-dkms (lts)
+
+
+function pkgmanager_forms()
+{
+	if [ -e $_eml_folder ]; then
+		dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_msg_pkgs_ttl" --msgbox "$_msg_pkgs_bd" 0 0
+		wait
+		info_search_pkg
+		wait
+		manager_pkg_start
+		wait
+	else
+		dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_ynq_pmngr_ttl" --yesno "$_ynq_pmngr_bd" 0 0
+		if [[ $? -eq 0 ]]; then
+			git clone "$git_pkg_mngr"
+			wait
+			mkdir -p "$_aur_pkg_folder"
+			wait
+			mv -f "$_pkg_mngr_dir" "$_aur_pkg_folder"
+			rm -rf "$_pkg_mngr_name"
+			wait
+			info_search_pkg
+			wait
+			manager_pkg_start
+			wait
+		else
+			_pm_once=0
+			install_gep_old
+		fi
+	fi
+}
 
 
 
