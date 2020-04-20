@@ -1,14 +1,14 @@
 #!/bin/bash
 pkg_aur_start()
 {
-     check_dbl_list=$(find "$_aur_pkg_folder" -maxdepth 1 -type f | grep -v "windowsfonts" | rev | cut -d '/' -f1 | rev | cut -d '-' -f1 | sort | uniq -d | wc -l)
+     check_dbl_list=$(find "$_aur_pkg_folder" -maxdepth 1 -type f | rev | cut -d '/' -f1 | rev | cut -d '-' -f1 | sort | uniq -d | wc -l)
      wait
      if [[ ${check_dbl_list[*]} != "0" ]]; then
-        dbl_name=$(find "$_aur_pkg_folder" -maxdepth 1 -type f | grep -v "windowsfonts" | rev | cut -d '/' -f1 | rev | cut -d '-' -f1 | sort | uniq -d)
+        dbl_name=$(find "$_aur_pkg_folder" -maxdepth 1 -type f | rev | cut -d '/' -f1 | rev | cut -d '-' -f1 | sort | uniq -d)
         wait
-        dbl_list=$(find "$_aur_pkg_folder" -maxdepth 1 -type f | grep -v "windowsfonts" | rev | cut -d '/' -f1 | rev | grep -v "windowsfonts" | cut -d '-' -f1 | sort | uniq -d | sed 's/$/\*/' | xargs | sed 's/ /|/g')
+        dbl_list=$(find "$_aur_pkg_folder" -maxdepth 1 -type f | rev | cut -d '/' -f1 | rev | grep -v "windowsfonts" | cut -d '-' -f1 | sort | uniq -d | sed 's/$/\*/' | xargs | sed 's/ /|/g')
         wait
-        all_name=$(find "$_aur_pkg_folder" -maxdepth 1 -type f | grep -v "windowsfonts" | rev | cut -d '/' -f1 | cut -d '-' -f4-11 | rev | grep -Ev "${dbl_list[*]}")
+        all_name=$(find "$_aur_pkg_folder" -maxdepth 1 -type f | rev | cut -d '/' -f1 | cut -d '-' -f4-11 | rev | grep -Ev "${dbl_list[*]}")
         wait
         for i in ${all_name[*]}; do
             full_name="${full_name} $i"
@@ -19,7 +19,7 @@ pkg_aur_start()
         done
         wait
      else
-        all_name=$(find "$_aur_pkg_folder" -maxdepth 1 -type f | grep -v "windowsfonts" | rev | cut -d '/' -f1 | cut -d '-' -f4-11 | rev)
+        all_name=$(find "$_aur_pkg_folder" -maxdepth 1 -type f | rev | cut -d '/' -f1 | cut -d '-' -f4-11 | rev)
         wait
         for i in ${all_name[*]}; do
             full_name="${full_name} $i"
@@ -45,8 +45,15 @@ function packages_forms()
 		if [[ $? -eq 0 ]]; then
 			git clone "$git_else_pkg"
 			wait
-			mv -f "$_else_pkg_dir" "$filesdir/"
-			rm -rf "$_else_pkg_name"
+			_gitpkg_clndir=$(echo "$git_else_pkg" | rev | cut -d '/' -f1 | rev | sed 's/\.git//')
+			wait
+			mkdir -p $_aur_pkg_folder
+			wait
+			find "${_gitpkg_clndir[*]}" -type f -iname "*tar*" -exec cp -f {} $_aur_pkg_folder \;
+			wait
+			rm -rf "${_gitpkg_clndir[*]}"
+			wait
+			unset _gitpkg_clndir
 			wait
 			info_search_pkg
 			wait
@@ -54,7 +61,7 @@ function packages_forms()
 			wait
 		else
 			aur_pkg_once=0
-			install_gep_old
+			install_gep
 		fi
 	fi
 }

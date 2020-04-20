@@ -59,10 +59,13 @@ function emulator_forms()
 		if [[ $? -eq 0 ]]; then
 			git clone "$git_eml_pkg"
 			wait
-			mkdir -p "$_aur_pkg_folder"
-			mv -f "$_eml_pkg_dir" "$_aur_pkg_folder"
+			_gitpkg_clndir=$(echo "$git_eml_pkg" | rev | cut -d '/' -f1 | rev | sed 's/\.git//')
 			wait
-			rm -rf "$_eml_pkg_name"
+			mkdir -p $_eml_folder
+			wait
+			find "${_gitpkg_clndir[*]}" -type f -iname "*tar*" -exec cp -f {} $_eml_folder \;
+			wait
+			rm -rf "${_gitpkg_clndir[*]}"
 			wait
 			info_search_pkg
 			wait
@@ -70,7 +73,7 @@ function emulator_forms()
 			wait
 		else
 			_eml_pkg_once=0
-			install_gep_old
+			install_gep
 		fi
 	fi
 }

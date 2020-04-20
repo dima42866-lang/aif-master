@@ -7,6 +7,7 @@ nvidia-lts
 nvidia-settings
 nvidia-utils
 lib32-nvidia-utils
+
 cuda
 bumblebee
 mesa
@@ -68,12 +69,15 @@ function pkgmanager_forms()
 	else
 		dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_ynq_pmngr_ttl" --yesno "$_ynq_pmngr_bd" 0 0
 		if [[ $? -eq 0 ]]; then
-			git clone "$git_pkg_mngr"
+			git clone "$git_eml_pkg"
 			wait
-			mkdir -p "$_aur_pkg_folder"
+			_gitpkg_clndir=$(echo "$git_eml_pkg" | rev | cut -d '/' -f1 | rev | sed 's/\.git//')
 			wait
-			mv -f "$_pkg_mngr_dir" "$_aur_pkg_folder"
-			rm -rf "$_pkg_mngr_name"
+			mkdir -p $_eml_folder
+			wait
+			find "${_gitpkg_clndir[*]}" -type f -iname "*tar*" -exec cp -f {} $_eml_folder \;
+			wait
+			rm -rf "${_gitpkg_clndir[*]}"
 			wait
 			info_search_pkg
 			wait
@@ -81,7 +85,7 @@ function pkgmanager_forms()
 			wait
 		else
 			_pm_once=0
-			install_gep_old
+			install_gep
 		fi
 	fi
 }

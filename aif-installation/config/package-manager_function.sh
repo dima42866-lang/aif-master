@@ -27,10 +27,13 @@ function pkgmanager_forms()
 		if [[ $? -eq 0 ]]; then
 			git clone "$git_pkg_mngr"
 			wait
-			mkdir -p "$_aur_pkg_folder"
+			_gitpkg_clndir=$(echo "$git_pkg_mngr" | rev | cut -d '/' -f1 | rev | sed 's/\.git//')
 			wait
-			mv -f "$_pkg_mngr_dir" "$_aur_pkg_folder"
-			rm -rf "$_pkg_mngr_name"
+			mkdir -p $_pkg_manager_folder
+			wait
+			find "${_gitpkg_clndir[*]}" -type f -iname "*tar*" -exec cp -f {} $_pkg_manager_folder \;
+			wait
+			rm -rf "${_gitpkg_clndir[*]}"
 			wait
 			info_search_pkg
 			wait
@@ -38,7 +41,7 @@ function pkgmanager_forms()
 			wait
 		else
 			_pm_once=0
-			install_gep_old
+			install_gep
 		fi
 	fi
 }
