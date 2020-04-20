@@ -17,6 +17,8 @@ libvdpau
 lib32-libvdpau
 lib32-virtualgl
 
+
+
 sudo systemctl enable bumblebeed.service
 sudo systemctl start bumblebeed.service
 

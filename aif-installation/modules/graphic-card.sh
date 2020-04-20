@@ -124,29 +124,134 @@ install_ati(){
             [[ ${_list_nouveau[*]} != "" ]] && pacstrap ${MOUNTPOINT} ${_list_nouveau[*]} 2>/tmp/.errlog
             sed -i 's/MODULES=""/MODULES="nouveau"/' ${MOUNTPOINT}/etc/mkinitcpio.conf       
              ;;
-        "6") 
+        "6") NVIDIA_INST=1
+				if [[ $LTS == 0 ]]; then
+					clear
+					info_search_pkg
+					_list_nvd_pkg=$(check_s_lst_pkg "${_nvd_pkg[*]}")
+					wait
+					clear
+					[[ ${_list_nvd_pkg[*]} != "" ]] && pacstrap ${MOUNTPOINT} ${_list_nvd_pkg[*]} 2>/tmp/.errlog
+					check_for_error
+				else
+					clear
+					info_search_pkg
+					_list_nvd_lts_pkg=$(check_s_lst_pkg "${_nvd_lts_pkg[*]}")
+					wait
+					clear
+					[[ ${_list_nvd_lts_pkg[*]} != "" ]] && pacstrap ${MOUNTPOINT} ${_list_nvd_lts_pkg[*]} 2>/tmp/.errlog
+					check_for_error
+				fi
+				wait
+				nvd_select_dep
              ;;
-        "7") 
+        "7") [[ $INTEGRATED_GC == "ATI" ]] &&  install_ati || install_intel
+				wait
+				NVIDIA_INST=1
+				if [[ $LTS == 0 ]]; then
+					clear
+					info_search_pkg
+					_list_nvd_pkg=$(check_s_lst_pkg "${_nvd_pkg[*]}")
+					wait
+					clear
+					[[ ${_list_nvd_pkg[*]} != "" ]] && pacstrap ${MOUNTPOINT} ${_list_nvd_pkg[*]} 2>/tmp/.errlog
+					check_for_error
+				else
+					clear
+					info_search_pkg
+					_list_nvd_lts_pkg=$(check_s_lst_pkg "${_nvd_lts_pkg[*]}")
+					wait
+					clear
+					[[ ${_list_nvd_lts_pkg[*]} != "" ]] && pacstrap ${MOUNTPOINT} ${_list_nvd_lts_pkg[*]} 2>/tmp/.errlog
+					check_for_error
+				fi
+				wait
+				nvd_select_dep
+				wait
+				modificate_xorg
              ;;
-        "8") 
+        "8") NVIDIA_INST=1
+				clear
+				info_search_pkg
+				_list_nvd_dkms_pkg=$(check_s_lst_pkg "${_nvd_dkms_pkg[*]}")
+				wait
+				[[ ${_list_nvd_dkms_pkg[*]} != "" ]] && pacstrap ${MOUNTPOINT} ${_list_nvd_dkms_pkg[*]} 2>/tmp/.errlog
+				wait
+				check_for_error
+				clear
+				wait
+				nvd_select_dep
              ;;          
-        "9") 
+        "9") [[ $INTEGRATED_GC == "ATI" ]] &&  install_ati || install_intel
+				wait
+				NVIDIA_INST=1
+				clear
+				info_search_pkg
+				_list_nvd_dkms_pkg=$(check_s_lst_pkg "${_nvd_dkms_pkg[*]}")
+				wait
+				[[ ${_list_nvd_dkms_pkg[*]} != "" ]] && pacstrap ${MOUNTPOINT} ${_list_nvd_dkms_pkg[*]} 2>/tmp/.errlog
+				wait
+				check_for_error
+				clear
+				wait
+				nvd_select_dep
+				wait
+				modificate_xorg
              ;;
-        "10") 
+        "10") NVIDIA_INST=1
+				
+				wait
+				nvd_select_dep
              ;;
-        "11") 
+        "11") [[ $INTEGRATED_GC == "ATI" ]] &&  install_ati || install_intel
+				wait
+				NVIDIA_INST=1
+				
+				wait
+				nvd_select_dep
+				wait
+				modificate_xorg
              ;;
-        "12") 
+        "12") NVIDIA_INST=1
+				
+				wait
+				nvd_select_dep
              ;;
-        "13") 
+        "13") [[ $INTEGRATED_GC == "ATI" ]] &&  install_ati || install_intel
+				NVIDIA_INST=1
+				
+				wait
+				nvd_select_dep
+				wait
+				modificate_xorg
              ;;
-        "14") 
+        "14") NVIDIA_INST=1
+				
+				wait
+				nvd_select_dep
              ;;
-        "15") 
+        "15") [[ $INTEGRATED_GC == "ATI" ]] &&  install_ati || install_intel
+				wait
+				NVIDIA_INST=1
+				
+				wait
+				nvd_select_dep
+				wait
+				modificate_xorg
              ;;
-        "16") 
+        "16") NVIDIA_INST=1
+				
+				wait
+				nvd_select_dep
              ;;
-        "17") 
+        "17") [[ $INTEGRATED_GC == "ATI" ]] &&  install_ati || install_intel
+				wait
+				NVIDIA_INST=1
+				
+				wait
+				nvd_select_dep
+				wait
+				modificate_xorg
              ;;                                       
         "18") # Via
             clear
@@ -226,5 +331,88 @@ function xorg_modif()
 		sed -Ei '/Section \"Module\"/a\ \tLoad \"dbe\"' ${MOUNTPOINT}/etc/X11/xorg.conf
 		sed -Ei '/Section \"Module\"/a\ \tLoad \"extmod\"' ${MOUNTPOINT}/etc/X11/xorg.conf
 		sed -Ei '/Driver/s/intel/modesetting/' ${MOUNTPOINT}/etc/X11/xorg.conf
+	fi
+}
+#
+function modificate_xorg()
+{
+	dialog --defaultno --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_ynq_nvd_xm_ttl" --yesno "$_ynq_nvd_xm_bd" 0 0
+
+	if [[ $? -eq 0 ]]; then
+		xorg_modif
+	fi
+}
+function nvd_select_dep()
+{
+	if [[ $_nvd_dep_once -eq 0 ]]; then
+		clear
+		info_search_pkg
+		_list_nvd_dep=$(check_s_lst_pkg "${_nvd_dep[*]}")
+		wait
+		clear
+		_nvd_dep_mn=""
+		counter=0
+		for j in ${_list_nvd_dep[*]}; do
+			if [[ $counter -eq 0 ]]; then
+				_nvd_dep_mn="$j - on"
+			elif [[ "$j" == "${_nvd_dep[1]}" ]]; then
+				_nvd_dep_mn="${_nvd_dep_mn} $j - off"
+			else
+				_nvd_dep_mn="${_nvd_dep_mn} $j - on"
+			fi
+			let count+=1
+		done
+	fi
+	wait
+	dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_nvidia_dep_mn_ttl" --checklist "$_nvidia_dep_mn_bd" 0 0 9 ${_nvd_dep_mn} 2>${ANSWER} 
+	_chl_nvd=$(cat ${ANSWER})
+	wait
+	if [[ ${_chl_nvd[*]} != "" ]]; then
+		pacstrap ${MOUNTPOINT} ${_chl_nvd[*]} 2>/tmp/.errlog
+		wait
+		check_for_error
+		wait
+		declare -i _ch_chl_nvd
+		_ch_chl_nvd=$(echo "${_chl_nvd[*]}" | grep -oi "${_nvd_dep[1]}" | wc -l)
+		if [[ $_ch_chl_nvd -eq 1 ]]; then
+			dialog --defaultno --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_ynq_bmblb_ttl" --yesno "$_ynq_bmblb_bd" 0 0
+			if [[ $? -eq 0 ]]; then
+				arch_chroot "systemctl enable bumblebeed.service" 2>/tmp/.errlog
+				check_for_error
+				wait
+				find "${MOUNTPOINT}/usr/share/applications/" -type f -iname "nvidia-settings.desktop" -exec sed -i '/Exec/c Exec=sudo optirun /usr/bin/nvidia-settings -c :8' {} \;
+				unset _ch_chl_nvd
+				wait
+				dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_msg_bmblb_ttl" --msgbox "$_msg_bmblb_bd" 0 0
+			fi
+		fi
+	fi
+}
+function nvdthreefour_setup()
+{
+	if [[ $_nvdthf_once -eq 0 ]]; then
+		_nvdthf_once=1
+		
+	fi
+}
+function nvdthreefour_dkms_setup()
+{
+	if [[ $_nvdthf_once -eq 0 ]]; then
+		_nvdthf_once=1
+		
+	fi
+}
+function nvdthreenine_setup()
+{
+	if [[ $_nvdthn_once -eq 0 ]]; then
+		_nvdthn_once=1
+		
+	fi
+}
+function nvdthreenine_dkms_setup()
+{
+	if [[ $_nvdthn_once -eq 0 ]]; then
+		_nvdthn_once=1
+		
 	fi
 }
