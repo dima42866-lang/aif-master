@@ -58,7 +58,7 @@ _reefind_pkg=(refind-efi efibootmgr dosfstools)
 _systemd_boot_pkg=(efibootmgr dosfstools)
 #
 # Alsa xorg packages
-_x_pkg=(alsa-utils alsa-plugins volumeicon pavucontrol pulseaudio pulseaudio-alsa pulseaudio-bluetooth pulseaudio-equalizer pulseaudio-jack pulseeffects pulsemixer pasystray pamixer pulseview rhythmbox audacious audacity xscreensaver xf86-input-synaptics xf86-input-keyboard xf86-input-mouse)
+_x_pkg=(alsa-utils alsa-plugins volumeicon pavucontrol pulseaudio pulseaudio-alsa pulseaudio-bluetooth pulseaudio-equalizer pulseaudio-jack pulseeffects pulsemixer pasystray pamixer pulseview rhythmbox audacious audacity xf86-input-synaptics xf86-input-keyboard xf86-input-mouse)
 #
 # Graphic Card packages
 _intel_pkg=(xf86-video-intel libva-intel-driver intel-ucode)
