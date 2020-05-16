@@ -3,12 +3,12 @@ SETUPDIR=$(DESTDIR)usr/share
 TARGET=aif
 LABEL_NAME=$(TARGET)-master
 LABEL_DESKTOP=$(LABEL_NAME).desktop
-export GITURL="https://github.com/maximalisimus/$(LABEL_NAME).git"
-export SOURCES=$(TARGET)-installation
-export ICONDIR=icons
-export IMAGEDIR=image
-export ICON_NAME=$(TARGET)-icon
-export ICONFL=$(ICONDIR)/$(ICON_NAME).png
+GITURL="https://github.com/maximalisimus/$(LABEL_NAME).git"
+SOURCES=$(TARGET)-installation
+ICONDIR=icons
+IMAGEDIR=image
+ICON_NAME=$(TARGET)-icon
+ICONFL=$(ICONDIR)/$(ICON_NAME).png
 #
 DESCENG="Installing the ArchLinux system in pseudographic mode using the dialog package."
 DESCRU="Установка системы ArchLinux в псевдографическом режиме, используя пакет dialog."
@@ -22,7 +22,23 @@ all: icon desktop
 	echo "Please enter to: make install"
 	echo ""
 build:
-	$(MAKE) -f make.build
+ifeq ($(shell test -e $(SOURCES) && echo -n yes || echo -n no),no)
+	ifeq ($(shell test -e git && echo -n yes || echo -n no),no)
+		mkdir -p git $(SOURCES) $(ICONDIR) $(IMAGEDIR)
+		git clone $(GITURL) git
+		cp -a git/$(SOURCES)/* $(SOURCES)/
+		cp -a git/$(ICONDIR)/* $(ICONDIR)/
+		cp -a git/$(IMAGEDIR)/* $(IMAGEDIR)/
+		rm -rf git
+	endif
+endif
+ifeq ($(shell test -e $(ICONFL) && echo -n yes || echo -n no),no)
+	mkdir -p git $(ICONDIR)
+	git clone $(GITURL) git
+	mkdir -p $(ICONDIR)
+	cp -a git/$(ICONDIR)/* $(ICONDIR)/
+	rm -rf git
+endif
 icon:
 	for i in $(icon_sizes) ; do \
 		mkdir -p $(ICONDIR)/hicolor/$$i/apps/ ; \
