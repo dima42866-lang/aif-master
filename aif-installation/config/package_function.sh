@@ -31,40 +31,6 @@ pkg_aur_start()
         full_menu="${full_menu} $i - off"
     done
 }
-function packages_forms()
-{
-	if [ -e $_aur_pkg_folder ]; then
-		dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_msg_pkgs_ttl" --msgbox "$_msg_pkgs_bd" 0 0
-		wait
-		info_search_pkg
-		wait
-		pkg_aur_start
-		wait
-	else
-		dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_ynq_pkgs_ttl" --yesno "$_ynq_pkgs_bd" 0 0
-		if [[ $? -eq 0 ]]; then
-			git clone "$git_else_pkg"
-			wait
-			_gitpkg_clndir=$(echo "$git_else_pkg" | rev | cut -d '/' -f1 | rev | sed 's/\.git//')
-			wait
-			mkdir -p $_aur_pkg_folder
-			wait
-			find "${_gitpkg_clndir[*]}" -type f -iname "*tar*" -exec cp -f {} $_aur_pkg_folder \;
-			wait
-			rm -rf "${_gitpkg_clndir[*]}"
-			wait
-			unset _gitpkg_clndir
-			wait
-			info_search_pkg
-			wait
-			pkg_aur_start
-			wait
-		else
-			aur_pkg_once=0
-			install_gep
-		fi
-	fi
-}
 aur_pkginstall()
 {
     dubleaursetup()
@@ -112,7 +78,7 @@ aur_pkginstall()
     }
     if [[ $aur_pkg_once == "0" ]]; then
 		aur_pkg_once=1
-		packages_forms
+		pkg_forms_pockets "$_ynq_pkgs_ttl" "$_ynq_pkgs_bd" "$git_else_pkg" "$_aur_pkg_folder" "pkg_aur_start" "aur_pkg_once" "install_gep"
     fi
     dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_aur_pkg_ttl" --checklist "$_aur_pkg_bd" 0 0 16 ${full_menu} 2>"${ANSWER}"
     clear

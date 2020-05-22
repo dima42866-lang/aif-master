@@ -13,43 +13,11 @@ manager_pkg_start()
    done
    _pm_menu="${_pm_menu} $_Back -"
 }
-function pkgmanager_forms()
-{
-	if [ -e $_eml_folder ]; then
-		dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_msg_pkgs_ttl" --msgbox "$_msg_pkgs_bd" 0 0
-		wait
-		info_search_pkg
-		wait
-		manager_pkg_start
-		wait
-	else
-		dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_ynq_pmngr_ttl" --yesno "$_ynq_pmngr_bd" 0 0
-		if [[ $? -eq 0 ]]; then
-			git clone "$git_pkg_mngr"
-			wait
-			_gitpkg_clndir=$(echo "$git_pkg_mngr" | rev | cut -d '/' -f1 | rev | sed 's/\.git//')
-			wait
-			mkdir -p $_pkg_manager_folder
-			wait
-			find "${_gitpkg_clndir[*]}" -type f -iname "*tar*" -exec cp -f {} $_pkg_manager_folder \;
-			wait
-			rm -rf "${_gitpkg_clndir[*]}"
-			wait
-			info_search_pkg
-			wait
-			manager_pkg_start
-			wait
-		else
-			_pm_once=0
-			install_gep
-		fi
-	fi
-}
 pkg_manager_install()
 {
    if [[ $_pm_once == "0" ]]; then
 		_pm_once=1
-		pkgmanager_forms
+		pkg_forms_pockets "$_ynq_pmngr_ttl" "$_ynq_pmngr_bd" "$git_pkg_mngr" "$_pkg_manager_folder" "manager_pkg_start" "_pm_once" "install_gep"
    fi
    dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_menu_pkg_meneger" --menu "$_pm_menu_body" 0 0 2 ${_pm_menu} 2>"${ANSWER}"
    _pm_check=$(cat "${ANSWER}")
