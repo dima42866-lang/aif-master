@@ -1,0 +1,15 @@
+
+aur-emulators
+https://maximalisimus.github.io/aur-emulators/x86_64
+
+aur-package-manager
+https://maximalisimus.github.io/aur-package-manager/
+
+aur-packages
+https://maximalisimus.github.io/aur-packages/
+
+aur-nvidia-340xx
+https://maximalisimus.github.io/aur-nvidia-340xx/
+
+aur-nvidia-390xx
+https://maximalisimus.github.io/aur-nvidia-390xx/
