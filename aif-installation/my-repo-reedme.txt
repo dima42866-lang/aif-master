@@ -14,6 +14,8 @@ https://maximalisimus.github.io/aur-nvidia-340xx/
 aur-nvidia-390xx
 https://maximalisimus.github.io/aur-nvidia-390xx/
 
+aur-kernel
+https://maximalisimus.github.io/aur-kernel/
 
 [aur-emulators]
 SigLevel = Never
@@ -34,6 +36,11 @@ Server = https://maximalisimus.github.io/$repo/$arch
 [aur-nvidia-390xx]
 SigLevel = Never
 Server = https://maximalisimus.github.io/$repo/$arch
+
+[aur-kernel]
+SigLevel = Never
+Server = https://maximalisimus.github.io/$repo/$arch
+
 
 
 
