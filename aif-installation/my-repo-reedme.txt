@@ -13,3 +13,27 @@ https://maximalisimus.github.io/aur-nvidia-340xx/
 
 aur-nvidia-390xx
 https://maximalisimus.github.io/aur-nvidia-390xx/
+
+
+[aur-emulators]
+SigLevel = Never
+Server = https://maximalisimus.github.io/aur-emulators/$arch/
+
+[aur-package-manager]
+SigLevel = Never
+Server = https://maximalisimus.github.io/aur-package-manager/$arch
+
+[aur-packages]
+SigLevel = Never
+Server = https://maximalisimus.github.io/aur-packages/$arch
+
+[aur-nvidia-340xx]
+SigLevel = Never
+Server = https://maximalisimus.github.io/aur-nvidia-340xx/$arch
+
+[aur-nvidia-390xx]
+SigLevel = Never
+Server = https://maximalisimus.github.io/aur-nvidia-390xx/$arch
+
+
+
