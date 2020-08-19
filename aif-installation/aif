@@ -22,19 +22,9 @@ filesdir=$(dirname "$ABSOLUT_FILENAME")
 # Save retyping
 VERSION="MAXIMALISIMUS Installation Framework 2.6"
 
-_src_fls=$(find "$filesdir/config" -maxdepth 1 -type f -iname "*.sh")
-wait
-for i in ${_src_fls[*]}; do
-    source "$i"
-    wait
-done
-_src_fls=$(find "$filesdir/modules" -maxdepth 1 -type f -iname "*.sh")
-wait
-for i in ${_src_fls[*]}; do
-    source "$i"
-    wait
-done
-unset _src_fls
+find "$filesdir/config" -maxdepth 1 -type f -iname "*.sh" -exec source {} \;
+
+find "$filesdir/modules" -maxdepth 1 -type f -iname "*.sh" -exec source {} \;
 
 ######################################################################
 ##                                                                  ##
@@ -49,12 +39,8 @@ id_system
 select_language
 if [[ "${_archi[*]}" = "x86_64" ]]; then
     multilib_question
-    clear
-    git_question_run
     wait
     clear
-    echo ""
-    find_and_remode "$_aur_pkg_folder"
 fi    
 check_requirements
 greeting

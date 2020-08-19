@@ -71,19 +71,3 @@ question_dialog_run()
 		fi
 	fi
 }
-git_question_run()
-{
-	if [[ "${_how_shell[*]}" != "fish" ]]; then
-		pacman -Qs git 1>/dev/null 2>/dev/null
-		if [[ $? != "0" ]]; then
-			sudo pacman -Syy --noconfirm
-			sudo pacman -S git --noconfirm
-		fi
-	else
-		pacman -Qs git 1>/dev/null 2>/dev/null
-		if [[ "$STATUS" != "0" ]]; then
-			sudo pacman -Syy --noconfirm
-			sudo pacman -S git --noconfirm
-		fi
-	fi
-}

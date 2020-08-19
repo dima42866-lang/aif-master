@@ -1,6 +1,6 @@
 #!/bin/bash
 
-eml_zavershenie()
+aurkernel_fine()
 {
     ### UNSET ###
     

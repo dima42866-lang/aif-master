@@ -131,28 +131,8 @@ _archi=$(uname -m)
 if [[ "${_archi[*]}" = "x86_64" ]]; then
     _other_pkg=(keepassxc veracrypt virtualbox kicad kicad-library kicad-library-3d smplayer wine wine-mono wine_gecko winetricks supertuxkart) # truecrypt
     emulator_packages=(desmume gens mednafen mupen64plus pcsx2 ppsspp)
-    _eml_folder="$filesdir/packages/emulators"
-    _aur_pkg_folder="$filesdir/packages"
-    _pkg_manager_folder="$filesdir/packages/package-manager"
-    _nvd_340xx_folder="$filesdir/packages/nvidia_340xx"
-    _nvd_390xx_folder="$filesdir/packages/nvidia_390xx"
-    git_else_pkg="https://github.com/maximalisimus/aur-packages.git"
-	git_pkg_mngr="https://github.com/maximalisimus/aur-package-manager.git"
-	git_eml_pkg="https://github.com/maximalisimus/aur-emulators.git"
-	git_nvidia390_pkg="https://github.com/maximalisimus/aur-nvidia-390xx.git"
-	git_nvidia340_pkg="https://github.com/maximalisimus/aur-nvidia-340xx.git"
 else
     _other_pkg=(keepassxc veracrypt virtualbox kicad kicad-library kicad-library-3d smplayer wine-mono winetricks supertuxkart) # truecrypt
     emulator_packages=(desmume mednafen mupen64plus ppsspp)
-    _eml_folder="$filesdir/packages_i686/emulators_i686"
-    _aur_pkg_folder="$filesdir/packages_i686"
-    _pkg_manager_folder="$filesdir/packages_i686/package-manager_i686"
-    _nvd_340xx_folder="$filesdir/packages_i686/nvidia_340xx"
-    _nvd_390xx_folder="$filesdir/packages_i686/nvidia_390xx"
-    git_else_pkg="https://github.com/maximalisimus/aur-packages-i686.git"
-	git_pkg_mngr="https://github.com/maximalisimus/aur-package-manager-i686.git"
-	git_eml_pkg="https://github.com/maximalisimus/aur-emulators-i686.git"
-	git_nvidia340_pkg="https://github.com/maximalisimus/aur-nvidia-390xx-i686.git"
-	git_nvidia390_pkg="https://github.com/maximalisimus/aur-nvidia-340xx-i686.git"
 fi
 

@@ -104,35 +104,23 @@ function mirror_config()
 }
 # mirror_config
 # echo "${_mirror_conf_str}"
-function pkg_forms_pockets()
+function setup_keyring()
 {
-	if [ -e $4 ]; then
-		dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_msg_pkgs_ttl" --msgbox "$_msg_pkgs_bd" 0 0
-		wait
-		info_search_pkg
-		wait
-		$5
-		wait
-	else
-		dialog --defaultno --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$1" --yesno "$2" 0 0
-		if [[ $? -eq 0 ]]; then
-			git clone "$3"
-			wait
-			_gitpkg_clndir=$(echo "$3" | rev | cut -d '/' -f1 | rev | sed 's/\.git//')
-			wait
-			mkdir -p $4
-			wait
-			find "${_gitpkg_clndir[*]}" -type f -iname "*tar*" -exec cp -f {} $4 \;
-			wait
-			rm -rf "${_gitpkg_clndir[*]}"
-			wait
-			info_search_pkg
-			wait
-			$5
-			wait
-		else
-			let $6=0
-			$7
-		fi
-	fi
+	sudo pacman-key --init
+	wait
+	wget https://maximalisimus.github.io/elseworld-keyring/elseworld{.gpg,-revoked,-trusted,-id.txt}
+	wait
+	sudo mv elseworld{.gpg,-revoked,-trusted} /usr/share/pacman/keyrings/
+	wait
+	sudo pacman-key --add /usr/share/pacman/keyrings/elseworld.gpg
+	wait
+	ewid=$(cat elseworld-id.txt)
+	wait
+	sudo pacman-key --lsign-key ${ewid}
+	wait
+	sudo pacman-key --populate archlinux elseworld
+	# wait
+	# sudo pacman-key --refresh-keys
+	wait
+	rm -rf elseworld-id.txt
 }

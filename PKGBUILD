@@ -17,7 +17,9 @@ md5sums=('SKIP'
 
 prepare() {
 	cd ${srcdir}/$pkgname
-	make TARGET=$_pkgrun POSTFIX=./post/ tmpdir=./$pkgname install
+	mkdir -p ./post/
+	make DESTDIR=./post/ all
+	make DESTDIR=./post/ install
 }
 
 package() {

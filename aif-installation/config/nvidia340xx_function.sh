@@ -1,6 +1,6 @@
 #!/bin/bash
 
-eml_zavershenie()
+nvd340xx_fine()
 {
     ### UNSET ###
     

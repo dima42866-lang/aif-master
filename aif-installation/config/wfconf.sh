@@ -1,11 +1,9 @@
 #!/bin/bash
-ANSWER="./.asf"
 _wifi_adapter=$(ip address show | grep -Ei "^[0-9]" | awk '{print $2}' | sed 's/://g'  | grep -Evi "lo" | grep -Ei "w")
 _wifi_adptr=( $_wifi_adapter )
 _intrfc=""
 _interface_mn=""
 _intr_once=0
-_backtitle="This FrameWork to WiFi conection"
 _wf_type=""
 _wep_keypass=0
 _my_ssid=""
@@ -18,19 +16,20 @@ function slct_intrfc()
 			_interface_mn="${_interface_mn} $i -"
 		done
 	fi
-	dialog --backtitle "$_backtitle" --title "Select interface" --menu "\nPlease to select WiFi interface\n" 0 0 3 ${_interface_mn} 2>${ANSWER}
+	dialog --backtitle "$_backtitle" --title "$_intrfc_ttl" --menu "$_intrfc_bd" 0 0 3 ${_interface_mn} 2>${ANSWER}
 	_intrfc=$(cat ${ANSWER})
 	wait
 	ip link set ${_intrfc[*]} up
 	wait
+	wifimenu
 }
 function type_wifi_connect()
 {
-	dialog --default-item 1 --backtitle "$_backtitle" --title "Selecting WiFi connection encryption" \
-    --menu "\nPlease select wireless encryption (WEP or WPA)\n" 0 0 3 \
+	dialog --default-item 1 --backtitle "$_backtitle" --title "$_encrpt_ttl" \
+    --menu "$_encrpt_bd" 0 0 3 \
  	"1" "WPA" \
  	"2" "WEP" \
-	"3" "Back" 2>${ANSWER}	
+	"3" "$_Back" 2>${ANSWER}	
 
     case $(cat ${ANSWER}) in
         "1") _wf_type="wpa"
@@ -41,14 +40,15 @@ function type_wifi_connect()
           *) wifimenu
              ;;
      esac
+	 wifimenu
 }
 function wep_keyorpass()
 {
-	dialog --default-item 2 --backtitle "$_backtitle" --title "Configuration mode WEP connection" \
-    --menu "\nPlease to select mode WEP connection\n" 0 0 2 \
- 	"1" "Key authentication mode" \
- 	"2" "Password authorization mode" \
-	"3" "Back" 2>${ANSWER}	
+	dialog --default-item 2 --backtitle "$_backtitle" --title "$_keyorpass_ttl" \
+    --menu "$_keyorpass_bd" 0 0 3 \
+ 	"1" "$_keyorpass_mn1" \
+ 	"2" "$_keyorpass_mn2" \
+	"3" "$_Back" 2>${ANSWER}	
 
     case $(cat ${ANSWER}) in
         "1") _wep_keypass=0
@@ -67,13 +67,14 @@ function search_wifi_ssid()
 	for j in ${_srch_ssid[*]}; do
 		_ssid_mn="${_ssid_mn} $j -"
 	done
-	dialog --backtitle "$_backtitle" --title "Selecting a wireless network" --menu "\nPlease select your wireless network\n" 0 0 16 ${_ssid_mn} 2>${ANSWER}
+	dialog --backtitle "$_backtitle" --title "$_srch_ssid_ttl" --menu "$_srch_ssid_bd" 0 0 16 ${_ssid_mn} 2>${ANSWER}
 	variables=$(cat ${ANSWER})
 	_my_ssid=""
 	_my_ssid="${variables[*]}"
 	unset variables
-	dialog --backtitle "$_backtitle" --title "Input the Password" --inputbox "\nPlease enter the password (key) for your WiFi network\n" 0 0 "" 2>${ANSWER}
+	dialog --backtitle "$_backtitle" --title "$_inpass_ttl" --inputbox "$_inpass_bd" 0 0 "" 2>${ANSWER}
 	mypass=$(cat ${ANSWER})
+	wifimenu
 }
 function connect_wifi_network()
 {
@@ -104,6 +105,7 @@ function connect_wifi_network()
 	wait
 	sleep 3
 	wait
+	wifimenu
 }
 function wifimenu()
 {
@@ -116,31 +118,27 @@ function wifimenu()
 	   fi
 	fi
 	
-	dialog --default-item ${HIGHLIGHT_SUB} --backtitle "$_backtitle" --title "WiFi configuration network" \
-    --menu "\nPlease select the appropriate menu to set up a wireless Internet connection\n" 0 0 5 \
- 	"1" "Select an interface" \
- 	"2" "Selecting wireless connection encryption (WEP/WPA)" \
- 	"3" "Find a network and enter your password" \
+	dialog --default-item ${HIGHLIGHT_SUB} --backtitle "$_backtitle" --title "$_wfconf_mn_ttl" \
+    --menu "$_wfconf_mn_bd" 0 0 5 \
+ 	"1" "$_wfconf_mn_1" \
+ 	"2" "$_wfconf_mn_2" \
+ 	"3" "$_wfconf_mn_3" \
  	"4" "DHCPCD" \
-	"5" "Exit" 2>${ANSWER}	
+	"5" "$_Done" 2>${ANSWER}	
 
 	HIGHLIGHT_SUB=$(cat ${ANSWER})
     case $(cat ${ANSWER}) in
         "1") slct_intrfc
-             ;;
+        ;;
         "2") type_wifi_connect
-             ;;
+        ;;
         "3") search_wifi_ssid
 		;;
-	"4") connect_wifi_network
+		"4") connect_wifi_network
 		;;
-          *) rm -rf $ANSWER
-			clear
-			exit 0
+          *) clear
              ;;
      esac
-     wifimenu
+     # wifimenu
 }
-wifimenu
-exit 0
 
