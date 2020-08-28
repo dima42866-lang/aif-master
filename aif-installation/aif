@@ -22,9 +22,21 @@ filesdir=$(dirname "$ABSOLUT_FILENAME")
 # Save retyping
 VERSION="MAXIMALISIMUS Installation Framework 2.6"
 
-find "$filesdir/config" -maxdepth 1 -type f -iname "*.sh" -exec source {} \;
+_sh_files=$(find "$filesdir/config" -maxdepth 1 -type f -iname "*.sh" | xargs)
+_files=( $_sh_files )
+unset _sh_files
+for i in ${_files[*]}; do
+	source $i
+done
+unset _files
 
-find "$filesdir/modules" -maxdepth 1 -type f -iname "*.sh" -exec source {} \;
+_sh_files=$(find "$filesdir/modules" -maxdepth 1 -type f -iname "*.sh" | xargs)
+_files=( $_sh_files )
+unset _sh_files
+for i in ${_files[*]}; do
+	source $i
+done
+unset _files
 
 ######################################################################
 ##                                                                  ##
