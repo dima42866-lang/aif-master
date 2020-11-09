@@ -125,7 +125,7 @@ _ttf_theme_pkg=(gnome-icon-theme ttf-liberation ttf-dejavu opendesktop-fonts ttf
 _gr_editor=(gimp)
 _office=(libreoffice-fresh)
 # libreoffice-fresh libreoffice-fresh-ru
-_minimal_pkg=(grub-customizer xterm gnome-terminal lxterminal cmake brasero acetoneiso2 fuseiso chromium opera tor torbrowser-launcher transmission-gtk curl git wget gwget ksysguard doublecmd-gtk2 krusader blender vlc inkscape okular gedit geany leafpad parcellite gimp galculator)
+_minimal_pkg=(grub-customizer xterm gnome-terminal lxterminal cmake brasero acetoneiso2 fuseiso chromium opera tor torbrowser-launcher transmission-gtk curl git wget gwget ksysguard doublecmd-gtk2 krusader blender vlc inkscape okular gedit geany leafpad parcellite gimp pinta krita seexpr-krita krita-plugin-gmic galculator)
 emulator_packages=(desmume gens mednafen mupen64plus pcsx2 ppsspp)
 _archi=$(uname -m)
 if [[ "${_archi[*]}" = "x86_64" ]]; then
