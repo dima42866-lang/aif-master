@@ -69,7 +69,7 @@ _nvd_dkms_pkg=(nvidia-dkms nvidia-settings nvidia-utils lib32-nvidia-utils pango
 _nvd_dep=(cuda bumblebee mesa mesa-demos libva-utils libvdpau lib32-libvdpau lib32-virtualgl)
 _nouveau=(xf86-video-nouveau)
 _openchrome=(xf86-video-openchrome)
-_vbox_pkg=(virtualbox-guest-utils virtualbox-guest-modules )
+_vbox_pkg=(virtualbox-guest-utils virtualbox-guest-modules)
 _vbox_lts_pkg=(virtualbox-guest-utils)
 _vmware_pkg=(xf86-video-vmware xf86-input-vmmouse)
 _generic_pkg=(xf86-video-fbdev)
@@ -126,13 +126,14 @@ _gr_editor=(gimp)
 _office=(libreoffice-fresh)
 # libreoffice-fresh libreoffice-fresh-ru
 _minimal_pkg=(grub-customizer xterm gnome-terminal lxterminal cmake brasero acetoneiso2 fuseiso chromium opera tor torbrowser-launcher transmission-gtk curl git wget gwget ksysguard doublecmd-gtk2 krusader blender vlc inkscape okular gedit geany leafpad parcellite gimp pinta krita seexpr-krita krita-plugin-gmic galculator)
+_virtualization=(virtualbox qemu qemu-arch-extra)
 emulator_packages=(desmume gens mednafen mupen64plus pcsx2 ppsspp)
 _archi=$(uname -m)
 if [[ "${_archi[*]}" = "x86_64" ]]; then
-    _other_pkg=(keepassxc veracrypt virtualbox kicad kicad-library kicad-library-3d smplayer wine wine-mono wine_gecko winetricks supertuxkart) # truecrypt
+    _other_pkg=(keepassxc veracrypt kicad kicad-library kicad-library-3d smplayer wine wine-mono wine_gecko winetricks supertuxkart) # truecrypt
     emulator_packages=(desmume gens mednafen mupen64plus pcsx2 ppsspp)
 else
-    _other_pkg=(keepassxc veracrypt virtualbox kicad kicad-library kicad-library-3d smplayer wine-mono winetricks supertuxkart) # truecrypt
+    _other_pkg=(keepassxc veracrypt kicad kicad-library kicad-library-3d smplayer wine-mono winetricks supertuxkart) # truecrypt
     emulator_packages=(desmume mednafen mupen64plus ppsspp)
 fi
 
